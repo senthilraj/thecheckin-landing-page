@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TheCheckin - Modern Attendance Tracking App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body,
+    html {
+      overflow-x: hidden;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #1d19d8 0%, #000000 100%);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .testimonial-card:hover {
+      transform: scale(1.03);
+    }
+
+    .qr-type-card:hover {
+      transform: scale(1.05);
+    }
+
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+
+    @keyframes blob {
+      0% {
+        transform: translate(0px, 0px) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -50px) scale(1.1);
+      }
+
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+
+      100% {
+        transform: translate(0px, 0px) scale(1);
+      }
+    }
+
+    .text-primary {
+      color: #1d19d8;
+    }
+
+    .bg-primary {
+      background-color: #1d19d8;
+    }
+
+    .border-primary {
+      border-color: #1d19d8;
+    }
+
+    .hover\:bg-primary:hover {
+      background-color: #1d19d8;
+    }
+
+    .focus\:ring-primary:focus {
+      --tw-ring-color: #1d19d8;
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased text-gray-800">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm fixed w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <img src="/images//logo.png" alt="TheCheckin Logo" class="h-8 w-auto" />
+          </div>
+        </div>
+        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+          <a href="#features" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Features</a>
+          <a href="#customers" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Customers</a>
+          <a href="#qr-types" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">QR Types</a>
+          <a href="#faq" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">FAQ</a>
+          <a href="#contact" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Contact</a>
+        </div>
+        <div class="flex items-center">
+          <a href="#contact"
+            class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white gradient-bg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            Get Started
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Hero Section -->
+  <section class="pt-24 pb-12 md:pt-32 md:pb-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+          <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <span class="block">Track Every Minute.</span>
+            <span class="block text-primary">Support Every Team.</span>
+          </h1>
+          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+            Online time & attendance tracking software with shift scheduling, GPS, and timesheet automation.
+          </p>
+          <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+            <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+              <div class="rounded-md shadow">
+                <a href="#demo"
+                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white gradient-bg hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                  Start Free Trial
+                </a>
+              </div>
+              <div class="mt-3 sm:mt-0 sm:ml-3">
+                <a href="#how-it-works"
+                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10">
+                  Watch Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+          <div class="relative max-w-md w-full">
+            <!-- <div
+              class="absolute -top-10 -left-10 w-24 h-24 sm:w-32 sm:h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+            </div>
+            <div
+              class="absolute -bottom-10 -right-10 w-24 h-24 sm:w-32 sm:h-32 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+              class="absolute top-20 -right-5 w-24 h-24 sm:w-32 sm:h-32 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000">
+            </div> -->
+            <img
+              src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+              alt="TheCheckin App"
+              class="relative z-10 w-full rounded-xl shadow-2xl border-4 border-white object-contain" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gradient-to-b from-white to-slate-50 py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">Industries We Empower</h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Trusted by companies across diverse sectors for intelligent time tracking solutions that drive productivity.</p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <!-- Startup -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-indigo-50 mb-4 group-hover:bg-indigo-100 transition-colors">
+          <i class="fas fa-lightbulb text-3xl text-indigo-600 group-hover:text-indigo-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Startups</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-indigo-600 font-medium transition-opacity">Agile teams</span>
+      </div>
+
+      <!-- Retail -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-blue-50 mb-4 group-hover:bg-blue-100 transition-colors">
+          <i class="fas fa-store text-3xl text-blue-600 group-hover:text-blue-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Retail</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-blue-600 font-medium transition-opacity">Stores & chains</span>
+      </div>
+
+      <!-- Healthcare -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-emerald-50 mb-4 group-hover:bg-emerald-100 transition-colors">
+          <i class="fas fa-stethoscope text-3xl text-emerald-600 group-hover:text-emerald-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Healthcare</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-emerald-600 font-medium transition-opacity">Clinics & hospitals</span>
+      </div>
+
+      <!-- Manufacturing -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-amber-50 mb-4 group-hover:bg-amber-100 transition-colors">
+          <i class="fas fa-industry text-3xl text-amber-600 group-hover:text-amber-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Manufacturing</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-amber-600 font-medium transition-opacity">Factories & plants</span>
+      </div>
+
+      <!-- Education -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-purple-50 mb-4 group-hover:bg-purple-100 transition-colors">
+          <i class="fas fa-graduation-cap text-3xl text-purple-600 group-hover:text-purple-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Education</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-purple-600 font-medium transition-opacity">Schools & universities</span>
+      </div>
+
+      <!-- Hospitality -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-rose-50 mb-4 group-hover:bg-rose-100 transition-colors">
+          <i class="fas fa-hotel text-3xl text-rose-600 group-hover:text-rose-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Hospitality</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-rose-600 font-medium transition-opacity">Hotels & resorts</span>
+      </div>
+
+      <!-- Restaurant -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-red-50 mb-4 group-hover:bg-red-100 transition-colors">
+          <i class="fas fa-utensils text-3xl text-red-600 group-hover:text-red-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Restaurant</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-red-600 font-medium transition-opacity">Bars & cafes</span>
+      </div>
+
+      <!-- Logistics -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-orange-50 mb-4 group-hover:bg-orange-100 transition-colors">
+          <i class="fas fa-truck text-3xl text-orange-600 group-hover:text-orange-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Logistics</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-orange-600 font-medium transition-opacity">Shipping & delivery</span>
+      </div>
+
+      <!-- Construction -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-yellow-50 mb-4 group-hover:bg-yellow-100 transition-colors">
+          <i class="fas fa-hard-hat text-3xl text-yellow-600 group-hover:text-yellow-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Construction</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-yellow-600 font-medium transition-opacity">Sites & projects</span>
+      </div>
+
+      <!-- Technology -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-sky-50 mb-4 group-hover:bg-sky-100 transition-colors">
+          <i class="fas fa-laptop-code text-3xl text-sky-600 group-hover:text-sky-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">Technology</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-sky-600 font-medium transition-opacity">IT & software</span>
+      </div>
+
+      <!-- And More -->
+      <div class="group relative flex flex-col items-center bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-2xl bg-gray-50 mb-4 group-hover:bg-gray-100 transition-colors">
+          <i class="fas fa-ellipsis-h text-3xl text-gray-600 group-hover:text-gray-700 transition-colors"></i>
+        </div>
+        <span class="text-gray-800 font-semibold">And More</span>
+        <span class="absolute -bottom-5 opacity-0 group-hover:opacity-100 text-xs text-gray-600 font-medium transition-opacity">30+ industries</span>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+
+
+  <!-- Our Solutions Section -->
+  <section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-dark mb-4">Our Solutions</h2>
+        <p class="text-lg text-gray-600 max-w-xl mx-auto">
+          Features designed to simplify and strengthen your attendance workflow
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <!-- Mobile-Friendly -->
+        <div
+          class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300 flex items-start gap-4 max-w-md mx-auto sm:max-w-full">
+          <div class="text-primary text-3xl flex-shrink-0">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-dark">Mobile-Friendly</h3>
+            <p class="text-gray-600 mt-1 text-sm">
+              Track attendance effortlessly from any mobile device, anytime and anywhere.
+            </p>
+          </div>
+        </div>
+        <!-- Secure -->
+        <div
+          class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300 flex items-start gap-4 max-w-md mx-auto sm:max-w-full">
+          <div class="text-primary text-3xl flex-shrink-0">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-dark">Secure</h3>
+            <p class="text-gray-600 mt-1 text-sm">
+              Robust security features ensure that your data is always protected.
+            </p>
+          </div>
+        </div>
+        <!-- Time Tracking -->
+        <div
+          class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300 flex items-start gap-4 max-w-md mx-auto sm:max-w-full">
+          <div class="text-primary text-3xl flex-shrink-0">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-dark">Time Tracking</h3>
+            <p class="text-gray-600 mt-1 text-sm">
+              Efficient real-time tracking of work hours with QR-based attendance.
+            </p>
+          </div>
+        </div>
+        <!-- Affordable -->
+        <div
+          class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300 flex items-start gap-4 max-w-md mx-auto sm:max-w-full">
+          <div class="text-primary text-3xl flex-shrink-0">
+            <i class="fas fa-wallet"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-dark">Affordable</h3>
+            <p class="text-gray-600 mt-1 text-sm">
+              A cost-effective solution that scales with your business size.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Features Section -->
+  <section id="features" class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <h2 class="text-base text-primary font-semibold tracking-wide uppercase">Features</h2>
+        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Advanced Attendance Features
+        </p>
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          Comprehensive solutions for modern workforce management
+        </p>
+      </div>
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Real-Time Tracking -->
+        <div
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-tachometer-alt"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Real-Time Tracking</h3>
+          <p class="text-gray-600 max-w-xs">
+            Employees can check-in and out anywhere, anytime using their mobile devices with live updates.
+          </p>
+        </div>
+        <!-- Shift Scheduling -->
+        <div
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Shift Scheduling</h3>
+          <p class="text-gray-600 max-w-xs">
+            Create and manage custom employee shift schedules with support for recurring patterns.
+          </p>
+        </div>
+        <!-- Geo-Fencing -->
+        <div
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Geo-Fencing</h3>
+          <p class="text-gray-600 max-w-xs">
+            Restrict check-in/out to specific geographic boundaries with customizable radius settings.
+          </p>
+        </div>
+        <!-- Fake GPS Detection -->
+        <div
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Fake GPS Detection</h3>
+          <p class="text-gray-600 max-w-xs">
+            Advanced detection prevents spoofing by identifying and blocking fake GPS signals.
+          </p>
+        </div>
+        <!-- Kiosk Mode -->
+        <div
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Kiosk Mode</h3>
+          <p class="text-gray-600 max-w-xs">
+            Centralized check-in checkout stations for facilities with shared devices.
+          </p>
+        </div>
+        <!-- Flexible Shifts -->
+        <div
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-clock-rotate-left"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Flexible Shifts</h3>
+          <p class="text-gray-600 max-w-xs">
+            Employees in an organization might work different hours. Our application allows you to create multiple
+            shifts.
+          </p>
+        </div>
+        <article
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-users-cog"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Role Management</h3>
+          <p class="text-gray-600 max-w-xs">
+            There are three roles in the attendance management software: Admin, Branch Lead, and Team. You can assign
+            employees to manage based on team or branch.
+          </p>
+        </article>
+        <article
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-location-arrow"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">GPS Location Tracking</h3>
+          <p class="text-gray-600 max-w-xs">
+            Verify employees are at designated locations when clocking in with precise GPS coordinates.
+          </p>
+        </article>
+        <article
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-sitemap"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Multiple Branch Support</h3>
+          <p class="text-gray-600 max-w-xs">
+            You can easily track attendance for all your branches in one place. This makes it simple to oversee
+            operations and keep everything organized.
+          </p>
+        </article>
+        <article
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-laptop"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Multiple Platform Support</h3>
+          <p class="text-gray-600 max-w-xs">
+            TheCheckIn app supports all Android, iOS, and Web platforms, making it accessible to everyone in your
+            organization.
+          </p>
+        </article>
+        <article
+          class="feature-card bg-white p-8 rounded-lg shadow-md text-center transition duration-300 flex flex-col items-center">
+          <div class="text-primary text-4xl mb-4">
+            <i class="fas fa-file-invoice"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-dark mb-3">Timesheet Generation</h3>
+          <p class="text-gray-600 max-w-xs">
+            Employee timesheet reports are accurate and reliable from our application. Customizable reports are also
+            available based on the organization's needs.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <h2 class="text-base text-primary font-semibold tracking-wide uppercase">How It Works</h2>
+        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Simple setup, powerful results
+        </p>
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          A simple, secure, and smart way to track attendance with QR codes and GPS verification.
+        </p>
+      </div>
+      <div class="mt-10 relative">
+        <div
+          class="absolute hidden md:block h-full border-r-2 border-primary left-1/2 transform -translate-x-1/2 top-0 bottom-0">
+        </div>
+        <!-- Step 1 -->
+        <div class="relative mb-12 flex flex-col md:flex-row items-start">
+          <div class="flex items-center w-full md:w-1/2 pr-0 md:pr-8">
+            <div
+              class="flex items-center justify-center w-12 h-12 min-w-[3rem] rounded-full bg-primary text-white border-4 border-white shadow z-10">
+              <span class="text-xl font-bold">1</span>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-medium text-gray-900">Setup account</h3>
+              <p class="mt-2 text-gray-600 text-sm">
+                Admin creates an account and configures branches, employees, and attendance settings.
+              </p>
+            </div>
+          </div>
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+        <!-- Step 2 -->
+        <div class="relative mb-12 flex flex-col md:flex-row-reverse items-start">
+          <div class="flex items-center w-full md:w-1/2 pl-0 md:pl-8">
+            <div
+              class="flex items-center justify-center w-12 h-12 min-w-[3rem] rounded-full bg-primary text-white border-4 border-white shadow z-10">
+              <span class="text-xl font-bold">2</span>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-medium text-gray-900">Employee Scans</h3>
+              <p class="mt-2 text-gray-600 text-sm">
+                Employees scan the QR code via mobile to check in instantly.
+              </p>
+            </div>
+          </div>
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+        <!-- Step 3 -->
+        <div class="relative mb-12 flex flex-col md:flex-row items-start">
+          <div class="flex items-center w-full md:w-1/2 pr-0 md:pr-8">
+            <div
+              class="flex items-center justify-center w-12 h-12 min-w-[3rem] rounded-full bg-primary text-white border-4 border-white shadow z-10">
+              <span class="text-xl font-bold">3</span>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-medium text-gray-900">Location Verified</h3>
+              <p class="mt-2 text-gray-600 text-sm">
+                System verifies location using GPS or geofencing before recording check-in.
+              </p>
+            </div>
+          </div>
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+        <!-- Step 4 -->
+        <div class="relative mb-12 flex flex-col md:flex-row-reverse items-start">
+          <div class="flex items-center w-full md:w-1/2 pl-0 md:pl-8">
+            <div
+              class="flex items-center justify-center w-12 h-12 min-w-[3rem] rounded-full bg-primary text-white border-4 border-white shadow z-10">
+              <span class="text-xl font-bold">4</span>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-medium text-gray-900">Check-In Recorded</h3>
+              <p class="mt-2 text-gray-600 text-sm">
+                Check-in is logged and reflected on admin dashboard in real-time.
+              </p>
+            </div>
+          </div>
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- QR Types Section -->
+  <section id="qr-types" class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-800 mb-3">QR Types for Employee Attendance</h2>
+        <p class="text-gray-600 text-lg">Explore the flexible check-in options supported by TheCheckIn app.</p>
+      </div>
+      <div class="flex flex-col md:flex-row items-stretch gap-6">
+        <!-- Branch QR -->
+        <div class="qr-type-card flex-1 bg-white rounded-xl border hover:shadow-lg transition p-6 text-center">
+          <div class="text-primary text-5xl mb-4">
+            <i class="fas fa-qrcode"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Branch QR</h3>
+          <p class="text-gray-600 text-sm mb-4">Ideal for office-based attendance</p>
+          <ul class="text-left text-gray-600 text-sm list-none list-inside text-center">
+            <li>Scan QR at the office using your mobile.</li>
+            <li>Location & device verified for security.</li>
+            <li>Prevents spoofing or proxy check-ins.</li>
+          </ul>
+        </div>
+        <!-- Employee QR -->
+        <div class="qr-type-card flex-1 bg-white rounded-xl border hover:shadow-lg transition p-6 text-center">
+          <div class="text-primary text-5xl mb-4">
+            <i class="fas fa-id-badge"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Employee QR</h3>
+          <p class="text-gray-600 text-sm mb-4">Works with employee ID cards</p>
+          <ul class="text-left text-gray-600 text-sm list-none list-inside text-center">
+            <li>Printed QR on each employee ID.</li>
+            <li>Scan with office kiosk mobile.</li>
+            <li>Seamless validation using TheCheckIn app.</li>
+          </ul>
+        </div>
+        <!-- Direct -->
+        <div class="qr-type-card flex-1 bg-white rounded-xl border hover:shadow-lg transition p-6 text-center">
+          <div class="text-primary text-5xl mb-4">
+            <i class="fas fa-location-arrow"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Direct</h3>
+          <p class="text-gray-600 text-sm mb-4">No scanning needed</p>
+          <ul class="text-left text-gray-600 text-sm list-none list-inside text-center">
+            <li>Check-in from your mobile directly.</li>
+            <li>GPS location used for validation.</li>
+            <li>Great for remote workers & field teams.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Testimonials Section -->
+  <section id="customers" class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <h2 class="text-base text-primary font-semibold tracking-wide uppercase">Testimonials</h2>
+        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          What Our Customers Say
+        </p>
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          Trusted by organizations of all sizes across various industries
+        </p>
+      </div>
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card bg-white p-8 rounded-lg shadow-md flex flex-col transition duration-300">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 mr-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <p class="text-gray-600 mb-6 flex-grow">"QRCheck has transformed how we track attendance at our university
+            lectures. The QR system is so much more efficient than paper sign-in sheets."</p>
+          <div class="flex items-center mt-auto">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1768&q=80"
+              alt="Sarah Johnson" class="w-12 h-12 rounded-full mr-4 object-cover" />
+            <div>
+              <h4 class="font-semibold text-gray-900">Sarah Johnson</h4>
+              <p class="text-gray-500 text-sm">University Administrator</p>
+            </div>
+          </div>
+        </div>
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card bg-white p-8 rounded-lg shadow-md flex flex-col transition duration-300">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 mr-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <p class="text-gray-600 mb-6 flex-grow">"Our employee attendance tracking is now 100% accurate with QRCheck.
+            The real-time reports save us hours of manual work each week."</p>
+          <div class="flex items-center mt-auto">
+            <img
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+              alt="Michael Chen" class="w-12 h-12 rounded-full mr-4 object-cover" />
+            <div>
+              <h4 class="font-semibold text-gray-900">Michael Chen</h4>
+              <p class="text-gray-500 text-sm">HR Director, Tech Company</p>
+            </div>
+          </div>
+        </div>
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card bg-white p-8 rounded-lg shadow-md flex flex-col transition duration-300">
+          <div class="flex items-center mb-4">
+            <div class="text-yellow-400 mr-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+          <p class="text-gray-600 mb-6 flex-grow">"For our conferences and events, QRCheck provides a professional
+            check-in experience that impresses our attendees while giving us valuable data."</p>
+          <div class="flex items-center mt-auto">
+            <img
+              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1744&q=80"
+              alt="Emma Rodriguez" class="w-12 h-12 rounded-full mr-4 object-cover" />
+            <div>
+              <h4 class="font-semibold text-gray-900">Emma Rodriguez</h4>
+              <p class="text-gray-500 text-sm">Event Coordinator</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contact" class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div class="lg:col-span-6">
+          <div class="bg-indigo-50 p-8 rounded-xl h-full flex flex-col justify-center">
+            <h3 class="text-2xl font-bold text-gray-900">Why schedule a demo?</h3>
+            <ul class="mt-6 space-y-4">
+              <li class="flex items-start">
+                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-700">
+                  See exactly how TheCheckIn works with your specific business needs
+                </p>
+              </li>
+              <li class="flex items-start">
+                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-700">
+                  Get answers to all your questions from our product experts
+                </p>
+              </li>
+              <li class="flex items-start">
+                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-700">
+                  Learn best practices for implementing attendance tracking
+                </p>
+              </li>
+              <li class="flex items-start">
+                <div class="flex-shrink-0 h-6 w-6 text-primary">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <p class="ml-3 text-base text-gray-700">
+                  Discover how much time and money you could save
+                </p>
+              </li>
+            </ul>
+            <div class="mt-8 bg-white p-6 rounded-lg shadow-sm">
+              <p class="text-lg font-medium text-gray-900">"TheCheckIn reduced our manual processing time by 75% and
+                completely eliminated buddy punching. The ROI was immediate."</p>
+              <div class="mt-4 flex items-center">
+               
+               <!--  <div class="ml-3">
+                  <p class="text-sm font-medium text-gray-900">Sarah Johnson</p>
+                  <p class="text-sm text-gray-500">HR Director, Acme Corp</p>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 lg:mt-0 lg:col-span-6">
+          <div class="bg-white p-8 rounded-xl shadow-xl">
+            <h3 class="text-xl font-semibold text-gray-900 mb-6">Book a demo</h3>
+            <form action="https://formspree.io/f/mgvyqpww" method="POST" class="space-y-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input type="text" id="name" name="name"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+                  required>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input type="email" id="email" name="email"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+                  required>
+              </div>
+              <div>
+                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                <input type="text" id="subject" name="subject"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <textarea id="message" name="message" rows="4"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
+                  required></textarea>
+              </div>
+              <div>
+                <button type="submit"
+                  class="w-full bg-primary text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition duration-300">
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Frequently Asked Questions
+        </p>
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          Find answers to common questions about TheCheckIn app
+        </p>
+      </div>
+      <div class="mt-10 max-w-3xl mx-auto">
+        <div class="space-y-4">
+          <div class="bg-white rounded-lg shadow-md">
+            <button
+              class="w-full flex justify-between items-center px-6 py-4 text-left text-lg font-medium text-gray-900 focus:outline-none"
+              onclick="toggleFAQ(this)">
+              <span>How do employees check in or out?</span>
+              <i class="fas fa-chevron-down text-primary"></i>
+            </button>
+            <div class="px-6 pb-4 hidden text-gray-600">
+              <p> Employees can check in/out using face recognition, QR code scanning, or GPS-based check-ins via their
+                mobile phones. These methods ensure secure, contactless, and accurate tracking.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md">
+            <button
+              class="w-full flex justify-between items-center px-6 py-4 text-left text-lg font-medium text-gray-900 focus:outline-none"
+              onclick="toggleFAQ(this)">
+              <span>Can TheCheckIn support multiple branches?</span>
+              <i class="fas fa-chevron-down text-primary"></i>
+            </button>
+            <div class="px-6 pb-4 hidden text-gray-600">
+              <p>Yes, TheCheckIn supports multiple branches seamlessly. Admins can manage attendance across all
+                locations from a single dashboard, with customizable settings for each branch.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md">
+            <button
+              class="w-full flex justify-between items-center px-6 py-4 text-left text-lg font-medium text-gray-900 focus:outline-none"
+              onclick="toggleFAQ(this)">
+              <span>Is TheCheckIn suitable for remote teams?</span>
+              <i class="fas fa-chevron-down text-primary"></i>
+            </button>
+            <div class="px-6 pb-4 hidden text-gray-600">
+              <p>Absolutely! Our Direct check-in option allows remote workers to log their attendance using GPS
+                verification, making it ideal for field teams and remote employees.</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md">
+            <button
+              class="w-full flex justify-between items-center px-6 py-4 text-left text-lg font-medium text-gray-900 focus:outline-none"
+              onclick="toggleFAQ(this)">
+              <span>Is it secure to store employee data on TheCheckin?
+              </span>
+              <i class="fas fa-chevron-down text-primary"></i>
+            </button>
+            <div class="px-6 pb-4 hidden text-gray-600">
+              <p> Absolutely. All data is securely encrypted and stored in the cloud. Only authorized personnel have
+                access to sensitive information.
+              </p>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg shadow-md">
+            <button
+              class="w-full flex justify-between items-center px-6 py-4 text-left text-lg font-medium text-gray-900 focus:outline-none"
+              onclick="toggleFAQ(this)">
+              <span>Does TheCheckIn offer a free trial?</span>
+              <i class="fas fa-chevron-down text-primary"></i>
+            </button>
+            <div class="px-6 pb-4 hidden text-gray-600">
+              <p>Yes, we offer a free trial so you can explore all features of TheCheckIn. Sign up today to experience
+                how our app can streamline your attendance tracking!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA Section -->
+  <section class="gradient-bg py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-white mb-6">Stop scrolling, what are you waiting for?</h2>
+      <p class="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+        Your team deserves the best - make the switch to TheCheckIn and see the difference!
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <a href="#"
+          class="bg-white text-primary px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition duration-300 w-full sm:w-auto text-center">
+          Start Free Trial
+        </a>
+        <a href="#contact"
+          class="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold w-full sm:w-auto text-center">
+          Request Demo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Footer -->
+  <footer class="bg-black text-white">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-base text-gray-400">
+        © 2025 Pazhanam-Techologies. All rights reserved.
+      </p>
+    </div>
+  </footer>
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    // FAQ accordion toggle
+    function toggleFAQ(button) {
+      const content = button.nextElementSibling;
+      const icon = button.querySelector('i');
+      content.classList.toggle('hidden');
+      icon.classList.toggle('fa-chevron-down');
+      icon.classList.toggle('fa-chevron-up');
+    }
+  </script>
+</body>
+
+</html>
