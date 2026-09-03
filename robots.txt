@@ -1,2 +1,52 @@
+# robots.txt — thecheckin.io
+# Allow all search engines and AI crawlers
+
 User-agent: *
 Allow: /
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing / Microsoft
+User-agent: Bingbot
+Allow: /
+
+# OpenAI (ChatGPT / SearchGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+# Common Crawl (feeds LLM training datasets — used to train GPT, Llama, etc.)
+User-agent: CCBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://thecheckin.io/sitemap.xml

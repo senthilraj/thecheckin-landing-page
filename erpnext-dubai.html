@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERPNext Implementation Dubai — Attendance Tracking Included | TheCheckIn</title>
+    <meta name="description" content="ERPNext implementation for Dubai businesses — with face recognition attendance built in. Replace biometric terminals, track multi-site field teams, and sync to Frappe HRMS. Pazhanam Technologies.">
+    <meta name="keywords" content="erpnext implementation dubai, erpnext dubai, frappe dubai, erpnext uae, attendance tracking dubai, frappe hrms dubai, face recognition attendance dubai">
+    <link rel="canonical" href="https://thecheckin.io/erpnext-dubai.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/erpnext-dubai.html">
+    <meta property="og:title" content="ERPNext Implementation Dubai — Attendance Tracking Included | TheCheckIn">
+    <meta property="og:description" content="ERPNext for Dubai businesses — face recognition attendance replaces biometric terminals. Multi-site, multi-shift, Frappe HRMS payroll ready.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ERPNext Implementation Dubai — Attendance Tracking Included | TheCheckIn">
+    <meta name="twitter:description" content="ERPNext for Dubai businesses — face recognition attendance replaces biometric terminals.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "ERPNext Implementation Dubai", "item": "https://thecheckin.io/erpnext-dubai.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does TheCheckIn work for companies in Dubai and the UAE?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. TheCheckIn is used by companies in Dubai — including Gibcaac — and across the GCC. The app works on any Android phone, supports multi-nationality workforces with multiple sites, and exports attendance data that maps to ERPNext HR for Frappe HRMS payroll processing." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can TheCheckIn replace the biometric attendance terminals common in Dubai offices?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Biometric attendance terminals (fingerprint or face) are standard in many Dubai offices. TheCheckIn replaces them — face recognition runs on each employee's Android phone instead. No terminal to purchase, maintain, or replace. Works at the office, on site, or at a client's premises." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it handle multi-nationality workforces with employees at different sites?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. TheCheckIn supports multiple branches, each with their own check-in settings — GPS, face recognition, or QR. Dubai companies commonly have staff at the main office plus workers at construction sites, client offices, or warehouse locations. Each site is managed separately in the admin dashboard." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero Dubai dashboard animations ═══ */
+        @keyframes site-slide-in {
+            from { opacity: 0; transform: translateX(-14px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .site-item {
+            opacity: 0;
+            animation: site-slide-in 0.5s ease forwards;
+        }
+        @keyframes live-badge-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+        }
+        .live-badge-pulse { animation: live-badge-pulse 1.8s ease-in-out infinite; }
+        @keyframes sync-cycle {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(6px); opacity: 0.7; }
+        }
+        .sync-cycle { animation: sync-cycle 2s ease-in-out infinite; }
+        @keyframes dash-reveal {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dash-reveal { opacity: 0; animation: dash-reveal 0.5s ease forwards; }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">ERPNext Dubai</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-700">
+                        <i class="fas fa-building mr-1.5"></i> Dubai &amp; GCC
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700">
+                        ERPNext v14 &amp; v15
+                    </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    ERPNext Implementation in Dubai — Attendance Included
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Dubai businesses moving to ERPNext often face the same gap: ERPNext handles HR and payroll well, but getting accurate attendance data into it is a separate problem.
+                </p>
+                <p class="text-xl text-gray-600 mb-4">
+                    Biometric terminals are everywhere in Dubai offices. They work — until they don't. Fingerprint readers fail in summer heat. Shared terminals slow down morning rushes. Workers at construction sites and client premises can't use a terminal at the office.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    TheCheckIn fixes that. Face recognition on each employee's Android phone. GPS confirmation from the work site. Timesheets export directly into ERPNext HR. Gibcaac, one of our Dubai customers, uses it across their team today.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp Us About Dubai Setup
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · Works on any Android · Admin dashboard on any browser</p>
+            </div>
+
+            <!-- Visual: Dubai multi-site dashboard -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-building text-amber-500 text-lg"></i>
+                        <p class="font-bold text-gray-900 text-sm">Dubai &amp; GCC — Live Dashboard</p>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100 site-item" style="animation-delay:0.1s">
+                            <div class="w-9 h-9 bg-amber-400 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-building text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-semibold text-gray-800">Main Office · Dubai Marina</p>
+                                <p class="text-[10px] text-gray-500">Face recognition · 45 staff</p>
+                            </div>
+                            <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold flex-shrink-0">✓ Live</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 site-item" style="animation-delay:0.3s">
+                            <div class="w-9 h-9 bg-orange-400 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-hard-hat text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-semibold text-gray-800">Site A · Al Quoz</p>
+                                <p class="text-[10px] text-gray-500">GPS check-in · 12 workers</p>
+                            </div>
+                            <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold flex-shrink-0">✓ Live</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 site-item" style="animation-delay:0.5s">
+                            <div class="w-9 h-9 bg-blue-400 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-tools text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-semibold text-gray-800">Client Site · Business Bay</p>
+                                <p class="text-[10px] text-gray-500">GPS geofence · 8 technicians</p>
+                            </div>
+                            <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold flex-shrink-0">✓ Live</span>
+                        </div>
+                    </div>
+                    <div class="bg-primary-50 border border-primary-100 rounded-xl p-3 flex items-center gap-2 mb-3 site-item" style="animation-delay:0.7s">
+                        <div class="w-7 h-7 bg-brand-blue rounded-lg flex items-center justify-center flex-shrink-0 sync-cycle">
+                            <i class="fas fa-layer-group text-white text-xs"></i>
+                        </div>
+                        <p class="text-xs text-gray-700 font-medium">All branches synced to ERPNext</p>
+                        <span class="ml-auto text-[10px] text-emerald-600 font-bold flex items-center gap-1 flex-shrink-0 live-badge-pulse">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            Real-time
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <img src="images/gibcaac-dubai-logo.png" alt="Gibcaac Dubai" class="h-6 w-auto opacity-70">
+                        <p class="text-[10px] text-gray-400">Customer in Dubai · Using TheCheckIn</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Dubai specifically -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">Why attendance tracking in Dubai has its own challenges</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">Dubai businesses often have workforce patterns that standard attendance tools aren't designed for.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-globe text-amber-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Multi-nationality workforce</h3>
+                    <p class="text-sm text-gray-600">Teams from 10+ countries, different phone models, different languages. TheCheckIn's Android app is simple enough to use without extensive training — and face registration doesn't depend on language.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-map-pin text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Workers at multiple sites</h3>
+                    <p class="text-sm text-gray-600">Construction sites, client offices, warehouses across Dubai and the UAE. Each location is a separate branch in TheCheckIn — with its own GPS fence or QR code for check-in.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-sun text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">No reliable terminal at outdoor sites</h3>
+                    <p class="text-sm text-gray-600">Biometric terminals need a fixed indoor location and power. A construction site in Meydan or a service call in Sharjah doesn't have that. A phone does.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-money-bill text-emerald-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-2">Payroll accuracy matters</h3>
+                    <p class="text-sm text-gray-600">In Dubai, late or incorrect salary payments have regulatory consequences. Accurate attendance data in ERPNext means Frappe HRMS payroll processes correctly every month — no corrections, no disputes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ERPNext + TheCheckIn for Dubai -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">How ERPNext and TheCheckIn work together in Dubai</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">1</div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Set up ERPNext for your business</p>
+                                <p class="text-sm text-gray-600 mt-1">ERPNext handles your HR structure — employees, departments, shifts, leave types, and payroll. Pazhanam helps configure ERPNext for the Dubai work environment including GCC-specific payroll considerations.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">2</div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Deploy TheCheckIn for attendance capture</p>
+                                <p class="text-sm text-gray-600 mt-1">Each employee gets the Android app and registers their face once. Office staff use face recognition at the door. Site workers use GPS from their location. All check-ins go to TheCheckIn's dashboard instantly.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">3</div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Export attendance into ERPNext</p>
+                                <p class="text-sm text-gray-600 mt-1">Weekly or monthly — one click exports from TheCheckIn to an ERPNext-compatible format. Import into ERPNext HR Attendance, and Frappe HRMS payroll picks up the data automatically.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5"><i class="fas fa-check text-xs"></i></div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Payroll processes accurately</p>
+                                <p class="text-sm text-gray-600 mt-1">Frappe HRMS calculates salary based on actual attendance. Late deductions, overtime additions, and leave balance changes all apply automatically. Less manual work for your HR team every month.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <!-- Gibcaac testimonial / customer callout -->
+                    <div class="bg-primary-50 rounded-2xl p-8 border border-primary-100 mb-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="images/gibcaac-dubai-logo.png" alt="Gibcaac Dubai" class="h-10 w-auto">
+                            <div>
+                                <p class="font-semibold text-gray-900">Gibcaac</p>
+                                <p class="text-sm text-gray-500">Dubai, UAE</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">Gibcaac is a Dubai-based company that uses TheCheckIn for employee attendance tracking. Face recognition on their team's Android phones replaced the need for a shared biometric terminal — and attendance data exports directly into their HR system.</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+                        <h3 class="font-bold text-gray-900 mb-4">Ask us about your Dubai setup</h3>
+                        <p class="text-sm text-gray-600 mb-5">Whether you're implementing ERPNext fresh or already running it and need attendance sorted — WhatsApp us and describe your situation. We'll recommend the fastest path.</p>
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="w-full inline-flex items-center justify-center px-5 py-3 rounded-lg text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                            <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                        </a>
+                        <p class="text-xs text-gray-400 text-center mt-3">Typical response within a few hours on business days</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from Dubai businesses</h2>
+            <div class="space-y-4 mt-10" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does TheCheckIn work for companies in Dubai and the UAE?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn is used by companies in Dubai (including Gibcaac) and across the GCC. The app works on any Android phone, supports teams spread across multiple sites, and exports attendance data that maps to ERPNext HR for Frappe HRMS payroll processing.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can it replace the biometric terminal we currently have in our Dubai office?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn uses face recognition on each employee's own Android phone instead of a shared biometric terminal. No hardware to buy, no terminal to maintain. If some employees don't have smartphones, they can use a shared tablet with the app installed, or you can keep QR code check-in as a fallback.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We have workers at construction sites and at the main office. Can both use it?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Office staff can use face recognition at their desk or at an entrance. Site workers use GPS — they check in from the job site, and the app confirms they're within the geofenced area you set for that location. Both show up in the same admin dashboard.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can Pazhanam help us implement ERPNext from scratch in Dubai?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Pazhanam does ERPNext implementation — HR setup, payroll configuration, custom workflows, and attendance integration via TheCheckIn. If you're starting fresh with ERPNext and want attendance sorted from day one, reach out and we'll scope it out together.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Sort ERPNext attendance for your Dubai team</h2>
+            <p class="text-lg opacity-90 mb-2">Try TheCheckIn free and see how face recognition check-in works for your team. Then we can talk about ERPNext integration.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · Dubai-ready · Multi-site · ERPNext compatible</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2 text-[#25D366]"></i> Chat on WhatsApp
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Face recognition attendance for Dubai, GCC, and global teams. ERPNext and Frappe HRMS integration by Pazhanam Technologies.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-brand-blue font-medium">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var mailto = 'mailto:' + addr;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="' + mailto + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>

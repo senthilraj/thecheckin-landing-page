@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics & Delivery Driver Attendance Tracking — GPS Check-in | TheCheckIn</title>
+    <meta name="description" content="Track driver and delivery staff attendance with GPS check-in from depots and warehouses. Face recognition. Real-time location proof. No hardware. Free up to 10 employees.">
+    <meta name="keywords" content="logistics attendance tracking, delivery driver attendance, driver attendance app, logistics employee attendance, warehouse staff attendance">
+    <link rel="canonical" href="https://thecheckin.io/logistics-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/logistics-attendance.html">
+    <meta property="og:title" content="Logistics & Driver Attendance — GPS Check-in | TheCheckIn">
+    <meta property="og:description" content="GPS check-in for drivers and delivery staff. Face recognition. Real-time location. No hardware at every depot. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Logistics & Driver Attendance — GPS Check-in | TheCheckIn">
+    <meta name="twitter:description" content="GPS check-in for drivers and delivery staff. Real-time location proof. No hardware at every depot.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Logistics & Delivery Attendance", "item": "https://thecheckin.io/logistics-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can drivers check in from different depot locations each day?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each depot is set up as a separate branch in TheCheckIn with its own GPS geofence. Drivers check in from whichever depot they're starting from that day. The check-in records which location they started from, what time they arrived, and whether they were within the geofenced zone." }
+            },
+            {
+              "@type": "Question",
+              "name": "What if a driver checks in from their home instead of the depot?",
+              "acceptedAnswer": { "@type": "Answer", "text": "GPS geofencing catches this. You define the acceptable radius around each depot (e.g. 200 meters). If a driver tries to check in from outside that radius, the check-in is blocked or flagged as out-of-zone. Combined with face recognition, you know both who checked in and exactly where they were when they did it." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TheCheckIn track the driver throughout the delivery route?",
+              "acceptedAnswer": { "@type": "Answer", "text": "TheCheckIn is an attendance tool — it records check-in (start of shift at depot) and check-out (end of shift). It captures GPS location at those moments but does not continuously track drivers throughout their route. For full route tracking, a dedicated fleet management tool would be needed alongside TheCheckIn." }
+            },
+            {
+              "@type": "Question",
+              "name": "Our drivers start very early — 4am or 5am. Does the system handle that?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Shift start times are fully configurable — you can set up a 4am shift, a 6am shift, a night shift starting at 10pm, anything you need. Late arrivals are flagged relative to the shift's own configured start time." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero logistics depot board animations ═══ */
+        @keyframes log-row-slide {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .log-row { opacity: 0; animation: log-row-slide 0.5s ease forwards; }
+        @keyframes log-check-pop {
+            0% { opacity: 0; transform: scale(0.3); }
+            60% { transform: scale(1.25); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .log-check { animation: log-check-pop 0.5s ease forwards; }
+        @keyframes log-pin-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .log-pin-bounce { animation: log-pin-bounce 2.2s ease-in-out infinite; }
+        @keyframes log-green-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+        }
+        .log-green-glow { animation: log-green-glow 2s ease-in-out infinite; }
+        @keyframes log-amber-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.45); }
+            50% { box-shadow: 0 0 0 6px rgba(245,158,11,0); }
+        }
+        .log-amber-glow { animation: log-amber-glow 1.5s ease-in-out infinite; }
+        @keyframes log-dispatch-count {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .log-count-up { animation: log-dispatch-count 0.5s ease 0.3s both; }
+        @keyframes log-row-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .log-row-in { opacity: 0; animation: log-row-in 0.5s ease forwards; }
+        .log-row-in.delay-1 { animation-delay: 0.1s; }
+        .log-row-in.delay-2 { animation-delay: 0.3s; }
+        .log-row-in.delay-3 { animation-delay: 0.5s; }
+        .log-row-in.delay-4 { animation-delay: 0.7s; }
+        .log-row-in.delay-5 { animation-delay: 0.9s; }
+        .log-row-in.delay-6 { animation-delay: 1.1s; }
+    </style>
+
+
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">Logistics &amp; Delivery Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-700 mb-5">
+                    <i class="fas fa-truck mr-2"></i> Logistics &amp; Delivery
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Driver & Delivery Attendance — GPS Check-in from Any Depot
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Your drivers start from three different depots. Some begin at 4am. Others do afternoon routes. You track their attendance with WhatsApp messages — "I'm here" — and a spreadsheet you update later. It works, but it's not reliable, and at the end of the month you can't be sure the data is right.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    TheCheckIn gives every driver a GPS-verified check-in at the depot. They open the app, verify their face, and check in. The system confirms they're within the geofenced depot zone — not sitting at home marking themselves present. You see who's started their shift, from which depot, at exactly what time.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · GPS geofencing · Face recognition · Multi-depot</p>
+            </div>
+
+            <!-- Visual: Driver depot timeline -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-5 log-row-in delay-1">
+                        <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-emerald-600 log-pin-bounce"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Today's drivers — GPS verified</p>
+                            <p class="text-[10px] text-gray-400">3 depots · Morning shift</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 mb-3">
+                        <div class="flex items-center justify-between bg-emerald-50 rounded-lg px-3 py-2.5 border border-emerald-100 log-row-in delay-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-pin text-emerald-700 text-[9px] log-pin-bounce" style="animation-delay:0.4s"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-800">Depot A — City Centre</p>
+                                    <p class="text-[10px] text-gray-500">3 drivers dispatched</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full log-green-glow" style="animation-delay:0.5s">3/3 ✓</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-emerald-50 rounded-lg px-3 py-2.5 border border-emerald-100 log-row-in delay-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-pin text-emerald-700 text-[9px] log-pin-bounce" style="animation-delay:0.5s"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-800">Depot B — North Zone</p>
+                                    <p class="text-[10px] text-gray-500">2 drivers dispatched</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-full log-amber-glow" style="animation-delay:0.6s">1/2</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-emerald-50 rounded-lg px-3 py-2.5 border border-emerald-100 log-row-in delay-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-pin text-emerald-700 text-[9px] log-pin-bounce" style="animation-delay:0.6s"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-800">Depot C — Industrial</p>
+                                    <p class="text-[10px] text-gray-500">4 drivers dispatched</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full log-green-glow" style="animation-delay:0.7s">4/4 ✓</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-3 border border-gray-100 log-row-in delay-5">
+                        <div class="flex items-center justify-between">
+                            <p class="text-[10px] text-gray-500 font-medium">GPS verified · Face match ✓</p>
+                            <p class="text-[10px] font-bold text-emerald-600 log-count-up">8 of 9 dispatched</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How logistics attendance works with TheCheckIn</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">GPS confirms the location. Face recognition confirms the person. No more "I'm here" WhatsApp messages.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">1</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Set up each depot as a branch</h3>
+                    <p class="text-sm text-gray-600">Add each depot or warehouse location in the admin dashboard. Set the GPS geofence radius — typically 200–500 metres. Drivers assigned to a depot must check in from within that zone. Takes 5 minutes to configure each location.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">2</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Driver checks in at the depot</h3>
+                    <p class="text-sm text-gray-600">When a driver arrives at the depot before their run, they open the app and complete a face check-in. The app captures their GPS location at that moment. If they're outside the geofenced zone, the check-in is blocked. Takes 5 seconds.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">3</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Operations manager sees who's dispatched</h3>
+                    <p class="text-sm text-gray-600">The dashboard shows which depots are fully staffed and which have drivers missing. Before the first run starts, you can see if a driver hasn't shown up — and arrange a replacement before deliveries are delayed.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">4</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Timesheets calculated across all depots</h3>
+                    <p class="text-sm text-gray-600">Drivers check out when they return to depot at end of shift. Total hours per driver, per depot, per pay period — all calculated from the timestamps. Export for payroll, or connect to ERPNext for direct sync.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Why logistics teams switch to TheCheckIn</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marked-alt text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">GPS proves the driver was at the depot — not marking from home</h3>
+                                <p class="text-gray-600">With WhatsApp messages or manual registers, a driver can mark themselves present from anywhere. GPS geofencing means the check-in is only accepted when they're physically at the depot. Pair with face recognition and you have both identity and location confirmed.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-building text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Multiple depots managed from one dashboard</h3>
+                                <p class="text-gray-600">No need to call each depot manager to ask if their team is in. Open the app and see all depots in one view — who's checked in, who's late, who hasn't arrived. One login covers your entire operation regardless of how many locations you run from.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-exchange-alt text-amber-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Drivers who rotate between depots are tracked correctly</h3>
+                                <p class="text-gray-600">Some drivers cover different depot routes on different days. When they check in, their GPS confirms which depot they're at — and that's recorded against their attendance for that day. You always know where each driver started from.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-clock text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Early starts and varied shift times handled automatically</h3>
+                                <p class="text-gray-600">Logistics shifts often start at 4am, 5am, or split across day and night. Each shift is configured with its own expected start time. Late arrivals are flagged relative to that time — not against a generic 9am default that doesn't fit how logistics actually works.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-emerald-50 rounded-2xl p-8 border border-emerald-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Built for every type of logistics and delivery operation</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-truck-moving text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Courier &amp; last-mile delivery</p>
+                                    <p class="text-xs text-gray-500">GPS depot check-in, face match, daily route dispatch</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-warehouse text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Warehouse &amp; distribution</p>
+                                    <p class="text-xs text-gray-500">Loading dock check-in, shift tracking by team</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-boxes text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Cold chain &amp; perishable logistics</p>
+                                    <p class="text-xs text-gray-500">Early morning dispatch, multi-location GPS confirm</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-motorcycle text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Delivery fleet &amp; bike delivery</p>
+                                    <p class="text-xs text-gray-500">Rider check-in from collection point, shift end confirmation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from logistics managers &amp; fleet operators</h2>
+            <p class="text-lg text-gray-600 mb-10">Real questions from logistics teams replacing WhatsApp attendance with GPS-verified check-in.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can drivers check in from different depots on different days?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Each depot is set up as a branch with its own GPS geofence. Drivers check in from whichever depot they start from that day. The check-in records the location, time, and face match. A driver who rotates between three depots in a week has a clean record showing exactly which depot each day.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">What if a driver tries to check in from outside the depot zone?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The check-in is blocked or flagged as out-of-zone. You define the acceptable radius around each depot (e.g. 200 metres). Attempts from outside that radius are visible in the admin dashboard, so you know if a driver tried to check in remotely.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does TheCheckIn track drivers throughout their delivery route?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        TheCheckIn is an attendance tool — it records check-in at depot and check-out at end of shift, with GPS location at those moments. It does not continuously track drivers during their route. For full route tracking, a fleet management tool would be used alongside TheCheckIn.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Our drivers start at 4am. Does the app work that early?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Shift start times are fully configurable — 4am, 5am, or any time you need. Late arrivals are flagged relative to the configured shift start time. Night shifts and split shifts are also supported.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Replace the WhatsApp register with GPS-verified check-in</h2>
+            <p class="text-lg opacity-90 mb-2">Set up your depots, add your drivers, and know who's at each location every morning.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · GPS geofencing · Face recognition · Multi-depot</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">GPS and face recognition attendance for logistics, field teams, factories, and retail — no hardware required.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/manufacturing-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Manufacturing</a></li>
+                        <li><a href="/clinic-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Clinics &amp; Healthcare</a></li>
+                        <li><a href="/school-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Schools &amp; Institutes</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-brand-blue font-medium">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="mailto:' + addr + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+        // Hero dashboard — live refresh cycle (simulates real-time check-in activity)
+        (function () {
+            setTimeout(function () {
+                var pins = document.querySelectorAll('.log-pin-bounce');
+                if (!pins.length) return;
+                var idx = 0;
+                setInterval(function () {
+                    pins[idx].style.filter = 'drop-shadow(0 0 8px rgba(16,185,129,0.7))';
+                    setTimeout(function () {
+                        pins[idx].style.filter = '';
+                        idx = (idx + 1) % pins.length;
+                    }, 1000);
+                }, 12000);
+            }, 2500);
+        })();
+    </script>
+</body>
+</html>

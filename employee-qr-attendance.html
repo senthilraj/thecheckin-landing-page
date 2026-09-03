@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee QR Card Attendance — No Smartphone Needed for Workers | TheCheckIn</title>
+    <meta name="description" content="Printed QR cards for each employee — supervisor scans them at entry. No smartphone needed for workers. Ideal for factories, construction sites, and high-turnover teams. Free up to 10 employees.">
+    <meta name="keywords" content="employee qr card attendance, qr card employee check in, attendance without smartphone, factory worker attendance card, printed qr attendance card">
+    <link rel="canonical" href="https://thecheckin.io/employee-qr-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/employee-qr-attendance.html">
+    <meta property="og:title" content="Employee QR Card Attendance — No Smartphone Needed | TheCheckIn">
+    <meta property="og:description" content="Printed QR card per employee. Supervisor scans at gate entry. No smartphone needed for workers. Ideal for factories and high-turnover teams.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Employee QR Card Attendance — No Smartphone Needed | TheCheckIn">
+    <meta name="twitter:description" content="Printed QR card per employee. Supervisor scans at gate entry. No smartphone needed for workers.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Employee QR Card Attendance", "item": "https://thecheckin.io/employee-qr-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does the supervisor scan multiple workers quickly at the gate?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The supervisor uses the TheCheckIn app on their own phone and switches to the multi-scan mode. Workers walk past and hold up their QR card. The supervisor scans each card in sequence — it takes 2–3 seconds per card. For a team of 20 workers, gate check-in takes under 2 minutes." }
+            },
+            {
+              "@type": "Question",
+              "name": "What if a worker loses their QR card?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Print a new one from the admin dashboard. The old card can be deactivated so it can't be used if found by someone else. The new card prints with the same worker profile — no re-registration needed. Cost of replacement is just the paper and ink to print it." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can a worker share their QR card with a colleague to check in for them?",
+              "acceptedAnswer": { "@type": "Answer", "text": "If the supervisor is scanning cards, they can visually confirm the person holding the card is the right employee. To enforce this automatically, enable face recognition alongside QR cards — the scan checks the card identity and the face match confirms the person holding it, making card sharing pointless." }
+            },
+            {
+              "@type": "Question",
+              "name": "We have daily-wage workers who change every week. How quickly can we add new workers?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Add a new worker in under a minute — just a name and optionally a phone number. Print their QR card immediately. They can check in from their first day on site. When their contract ends, deactivate them with one click. Their attendance record stays in the system for payroll and compliance." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+        @keyframes card-scan-beam {
+            0%, 100% { opacity: 0; transform: scaleX(0); }
+            10% { opacity: 1; transform: scaleX(1); }
+            80% { opacity: 1; transform: scaleX(1); }
+            95% { opacity: 0; transform: scaleX(1); }
+        }
+        .scan-beam { animation: card-scan-beam 3s ease-in-out infinite; transform-origin: left; }
+        /* ═══ Phone frame wrapper + chip base ═══ */
+        .eqr-demo-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(12px, 4vh, 40px) 10px;
+        }
+        .eqr-chip {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1f2937;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            z-index: 20;
+            animation: eqr-chip-float 4s ease-in-out infinite;
+        }
+        .eqr-chip i { color: #d97706; font-size: 15px; }
+        .eqr-chip.green i { color: #16a34a; }
+        @keyframes eqr-chip-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .eqr-chip-1 { top: 4%; left: 0; animation-delay: 0s; }
+        .eqr-chip-2 { top: 22%; right: 0; animation-delay: 0.6s; }
+        .eqr-chip-3 { bottom: 26%; left: 0; animation-delay: 1.2s; }
+        .eqr-chip-4 { bottom: 4%; right: 8%; animation-delay: 1.8s; }
+        .eqr-phone {
+            width: clamp(200px, calc((100dvh - 224px) / 1.72), 300px);
+            max-width: 90%;
+            background: #0b1220;
+            border: 6px solid #1e293b;
+            border-radius: 42px;
+            padding: 18px 12px 12px;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.35), inset 0 0 0 2px rgba(255,255,255,0.06);
+            position: relative;
+            z-index: 10;
+        }
+        .eqr-phone::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 50%;
+            transform: translateX(-50%);
+            width: 90px; height: 22px;
+            background: #0b1220;
+            border-radius: 12px;
+            z-index: 30;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .eqr-phone-screen {
+            background: #fff;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 9/16;
+        }
+        .eqr-app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 36px 16px 12px;
+            background: linear-gradient(180deg,#fff 0%,#f8fafc 100%);
+            position: relative;
+            z-index: 20;
+        }
+        .eqr-app-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #1f2937; }
+        .eqr-app-title img { height: 22px; width: auto; }
+        .eqr-app-time { color: #64748b; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+        .eqr-app-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 16px 0;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .eqr-viewfinder {
+            position: relative;
+            height: 330px;
+            margin: 14px 12px 0;
+            background: #f0ede8;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .eqr-vf-bracket {
+            position: absolute;
+            width: 46px; height: 46px;
+            border: 3px solid #f59e0b;
+            border-radius: 10px;
+            z-index: 12;
+            opacity: 0.85;
+        }
+        .eqr-vf-bracket-tl { top: 22px; left: 22px; border-right: none; border-bottom: none; border-top-left-radius: 16px; animation: eqr-vf-bp 2s ease-in-out infinite; }
+        .eqr-vf-bracket-tr { top: 22px; right: 22px; border-left: none; border-bottom: none; border-top-right-radius: 16px; animation: eqr-vf-bp 2s ease-in-out infinite 0.5s; }
+        .eqr-vf-bracket-bl { bottom: 38px; left: 22px; border-right: none; border-top: none; border-bottom-left-radius: 16px; animation: eqr-vf-bp 2s ease-in-out infinite 1s; }
+        .eqr-vf-bracket-br { bottom: 38px; right: 22px; border-left: none; border-top: none; border-bottom-right-radius: 16px; animation: eqr-vf-bp 2s ease-in-out infinite 1.5s; }
+        @keyframes eqr-vf-bp { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.96); } }
+        .eqr-vf-scanline {
+            position: absolute;
+            left: 12px; right: 12px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(245,158,11,0.9), transparent);
+            box-shadow: 0 0 14px rgba(245,158,11,0.7);
+            z-index: 10;
+            border-radius: 9999px;
+            animation: eqr-vf-scan 3.2s ease-in-out infinite;
+        }
+        @keyframes eqr-vf-scan {
+            0% { top: 30px; opacity: 0; }
+            8% { opacity: 1; }
+            50% { top: 290px; }
+            92% { opacity: 1; }
+            100% { top: 30px; opacity: 0; }
+        }
+        .eqr-vf-status {
+            position: absolute;
+            bottom: 14px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(245,158,11,0.3);
+            color: #fcd34d;
+            font-size: 12px; font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            z-index: 15;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        .eqr-vf-status.verified { border-color: rgba(34,197,94,0.5); color: #4ade80; background: rgba(20,83,45,0.9); }
+        .eqr-vf-toast {
+            position: absolute;
+            left: 50%; bottom: 26px;
+            transform: translate(-50%, 20px);
+            background: rgba(15,23,42,0.98);
+            border: 1px solid rgba(34,197,94,0.6);
+            border-radius: 18px;
+            padding: 14px 18px;
+            width: calc(100% - 48px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 18px 40px -10px rgba(34,197,94,0.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.45s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .eqr-vf-toast.show { opacity: 1; transform: translate(-50%, 0); }
+        .eqr-vf-toast-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; background: rgba(34,197,94,0.15); border: 2px solid #22c55e; display: flex; align-items: center; justify-content: center; color: #22c55e; font-size: 18px; }
+        .eqr-vf-toast-title { color: #fff; font-size: 13px; font-weight: 700; line-height: 1.2; }
+        .eqr-vf-toast-sub { color: #94a3b8; font-size: 11px; margin-top: 2px; }
+        .eqr-vf-badge {
+            position: absolute; z-index: 30;
+            top: 50%; left: 50%;
+            background: rgba(34,197,94,0.95); color: #fff;
+            width: 58px; height: 58px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 26px;
+            opacity: 0; transform: scale(0);
+            transition: all 0.45s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow: 0 0 0 8px rgba(34,197,94,0.2), 0 12px 30px -5px rgba(34,197,94,0.5);
+        }
+        .eqr-vf-badge.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+        @media (max-width: 768px) {
+            .eqr-phone { width: 260px; }
+            .eqr-chip { padding: 6px 12px; font-size: 12px; }
+            .eqr-chip-1 { left: -6px; } .eqr-chip-2 { right: -6px; }
+            .eqr-chip-3 { left: -6px; } .eqr-chip-4 { right: 0; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">Employee QR Card Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-700 mb-5">
+                    <i class="fas fa-id-card mr-2"></i> Employee QR Card
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Employee QR Cards — Attendance Tracking Without Smartphones or Biometric Devices
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Not every worker has a smartphone. Not every factory can afford a biometric machine for each entry point. For daily-wage workers, construction labour, and high-turnover teams, there's a simpler option: a printed QR card per person, scanned by a supervisor at the gate.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    Print the card from the admin dashboard. Each card has a unique QR tied to that worker's profile. At shift start, the supervisor scans each incoming worker's card using one phone. The check-in records who came in and exactly when. Workers need nothing — no app, no phone, nothing to remember.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · Print cards yourself · Workers need no app · Add new staff in 60 seconds</p>
+            </div>
+
+            <!-- Visual: Phone scanning employee QR card -->
+            <div class="mt-12 md:mt-0">
+                <div class="eqr-demo-wrap">
+                    <div class="eqr-chip eqr-chip-1"><i class="fas fa-id-card"></i> Printed QR card</div>
+                    <div class="eqr-chip eqr-chip-2 green"><i class="fas fa-mobile-alt"></i> Supervisor phone</div>
+                    <div class="eqr-chip eqr-chip-3"><i class="fas fa-bolt"></i> 2-second scan</div>
+                    <div class="eqr-chip eqr-chip-4 green"><i class="fas fa-shield-alt"></i> No app needed</div>
+                    <div class="eqr-phone">
+                        <div class="eqr-phone-screen">
+                            <div class="eqr-app-header">
+                                <div class="eqr-app-title">
+                                    <img src="./images/logo.png" alt="TheCheckIn">
+                                </div>
+                                <div class="eqr-app-time" id="eqrClock">9:02 AM</div>
+                            </div>
+                            <div class="eqr-app-bar">
+                                <span><i class="fas fa-id-card mr-1"></i> Employee QR Scan</span>
+                                <span><i class="fas fa-building mr-1"></i> Main Gate</span>
+                            </div>
+                            <div class="eqr-viewfinder">
+                                <!-- Camera targeting brackets -->
+                                <div class="eqr-vf-bracket eqr-vf-bracket-tl"></div>
+                                <div class="eqr-vf-bracket eqr-vf-bracket-tr"></div>
+                                <div class="eqr-vf-bracket eqr-vf-bracket-bl"></div>
+                                <div class="eqr-vf-bracket eqr-vf-bracket-br"></div>
+                                <!-- Gate/entrance background -->
+                                <div style="position:absolute;inset:0;background:#f0ede8;"></div>
+                                <!-- Employee ID card held up to camera (brand-blue, like a real printed card) -->
+                                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-52%) rotate(-2deg);background:#1d19d8;border-radius:12px;padding:14px;box-shadow:0 8px 28px rgba(0,0,0,0.28);width:142px;">
+                                    <p style="font-size:6px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin:0 0 10px;text-align:center;">TheCheckIn · Employee ID</p>
+                                    <!-- Name row -->
+                                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                        <div id="eqrCardInitials" style="width:26px;height:26px;background:rgba(255,255,255,0.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:white;flex-shrink:0;text-align:center;">MK</div>
+                                        <div>
+                                            <p id="eqrCardName" style="color:white;font-size:9px;font-weight:700;margin:0;line-height:1.3;">Mohammed K.</p>
+                                            <p style="color:rgba(196,218,255,0.6);font-size:7px;margin:2px 0 0;">Line A · Worker</p>
+                                        </div>
+                                    </div>
+                                    <!-- QR code on white background -->
+                                    <div style="background:white;border-radius:6px;padding:6px;display:flex;justify-content:center;margin-bottom:6px;">
+                                        <svg viewBox="0 0 100 100" width="68" height="68">
+                                            <rect x="4" y="4" width="28" height="28" fill="#111827" rx="3"/>
+                                            <rect x="8" y="8" width="20" height="20" fill="white" rx="2"/>
+                                            <rect x="12" y="12" width="12" height="12" fill="#111827" rx="1"/>
+                                            <rect x="68" y="4" width="28" height="28" fill="#111827" rx="3"/>
+                                            <rect x="72" y="8" width="20" height="20" fill="white" rx="2"/>
+                                            <rect x="76" y="12" width="12" height="12" fill="#111827" rx="1"/>
+                                            <rect x="4" y="68" width="28" height="28" fill="#111827" rx="3"/>
+                                            <rect x="8" y="72" width="20" height="20" fill="white" rx="2"/>
+                                            <rect x="12" y="76" width="12" height="12" fill="#111827" rx="1"/>
+                                            <rect x="36" y="4" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="56" y="14" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="46" y="24" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="36" y="36" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="56" y="46" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="76" y="36" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="86" y="46" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="36" y="68" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="56" y="76" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="76" y="86" width="6" height="6" fill="#111827" rx="1"/>
+                                            <rect x="86" y="68" width="6" height="6" fill="#111827" rx="1"/>
+                                        </svg>
+                                    </div>
+                                    <p id="eqrEmpId" style="text-align:center;font-size:7px;color:rgba(196,218,255,0.4);font-weight:500;letter-spacing:0.1em;margin:0;">EMP-2847</p>
+                                </div>
+                                <!-- Amber scan line sweeping down -->
+                                <div class="eqr-vf-scanline"></div>
+                                <!-- Status pill -->
+                                <div class="eqr-vf-status" id="eqrStatus">Point camera at QR card</div>
+                                <!-- Check badge -->
+                                <div class="eqr-vf-badge" id="eqrBadge"><i class="fas fa-check"></i></div>
+                            </div>
+                        </div>
+                        <!-- Check-in toast -->
+                        <div class="eqr-vf-toast" id="eqrToast">
+                            <div class="eqr-vf-toast-icon"><i class="fas fa-check"></i></div>
+                            <div>
+                                <div class="eqr-vf-toast-title">Check-in Recorded</div>
+                                <div class="eqr-vf-toast-sub" id="eqrToastSub">Mohammed K. &middot; 07:58 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How Employee QR Card attendance works</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">The simplest check-in method available — one phone, printed cards, and a supervisor at the gate.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">1</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Add workers and print their cards</h3>
+                    <p class="text-sm text-gray-600">Add each worker in the admin dashboard — name and optional phone number. Download and print their unique QR card. Hand it to them on their first day. The card works as their permanent attendance ID until they leave.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">2</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Supervisor scans cards at gate entry</h3>
+                    <p class="text-sm text-gray-600">As workers arrive, the supervisor uses the TheCheckIn app to scan each person's card. Takes 2–3 seconds per scan. A team of 20 workers is checked in within 2 minutes. Workers need nothing — just their card.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">3</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Or: set up a self-scan point</h3>
+                    <p class="text-sm text-gray-600">Mount a tablet or shared phone near the entrance with the TheCheckIn app open in scan mode. Workers scan their own card as they walk in — no supervisor needed at all. Works for any entry point that can have a device mounted.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">4</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Dashboard and payroll reports update live</h3>
+                    <p class="text-sm text-gray-600">Admin sees who's been scanned in and who hasn't. Late arrivals are flagged. At month end, total days and hours per worker are ready for payroll — for daily-wage workers, contract staff, and permanent employees all in one export.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Employee QR Cards work where other methods don't</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-mobile-alt text-amber-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Workers don't need a smartphone at all</h3>
+                                <p class="text-gray-600">Daily-wage workers, factory floor staff, and seasonal workers often don't have smartphones — or don't want to install apps on their personal device. A printed card is all they need. The supervisor's one phone handles all scanning for everyone.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-plus text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">New contract workers are live in 60 seconds</h3>
+                                <p class="text-gray-600">A biometric machine requires enrollment — fingerprint registration, a technician, the machine to be working. With Employee QR Cards, add a worker's name, download their card, print it, hand it over. They can check in on day one, minute one.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-print text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Any printer, any paper — there's no minimum order</h3>
+                                <p class="text-gray-600">Cards print from the admin dashboard as PDFs. Print on regular A4, cut them, laminate if you want durability. Or print on card stock directly. No vendor to order from, no 3-day shipping wait, no minimum quantity.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-times-circle text-red-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Lost card? Deactivate and reprint in 30 seconds</h3>
+                                <p class="text-gray-600">Deactivate the lost card from the admin dashboard — it becomes unusable immediately. Print a new one. The worker's attendance history is unaffected and they're back to checking in the same day. No biometric re-enrollment, no IT ticket.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-amber-50 rounded-2xl p-8 border border-amber-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Best used in these situations</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-industry text-slate-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800"><a href="/manufacturing-attendance.html" class="hover:text-brand-blue">Factories &amp; manufacturing</a></p>
+                                    <p class="text-xs text-gray-500">Workers can't have phones on floor; supervisor scans at gate</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-hard-hat text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800"><a href="/construction-attendance.html" class="hover:text-brand-blue">Construction &amp; civil works</a></p>
+                                    <p class="text-xs text-gray-500">Daily-wage labour, high turnover, multiple gangs</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-school text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800"><a href="/school-attendance.html" class="hover:text-brand-blue">Schools &amp; institutes</a></p>
+                                    <p class="text-xs text-gray-500">Support and cleaning staff without smartphones</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-warehouse text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Warehouses &amp; distribution</p>
+                                    <p class="text-xs text-gray-500">Seasonal staff, pickers, packers — onboard instantly</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions about Employee QR Cards</h2>
+            <p class="text-lg text-gray-600 mb-10">Common questions from managers using QR cards for workers without smartphones.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How quickly can a supervisor scan a full team at gate entry?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        About 2–3 seconds per card. For a team of 20 workers, gate check-in takes under 2 minutes. The app's scan mode keeps the camera open between scans so the supervisor doesn't have to re-open it after each worker.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">What if a worker loses their QR card?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Deactivate the old card from the admin dashboard — it stops working immediately. Print a new one. The worker's profile and attendance history stay intact. Replacement takes less than a minute and costs only the paper and ink to print it.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can a worker share their card with a colleague to check in for them?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        When a supervisor scans, they can visually confirm the person holding the card. For higher-security environments, enable face recognition alongside QR cards — the scan validates the card and the face match confirms the person. Card sharing is immediately detected and blocked.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We have daily-wage workers who change every week. How fast can we onboard new workers?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Under 60 seconds. Add their name (and optionally a phone number), download their QR card, print it, hand it over. They can check in immediately. When their contract ends, deactivate them with one click. Their attendance record stays in the system for payroll and compliance.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Set up Employee QR Cards today — no hardware needed</h2>
+            <p class="text-lg opacity-90 mb-2">Add your workers, print their cards, hand them out. Your supervisor can start scanning at the next shift.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · Print on any printer · Workers need no app or smartphone</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Employee QR cards, face recognition, and GPS attendance for factories, offices, and field teams.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/qr-code-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/gps-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/employee-qr-attendance.html" class="text-sm text-brand-blue font-medium">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/manufacturing-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Manufacturing</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="mailto:' + addr + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+
+        // ═══ Employee QR card scan demo — phase cycle ═══
+        (function () {
+            var statusEl = document.getElementById('eqrStatus');
+            var badge    = document.getElementById('eqrBadge');
+            var toast    = document.getElementById('eqrToast');
+            var toastSub = document.getElementById('eqrToastSub');
+            var clock    = document.getElementById('eqrClock');
+            if (!statusEl) return;
+
+            var employees = [
+                { name: 'Mohammed K.',  initials: 'MK', time: '07:58 AM', empId: 'EMP-2847' },
+                { name: 'Sundaramurthy', initials: 'SM', time: '08:02 AM', empId: 'EMP-1923' },
+                { name: 'Lakshmi R.',   initials: 'LR', time: '08:05 AM', empId: 'EMP-3156' }
+            ];
+            var idx = 0;
+
+            var cardName     = document.getElementById('eqrCardName');
+            var cardInitials = document.getElementById('eqrCardInitials');
+            var cardEmpId    = document.getElementById('eqrEmpId');
+
+            function updateClock() {
+                var now = new Date();
+                var h = now.getHours(), m = now.getMinutes();
+                var ap = h >= 12 ? 'PM' : 'AM';
+                h = h % 12 || 12;
+                if (clock) clock.textContent = h + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
+            }
+            updateClock();
+            setInterval(updateClock, 30000);
+
+            function updateCard(emp) {
+                if (cardName)     cardName.textContent     = emp.name;
+                if (cardInitials) cardInitials.textContent = emp.initials;
+                if (cardEmpId)    cardEmpId.textContent    = emp.empId;
+            }
+
+            function reset() {
+                badge.classList.remove('show');
+                toast.classList.remove('show');
+                statusEl.classList.remove('verified');
+                statusEl.textContent = 'Point camera at QR card';
+                updateCard(employees[idx]);   /* show the next worker's card */
+            }
+
+            var PHASES = [
+                { ms: 2000, run: function () { reset(); } },
+                { ms: 2200, run: function () { statusEl.textContent = 'QR card detected…'; } },
+                { ms: 2800, run: function () {
+                    var emp = employees[idx];
+                    statusEl.textContent = 'Check-in recorded ✓';
+                    statusEl.classList.add('verified');
+                    badge.classList.add('show');
+                    toastSub.innerHTML = emp.name + ' &middot; ' + emp.time;
+                    idx = (idx + 1) % employees.length;
+                }},
+                { ms: 2200, run: function () { toast.classList.add('show'); } },
+                { ms: 2400, run: function () { toast.classList.remove('show'); } }
+            ];
+
+            var pi = 0;
+            function next() {
+                var p = PHASES[pi];
+                if (p.run) p.run();
+                pi = (pi + 1) % PHASES.length;
+                setTimeout(next, p.ms);
+            }
+            setTimeout(next, 800);
+        })();
+    </script>
+</body>
+</html>

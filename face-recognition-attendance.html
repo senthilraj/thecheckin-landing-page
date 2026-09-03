@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Attendance App ��� No Biometric Device | TheCheckIn</title>
+    <meta name="description" content="TheCheckIn uses face recognition attendance on any Android smartphone. No biometric machine, no fingerprint scanner. Liveness detection prevents proxy check-in. Free up to 10 employees.">
+    <meta name="keywords" content="face recognition attendance, face attendance app, face recognition attendance system, biometric attendance alternative, smartphone attendance, proxy attendance prevention">
+    <link rel="canonical" href="https://thecheckin.io/face-recognition-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/face-recognition-attendance.html">
+    <meta property="og:title" content="Face Recognition Attendance App — No Biometric Device | TheCheckIn">
+    <meta property="og:description" content="Face recognition attendance on any Android smartphone — no biometric machine needed. Liveness detection confirms it's really them. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Face Recognition Attendance App — No Biometric Device | TheCheckIn">
+    <meta name="twitter:description" content="Face recognition attendance on any Android smartphone — no biometric machine needed.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Face Recognition Attendance", "item": "https://thecheckin.io/face-recognition-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does face recognition attendance work in TheCheckIn?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Each employee registers their face once in the Android app — takes about 30 seconds. From then on, they open the app, look at the camera, and they're checked in. A liveness detection test (eye blink) confirms a real person is present, not a photo." }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need to buy any hardware for face recognition attendance?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No hardware at all. Face recognition runs on the employee's own Android smartphone. There's no biometric terminal, no fingerprint scanner, and no tablet to mount at the entrance." }
+            },
+            {
+              "@type": "Question",
+              "name": "How does TheCheckIn prevent employees from using a photo to check in?",
+              "acceptedAnswer": { "@type": "Answer", "text": "TheCheckIn uses liveness detection — the app asks the employee to blink before confirming the check-in. A printed photo or phone screen showing someone else's face cannot pass the blink test." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is face recognition attendance available on iOS?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The face recognition feature is currently available on Android only. The admin dashboard works on any browser including iPhone and iPad." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is employee face data stored on your servers?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Face recognition in TheCheckIn uses on-device processing. The app compares the live face against the registered face data on the employee's own smartphone. Raw face images are not transmitted to a server and are never shared with third parties." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+        /* ═══ Hero gradient ═══ */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        /* Desktop: fill viewport; start content from top so CTAs never get clipped */
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            /* Dynamic padding shrinks on short screens → content always fits */
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        /* Tall viewports only (≥820px): center the content vertically */
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ AI Face Recognition Hero Demo ═══ */
+        .face-demo-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(12px, 4vh, 40px) 10px;
+        }
+        /* Floating chips */
+        .face-chip {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1f2937;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            z-index: 20;
+            animation: chip-float 4s ease-in-out infinite;
+        }
+        .face-chip i { color: #1d19d8; font-size: 15px; }
+        .face-chip.green i { color: #16a34a; }
+        .face-chip-1 { top: 4%; left: 0; animation-delay: 0s; }
+        .face-chip-2 { top: 22%; right: 0; animation-delay: 0.6s; }
+        .face-chip-3 { bottom: 26%; left: 0; animation-delay: 1.2s; }
+        .face-chip-4 { bottom: 4%; right: 8%; animation-delay: 1.8s; }
+        @keyframes chip-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        /* Phone frame */
+        .face-phone {
+            width: clamp(200px, calc((100dvh - 224px) / 1.72), 300px);
+            max-width: 90%;
+            background: #0b1220;
+            border: 6px solid #1e293b;
+            border-radius: 42px;
+            padding: 18px 12px 12px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 10;
+        }
+        .face-phone::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 22px;
+            background: #0b1220;
+            border-radius: 12px;
+            z-index: 30;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .face-phone-screen {
+            background: #ffffff;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 9 / 16;
+        }
+        /* App header inside phone */
+        .face-app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 36px 16px 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            position: relative;
+            z-index: 20;
+        }
+        .face-app-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .face-app-title img { height: 22px; width: auto; }
+        .face-app-time {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+        /* Status bar inside phone */
+        .face-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 16px 0;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        /* Camera viewport */
+        .face-camera {
+            position: relative;
+            height: 330px;
+            margin: 14px 12px 0;
+            background: radial-gradient(ellipse at 50% 35%, #eef2f7 0%, #e2e8f0 100%);
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        /* Viewfinder corner brackets */
+        .face-bracket {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            border: 3px solid #38bdf8;
+            border-radius: 10px;
+            z-index: 12;
+            opacity: 0.85;
+        }
+        .face-bracket-tl { top: 22px; left: 22px; border-right: none; border-bottom: none; border-top-left-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite; }
+        .face-bracket-tr { top: 22px; right: 22px; border-left: none; border-bottom: none; border-top-right-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite 0.5s; }
+        .face-bracket-bl { bottom: 22px; left: 22px; border-right: none; border-top: none; border-bottom-left-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite 1s; }
+        .face-bracket-br { bottom: 22px; right: 22px; border-left: none; border-top: none; border-bottom-right-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite 1.5s; }
+        @keyframes bracket-pulse {
+            0%, 100% { opacity: 0.85; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.96); }
+        }
+        /* Detection ring */
+        .face-detect-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            z-index: 11;
+            pointer-events: none;
+        }
+        .face-detect-ring .ring-circle {
+            fill: none;
+            stroke: #38bdf8;
+            stroke-width: 2;
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: ring-scan 7s ease-in-out infinite;
+        }
+        .face-detect-ring .ring-pulse {
+            fill: none;
+            stroke: rgba(56, 189, 248, 0.35);
+            stroke-width: 1.5;
+            animation: ring-pulse 2.4s ease-out infinite;
+        }
+        @keyframes ring-scan {
+            0% { stroke-dashoffset: 500; }
+            20% { stroke-dashoffset: 0; }
+            80% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 500; }
+        }
+        @keyframes ring-pulse {
+            0% { transform: scale(0.75); opacity: 1; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        /* Avatar / face */
+        .face-avatar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 190px;
+            height: 190px;
+            z-index: 6;
+            transition: all 0.5s ease;
+        }
+        .face-avatar.verified .face-head {
+            filter: drop-shadow(0 0 18px rgba(34, 197, 94, 0.8));
+        }
+        /* Scan line */
+        .face-scanline {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.9), transparent);
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+            z-index: 10;
+            border-radius: 9999px;
+            animation: scan-move 3.2s ease-in-out infinite;
+        }
+        @keyframes scan-move {
+            0% { top: 30px; opacity: 0; }
+            8% { opacity: 1; }
+            50% { top: 290px; }
+            92% { opacity: 1; }
+            100% { top: 30px; opacity: 0; }
+        }
+        /* Face status text */
+        .face-status-text {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #7dd3fc;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            z-index: 15;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        .face-status-text.verified {
+            border-color: rgba(34, 197, 94, 0.5);
+            color: #4ade80;
+            background: rgba(20, 83, 45, 0.9);
+        }
+        /* Success toast */
+        .face-toast {
+            position: absolute;
+            left: 50%;
+            bottom: 26px;
+            transform: translate(-50%, 20px);
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(34, 197, 94, 0.6);
+            border-radius: 18px;
+            padding: 14px 18px;
+            width: calc(100% - 48px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 18px 40px -10px rgba(34, 197, 94, 0.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .face-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+        .face-toast-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22c55e;
+            font-size: 18px;
+        }
+        .face-toast-title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .face-toast-sub {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        /* Verified badge overlay */
+        .face-verified-badge {
+            position: absolute;
+            z-index: 30;
+            top: 56%;
+            left: 50%;
+            background: rgba(34, 197, 94, 0.95);
+            color: #fff;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.2), 0 12px 30px -5px rgba(34, 197, 94, 0.5);
+        }
+        .face-verified-badge.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        @media (max-width: 768px) {
+            .face-phone { width: 260px; }
+            .face-chip { padding: 6px 12px; font-size: 12px; }
+            .face-chip-1 { left: -6px; }
+            .face-chip-2 { right: -6px; }
+            .face-chip-3 { left: -6px; }
+            .face-chip-4 { right: 0; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">Face Recognition Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700 mb-5">
+                    <i class="fas fa-face-smile mr-2"></i> Android App · No Hardware
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Face Recognition Attendance on Any Smartphone
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Most biometric attendance terminals cost $200–$800 each. If you have 3 branches, that's over $2,000 before a single employee checks in — plus maintenance, replacements, and vendor support calls.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    TheCheckIn replaces all of it with the Android phone already in your employee's pocket. They look at the camera once. A liveness check confirms it's really them. They're in. You see it on your dashboard instantly.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App — Google Play
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · Android only · Admin dashboard on web</p>
+            </div>
+
+            <!-- Visual: Animated face recognition demo (identical to index.html) -->
+            <div class="mt-12 md:mt-0">
+                <div class="face-demo-wrap">
+                    <div class="face-chip face-chip-1"><i class="fas fa-mobile-alt"></i> Smartphone only</div>
+                    <div class="face-chip face-chip-2 green"><i class="fas fa-ban"></i> No biometric device</div>
+                    <div class="face-chip face-chip-3"><i class="fas fa-eye"></i> Liveness detection</div>
+                    <div class="face-chip face-chip-4 green"><i class="fas fa-shield-alt"></i> Proxy-proof</div>
+                    <div class="face-phone">
+                        <div class="face-phone-screen">
+                            <div class="face-app-header">
+                                <div class="face-app-title">
+                                    <img src="./images/logo.png" alt="TheCheckIn">
+                                </div>
+                                <div class="face-app-time" id="faceClock">9:02 AM</div>
+                            </div>
+                            <div class="face-status">
+                                <span><i class="fas fa-camera mr-1"></i> Face Check-in</span>
+                                <span><i class="fas fa-map-marker-alt mr-1"></i> Office</span>
+                            </div>
+                            <div class="face-camera">
+                                <div class="face-bracket face-bracket-tl"></div>
+                                <div class="face-bracket face-bracket-tr"></div>
+                                <div class="face-bracket face-bracket-bl"></div>
+                                <div class="face-bracket face-bracket-br"></div>
+                                <svg class="face-detect-ring" viewBox="0 0 200 200" fill="none">
+                                    <circle class="ring-circle" cx="100" cy="100" r="88"/>
+                                    <circle class="ring-pulse" cx="100" cy="100" r="40"/>
+                                </svg>
+                                <img class="face-avatar" id="faceAvatar" src="./images/face-recognization-thecheckin-attendance-1.png" alt="Face recognition attendance check-in" style="width:200px;height:200px;object-fit:cover;object-position:center 30%;border-radius:50%;transform:translate(-50%,-50%) scale(1.15);">
+                                <div class="face-scanline" id="faceScanline"></div>
+                                <div class="face-status-text" id="faceStatus">Align your face in the frame</div>
+                                <div class="face-verified-badge" id="faceVerifiedBadge"><i class="fas fa-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="face-toast" id="faceToast">
+                            <div class="face-toast-icon"><i class="fas fa-check"></i></div>
+                            <div>
+                                <div class="face-toast-title">Check-in Successful</div>
+                                <div class="face-toast-sub">Emily Watson &middot; <span id="faceToastTime">9:02 AM</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How face recognition check-in works</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">Three steps. First time takes 2 minutes. Every check-in after that takes about 5 seconds.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center text-lg font-bold mb-5">1</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Employee registers their face</h3>
+                    <p class="text-gray-600">The employee opens the TheCheckIn app, goes to Face Registration, and looks straight at the camera for about 30 seconds. That's it. No account needed, no email — just their face, once.</p>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center text-lg font-bold mb-5">2</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Check in by looking at the camera</h3>
+                    <p class="text-gray-600">Each day, the employee opens the app and looks at the camera. The app runs a quick liveness check — a blink confirmation — to confirm a real person is present. Not a photo. Not a video. The real employee.</p>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+                    <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center text-lg font-bold mb-5">3</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Admin sees it instantly</h3>
+                    <p class="text-gray-600">The check-in record hits your admin dashboard in real time — with the employee name, time, and location. At the end of the month, timesheets are already calculated. Export to Excel and hand to payroll.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why face recognition -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Why face recognition beats a biometric machine</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-dollar-sign text-brand-blue"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Zero hardware cost</h3>
+                                <p class="text-gray-600">Biometric terminals cost $200–$800 each and need IT support when they fail. TheCheckIn runs on the phone your employee already owns. No purchase orders, no procurement delays.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-shield-alt text-brand-blue"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Proxy attendance blocked completely</h3>
+                                <p class="text-gray-600">The liveness detection (eye blink test) means a colleague can't check in for someone else using their photo. The real employee has to be physically present, looking at the camera.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-map-marker-alt text-brand-blue"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Works at any location</h3>
+                                <p class="text-gray-600">No fixed terminal means no fixed check-in point. Field workers, HVAC technicians, and construction teams can check in face-to-camera from any job site. The app records where they were.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-clock text-brand-blue"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Timesheets write themselves</h3>
+                                <p class="text-gray-600">Check-in and check-out times are recorded automatically. Daily, weekly, and monthly timesheets are generated without anyone doing the math. Export to Excel in one click.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-primary-50 rounded-2xl p-8 border border-primary-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Who uses face recognition attendance</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-xl p-4 shadow-sm">
+                                <p class="font-semibold text-gray-800 mb-1"><i class="fas fa-hard-hat text-amber-500 mr-2"></i>Construction companies</p>
+                                <p class="text-sm text-gray-600">Workers spread across multiple sites, no fixed office to place a terminal. Face recognition from their phone works at any site.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm">
+                                <p class="font-semibold text-gray-800 mb-1"><i class="fas fa-hospital text-emerald-500 mr-2"></i>Clinics &amp; healthcare</p>
+                                <p class="text-sm text-gray-600">Doctors and nurses across shifts and departments. Face recognition confirms the right person is starting the right shift — no confusion, no proxy.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm">
+                                <p class="font-semibold text-gray-800 mb-1"><i class="fas fa-tools text-orange-500 mr-2"></i>HVAC &amp; field services</p>
+                                <p class="text-sm text-gray-600">Technicians start from home and go directly to client sites. Face recognition check-in from wherever they are — GPS confirms the location too.</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm">
+                                <p class="font-semibold text-gray-800 mb-1"><i class="fas fa-building text-blue-500 mr-2"></i>Offices with multiple branches</p>
+                                <p class="text-sm text-gray-600">One app for all branches — no need to install biometric terminals at every location. Employees check in face-to-phone wherever they report to work.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Common questions</h2>
+            <p class="text-lg text-gray-600 mb-10">Things people ask before switching from biometric machines.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">What if an employee grows a beard or changes their appearance?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Minor appearance changes — glasses on, glasses off, beard growth, different hairstyle — don't affect recognition accuracy. The app uses facial structure, not exact pixel matching. If someone makes a drastic change (e.g. grows a full beard from scratch), the employee can re-register their face in under a minute.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does face recognition work without an internet connection?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The face matching itself happens on the device. However, the check-in record needs to sync to the server to appear on the admin dashboard. If the employee is offline at check-in, the record will sync automatically once their phone reconnects to WiFi or mobile data.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Is the face recognition data stored on your servers?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Face recognition uses on-device processing. The registered face data stays on the employee's smartphone — raw face images are not sent to or stored on TheCheckIn servers. The only data we store is the attendance record (employee, time, location). Face data belongs to your company and is never shared with third parties.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does it work on any Android phone?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes — any Android phone with a front-facing camera and Android 8.0 or above. That covers virtually all phones made after 2018. The employee doesn't need a high-end phone — a basic $100 Android works fine.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can I use other check-in methods alongside face recognition?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn supports four check-in methods: face recognition, QR code (branch or employee), and GPS location. You can enable different methods for different employees or sites. Office staff might use face recognition at the door while field workers use GPS from job sites.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Ready to replace your biometric machine?</h2>
+            <p class="text-lg opacity-90 mb-2">Download the app and try face recognition check-in with your own team today.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · No hardware purchase · No IT setup needed</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Face recognition attendance app for offices, HVAC teams, construction, and field workers worldwide.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-brand-blue font-medium">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed WhatsApp button -->
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform 0.2s,box-shadow 0.2s;"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var mailto = 'mailto:' + addr;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="' + mailto + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    </script>
+
+    <!-- ═══ AI Face Recognition Hero Demo — Phase Cycle (same as index.html) ═══ -->
+    <script>
+        (function () {
+            var avatar = document.getElementById('faceAvatar');
+            if (!avatar) return;
+
+            var statusEl = document.getElementById('faceStatus');
+            var scanline = document.getElementById('faceScanline');
+            var badge = document.getElementById('faceVerifiedBadge');
+            var toast = document.getElementById('faceToast');
+            var toastTime = document.getElementById('faceToastTime');
+            var clock = document.getElementById('faceClock');
+
+            // Live clock in phone header
+            function updateClock() {
+                var now = new Date();
+                var h = now.getHours();
+                var m = now.getMinutes();
+                var ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12 || 12;
+                var mm = m < 10 ? '0' + m : m;
+                var timeStr = h + ':' + mm + ' ' + ampm;
+                if (clock) clock.textContent = timeStr;
+                if (toastTime) toastTime.textContent = timeStr;
+            }
+            updateClock();
+            setInterval(updateClock, 30000);
+
+            // Reset demo state
+            function resetDemo() {
+                avatar.classList.remove('verified');
+                badge.classList.remove('show');
+                toast.classList.remove('show');
+                statusEl.classList.remove('verified');
+                statusEl.textContent = 'Align your face in the frame';
+            }
+
+            // Phase cycle: scanning → verified → toast → reset
+            var PHASES = [
+                { ms: 2000, run: function () { resetDemo(); statusEl.textContent = 'Align your face in the frame'; } },
+                { ms: 2200, run: function () { statusEl.textContent = 'Scanning face…'; } },
+                { ms: 2800, run: function () {
+                    statusEl.textContent = 'Face verified ✓';
+                    statusEl.classList.add('verified');
+                    avatar.classList.add('verified');
+                    badge.classList.add('show');
+                } },
+                { ms: 2200, run: function () { toast.classList.add('show'); } },
+                { ms: 2400, run: function () { toast.classList.remove('show'); } }
+            ];
+
+            var phaseIndex = 0;
+            function nextPhase() {
+                var phase = PHASES[phaseIndex];
+                if (phase.run) phase.run();
+                phaseIndex = (phaseIndex + 1) % PHASES.length;
+                setTimeout(nextPhase, phase.ms);
+            }
+            setTimeout(nextPhase, 800);
+        })();
+    </script>
+</body>
+</html>

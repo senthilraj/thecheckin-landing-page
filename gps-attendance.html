@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Attendance Tracking — Verify Field Staff Are On-Site | TheCheckIn</title>
+    <meta name="description" content="GPS geofencing confirms field workers, drivers, and site staff are physically at the location when they check in. No hardware. Works on any Android phone. Free up to 10 employees.">
+    <meta name="keywords" content="gps attendance tracking, gps employee attendance, gps check in attendance, location based attendance, field staff attendance gps, remote worker attendance">
+    <link rel="canonical" href="https://thecheckin.io/gps-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/gps-attendance.html">
+    <meta property="og:title" content="GPS Attendance — Verify Field Staff Are On-Site | TheCheckIn">
+    <meta property="og:description" content="GPS geofencing confirms field workers are at the right location when they check in. No hardware. Works on any Android phone. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GPS Attendance — Verify Field Staff Are On-Site | TheCheckIn">
+    <meta name="twitter:description" content="GPS geofencing confirms field workers are at the right location when they check in. Works on any Android phone.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "GPS Attendance", "item": "https://thecheckin.io/gps-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How accurate is the GPS geofence? What radius should I set?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Smartphone GPS accuracy is typically 5–15 metres in open areas, less accurate inside buildings. For outdoor job sites — construction, HVAC, logistics depots — a 100–200 metre radius works well. For offices where staff park some distance away, 300–500 metres avoids false rejections. You set the radius; TheCheckIn enforces it." }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens when a field worker checks in from outside the geofenced zone?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The check-in is flagged as out-of-zone in the admin dashboard. Depending on your configuration, it can either be blocked (worker is asked to move closer and try again) or allowed with a flag for admin review. The GPS coordinates at time of check-in are always recorded, so you can see exactly where they were." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does GPS attendance drain the phone battery?",
+              "acceptedAnswer": { "@type": "Answer", "text": "TheCheckIn only accesses GPS at the moment of check-in, not continuously. A single GPS reading takes a fraction of a second. The app does not run in the background tracking location — it reads position only when the staff member initiates a check-in or check-out." }
+            },
+            {
+              "@type": "Question",
+              "name": "A worker starts at one site and moves to another during the day. How does that work?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Configure each site as a separate branch in TheCheckIn. When a worker moves from Site A to Site B mid-day, they check out of Site A and check in at Site B. Each site's attendance is tracked independently and the worker's record shows time spent at each location." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+        /* GPS pulse ring animation */
+        @keyframes gps-ring {
+            0% { transform: scale(0.8); opacity: 0.9; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .gps-ring {
+            animation: gps-ring 2s ease-out infinite;
+        }
+        .gps-ring-2 {
+            animation: gps-ring 2s ease-out infinite;
+            animation-delay: 0.7s;
+        }
+        @keyframes pin-bounce {
+            0%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+            60% { transform: translateY(-3px); }
+        }
+        .gps-pin { animation: pin-bounce 2.5s ease-in-out infinite; }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">GPS Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-sky-100 text-sky-700 mb-5">
+                    <i class="fas fa-map-marker-alt mr-2"></i> GPS Location Check-in
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    GPS Attendance — Confirm Field Workers Are On-Site When They Check In
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Your HVAC technician says they're at the client's building. Your construction crew says they're on site. Your delivery driver says they've left the depot. You take their word for it — because there's no way to verify.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    GPS attendance in TheCheckIn closes that gap. When a field worker checks in, the app captures their GPS location at that exact moment. You define a geofence around each work location — if they're within it, the check-in goes through. If they're not, it's flagged. No hardware at the site, no phone call needed.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · GPS geofencing · No hardware at each site · Works on any Android phone</p>
+            </div>
+
+            <!-- Visual: GPS map card -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-9 h-9 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-sky-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">GPS check-in verified</p>
+                            <p class="text-[10px] text-gray-400">Al Barsha Site · Dubai</p>
+                        </div>
+                    </div>
+                    <!-- Map placeholder with GPS visualisation -->
+                    <div class="bg-sky-50 rounded-xl border border-sky-100 p-5 mb-4 relative overflow-hidden" style="height:140px;">
+                        <!-- Grid pattern to simulate map -->
+                        <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(14,165,233,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.3) 1px, transparent 1px); background-size: 24px 24px;"></div>
+                        <!-- Geofence circle -->
+                        <div class="absolute" style="top:50%;left:50%;transform:translate(-50%,-50%);">
+                            <div class="absolute rounded-full border-2 border-dashed border-sky-400 opacity-60" style="width:100px;height:100px;transform:translate(-50%,-50%);top:50%;left:50%;"></div>
+                            <div class="absolute rounded-full bg-sky-200 opacity-30 gps-ring" style="width:60px;height:60px;transform:translate(-50%,-50%);top:50%;left:50%;"></div>
+                            <div class="absolute rounded-full bg-sky-300 opacity-20 gps-ring-2" style="width:60px;height:60px;transform:translate(-50%,-50%);top:50%;left:50%;"></div>
+                            <div class="gps-pin relative z-10" style="text-align:center;">
+                                <div class="inline-flex items-center justify-center w-8 h-8 bg-brand-blue rounded-full shadow-md">
+                                    <i class="fas fa-map-marker-alt text-white text-sm"></i>
+                                </div>
+                                <div class="text-[9px] font-bold text-brand-blue mt-1 bg-white px-1 rounded shadow-sm">Tariq</div>
+                            </div>
+                        </div>
+                        <!-- Zone label -->
+                        <div class="absolute top-2 right-2 bg-green-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">Within zone ✓</div>
+                    </div>
+                    <!-- Check-in detail -->
+                    <div class="bg-green-50 rounded-xl border border-green-100 p-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-gray-800">Tariq Hassan</p>
+                                <p class="text-[10px] text-gray-500">Al Barsha Site · HVAC install</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs font-bold text-green-600">08:47 AM ✓</p>
+                                <p class="text-[9px] text-green-500">GPS confirmed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How GPS attendance works</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">Set up once per location. No hardware to install. Location verified every time.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">1</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Set a geofence for each location</h3>
+                    <p class="text-sm text-gray-600">In the admin dashboard, add each work location — job site, office, depot — as a branch. Set the allowed radius (e.g. 200 metres). Staff assigned to that branch must check in from within that zone. Takes 2 minutes per location to configure.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">2</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Worker arrives and checks in</h3>
+                    <p class="text-sm text-gray-600">When the field worker arrives at the site, they open the app and tap Check In. The app reads their GPS location at that moment. If they're within the geofence, the check-in is recorded. If they're outside it, the check-in is blocked or flagged.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">3</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Location is captured and stored</h3>
+                    <p class="text-sm text-gray-600">The exact GPS coordinates at check-in and check-out are stored with the attendance record. You can see where each person was on a map. If a worker's coordinates don't match the expected site, it's visible immediately — not discovered weeks later.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">4</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Dashboard shows all sites in real time</h3>
+                    <p class="text-sm text-gray-600">See which field workers have checked in at each site, their arrival times, and any out-of-zone alerts — all from your phone. At month end, timesheets with hours per site are ready for payroll, broken down by location.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">What GPS attendance solves for field teams</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-ban text-sky-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">No more "I was there" disputes</h3>
+                                <p class="text-gray-600">When a client says your technician arrived late and your technician says they were on time, GPS solves the dispute immediately. The check-in timestamp and coordinates are a permanent record. Neither party's memory is needed — the data is there.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-tools text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">No hardware at each job site</h3>
+                                <p class="text-gray-600">Field teams can't take a biometric machine or a QR code placard to every job site. GPS attendance works anywhere — the phone already in the worker's pocket is the attendance terminal. No infrastructure needed at the site at all.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marked-alt text-amber-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Multi-site workers tracked per location</h3>
+                                <p class="text-gray-600">A technician who visits 3 sites in one day checks in and out at each one. Their total attendance record shows which site, how long, and what time — broken down per location. Client billing based on hours on-site becomes straightforward.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-violet-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-battery-full text-violet-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">GPS reads at check-in only — no battery drain</h3>
+                                <p class="text-gray-600">TheCheckIn reads GPS only when a check-in or check-out happens — not continuously. The location read takes less than a second. The app does not run in the background or drain the phone battery during the workday.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-sky-50 rounded-2xl p-8 border border-sky-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Industries where GPS attendance is most used</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-wrench text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800"><a href="/hvac-attendance.html" class="hover:text-brand-blue">HVAC &amp; field service</a></p>
+                                    <p class="text-xs text-gray-500">Technicians on client sites, no fixed office check-in</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-hard-hat text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800"><a href="/construction-attendance.html" class="hover:text-brand-blue">Construction &amp; civil works</a></p>
+                                    <p class="text-xs text-gray-500">Workers across multiple sites, GPS confirms on-site presence</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-truck text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800"><a href="/logistics-attendance.html" class="hover:text-brand-blue">Logistics &amp; delivery</a></p>
+                                    <p class="text-xs text-gray-500">Drivers check in from depots — GPS confirms they're there</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-user-tie text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Sales &amp; field representatives</p>
+                                    <p class="text-xs text-gray-500">Visit confirmation — GPS records where they were at check-in</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions about GPS attendance tracking</h2>
+            <p class="text-lg text-gray-600 mb-10">Common questions from managers setting up location-verified attendance for field staff.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How accurate is the GPS geofence? What radius should I set?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Smartphone GPS is typically accurate to 5–15 metres outdoors. For open construction sites and logistics depots, 100–200 metres works well. For offices where staff may park some distance away, 300–500 metres avoids false rejections. You set the radius; TheCheckIn enforces it.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">What happens when a worker checks in from outside the geofenced zone?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The check-in is flagged as out-of-zone in the admin dashboard. Depending on configuration, it can be blocked or allowed with a flag for review. The GPS coordinates at time of check-in are always stored, so you can see exactly where they were.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does GPS attendance drain the phone battery?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        No. TheCheckIn only reads GPS at the moment of check-in or check-out — not continuously. The single GPS reading takes under a second. The app does not run in the background tracking location during the workday.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">A worker visits multiple sites in one day — how is that tracked?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Each site is a separate branch in TheCheckIn with its own geofence. Workers check in and out at each site. The attendance record shows which site, how long they were there, and what time — broken down by location. Ideal for technicians, sales representatives, or inspectors who visit multiple locations per day.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Know where your field team is when they check in</h2>
+            <p class="text-lg opacity-90 mb-2">Set up your job sites, define geofences, and get GPS-verified attendance from day one.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · GPS geofencing · No hardware at each site</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">GPS and face recognition attendance for field teams, construction, logistics, and offices worldwide.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/qr-code-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/gps-attendance.html" class="text-sm text-brand-blue font-medium">GPS Attendance</a></li>
+                        <li><a href="/employee-qr-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/manufacturing-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Manufacturing</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="mailto:' + addr + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>

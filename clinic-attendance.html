@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic & Healthcare Staff Attendance Tracking | TheCheckIn</title>
+    <meta name="description" content="Track doctor, nurse, and support staff attendance across mixed shifts. Face recognition check-in. No biometric device. Shift reports ready for payroll. Free up to 10 employees.">
+    <meta name="keywords" content="clinic staff attendance, healthcare attendance app, hospital employee attendance, doctor attendance tracking, nurse attendance, clinic attendance management">
+    <link rel="canonical" href="https://thecheckin.io/clinic-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/clinic-attendance.html">
+    <meta property="og:title" content="Clinic & Healthcare Staff Attendance | TheCheckIn">
+    <meta property="og:description" content="Doctor, nurse, and support staff attendance tracking across mixed shifts. Face recognition check-in. No hardware. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Clinic & Healthcare Staff Attendance | TheCheckIn">
+    <meta name="twitter:description" content="Track doctors, nurses, and admin staff attendance across shifts. Face recognition or QR check-in.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Clinic & Healthcare Staff Attendance", "item": "https://thecheckin.io/clinic-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does TheCheckIn handle doctors who work part-time at multiple clinics?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A doctor can be registered in multiple branches within the same TheCheckIn account. Their attendance at each location is tracked separately and visible in one dashboard. If they run their own separate practice, they'd need their own account — but for multi-branch clinics under the same owner, one account covers all locations." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is patient or medical data stored anywhere in TheCheckIn?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. TheCheckIn only records staff attendance data — who checked in, when, and at which location. No patient names, no medical records, no clinical data. It's purely an HR attendance tool." }
+            },
+            {
+              "@type": "Question",
+              "name": "How private is the face recognition data for clinical staff?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Face recognition processing happens using AWS Rekognition — no facial data is stored on the device. Only the attendance record (name, timestamp, location) is stored. Staff are registered by the admin, and their face is used only to verify identity at check-in — it is not shared with third parties or used for any other purpose." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can TheCheckIn track on-call hours separately from regular shift hours?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Currently, TheCheckIn tracks all check-in and check-out events with timestamps. On-call hours can be tracked if staff check in when called and check out when done. Separate shift types can be configured in the admin dashboard with different labels — so 'On-Call' can appear distinctly in reports from regular shifts." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero clinic staff board animations ═══ */
+        @keyframes clinic-row-slide {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .clinic-row { opacity: 0; animation: clinic-row-slide 0.5s ease forwards; }
+        @keyframes clinic-check-pop {
+            0% { opacity: 0; transform: scale(0.3); }
+            60% { transform: scale(1.25); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .clinic-check { animation: clinic-check-pop 0.5s ease forwards; }
+        @keyframes clinic-green-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.45); }
+            50% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+        }
+        .clinic-green-glow { animation: clinic-green-glow 2s ease-in-out infinite; }
+        @keyframes clinic-amber-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(245,158,11,0); }
+        }
+        .clinic-amber-glow { animation: clinic-amber-glow 1.5s ease-in-out infinite; }
+        @keyframes clinic-row-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .clinic-row-in { opacity: 0; animation: clinic-row-in 0.5s ease forwards; }
+        .clinic-row-in.delay-1 { animation-delay: 0.1s; }
+        .clinic-row-in.delay-2 { animation-delay: 0.3s; }
+        .clinic-row-in.delay-3 { animation-delay: 0.5s; }
+        .clinic-row-in.delay-4 { animation-delay: 0.7s; }
+        .clinic-row-in.delay-5 { animation-delay: 0.9s; }
+        .clinic-row-in.delay-6 { animation-delay: 1.1s; }
+    </style>
+
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">Clinic &amp; Healthcare Staff Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-rose-50 text-rose-700 mb-5">
+                    <i class="fas fa-stethoscope mr-2"></i> Clinics &amp; Healthcare
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Attendance Tracking for Clinic Staff — Doctors, Nurses, and Admin in One Dashboard
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    A clinic runs on three different types of staff with three different schedules. The morning doctor comes in at 9am. Nurses rotate through shifts. The admin team keeps regular hours. Tracking all of them separately — and reconciling it for payroll — takes time you don't have.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    TheCheckIn puts all of them on one dashboard. Each staff member checks in with face recognition when they arrive — no biometric device, just their phone. You see who's in right now, by department, and timesheets are ready at the end of each pay period without anyone manually compiling them.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · Face recognition · QR check-in · Shift reports for payroll</p>
+            </div>
+
+            <!-- Visual: Clinic shift grid -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-5 clinic-row-in delay-1">
+                        <div class="w-9 h-9 bg-rose-50 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-hospital text-rose-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Today's staff — live</p>
+                            <p class="text-[10px] text-gray-400">Sunrise Medical Clinic</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-2.5 border border-blue-100 clinic-row-in delay-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-user-md text-blue-600 text-[9px] clinic-check" style="animation-delay:0.4s"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-800">Doctors</p>
+                                    <p class="text-[10px] text-gray-500">AM shift · 09:00–17:00</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs font-bold text-green-600 clinic-green-glow">2/2 in ✓</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between bg-rose-50 rounded-lg px-3 py-2.5 border border-rose-100 clinic-row-in delay-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-user-nurse text-rose-600 text-[9px] clinic-check" style="animation-delay:0.5s"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-800">Nurses</p>
+                                    <p class="text-[10px] text-gray-500">AM + PM rotation</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs font-bold text-amber-600 clinic-amber-glow">3/4 in</p>
+                                <p class="text-[9px] text-amber-500 clinic-amber-glow">1 not checked in</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between bg-purple-50 rounded-lg px-3 py-2.5 border border-purple-100 clinic-row-in delay-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-clipboard text-purple-600 text-[9px] clinic-check" style="animation-delay:0.65s"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-800">Admin & Reception</p>
+                                    <p class="text-[10px] text-gray-500">Regular hours</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs font-bold text-green-600 clinic-green-glow">3/3 in ✓</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-gray-50 rounded-xl px-3 py-2 border border-gray-100 clinic-row-in delay-5">
+                        <p class="text-[10px] text-center text-gray-500 font-medium">8 of 9 present · Timesheet auto-calculated</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How clinic attendance tracking works with TheCheckIn</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">Built for mixed teams — doctors, nurses, and support staff all tracked together.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">1</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Set up departments and shifts</h3>
+                    <p class="text-sm text-gray-600">Create departments (Doctors, Nurses, Admin) and configure their shifts independently. Doctor morning clinic, nurse AM/PM rotation, and admin regular hours can all be tracked with different expected start times.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">2</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Staff check in at the start of their shift</h3>
+                    <p class="text-sm text-gray-600">Each staff member opens the app when they arrive and completes a face recognition check-in — takes 3 seconds. No fingerprint reader, no card tap, no manual sign-in sheet. The clinic administrator sees them marked present immediately.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">3</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Track who's in by department</h3>
+                    <p class="text-sm text-gray-600">The admin dashboard shows attendance by department — are all doctors in for the morning session? Has the night nurse arrived to replace the day shift? You know before it becomes a problem, not after a patient asks why there's no nurse.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">4</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Payroll report at end of month</h3>
+                    <p class="text-sm text-gray-600">Total hours per staff member, broken down by day and shift. Part-time doctors get their session count. Nurses get their shift hours. Export to Excel for payroll, or connect to ERPNext for automatic sync.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">What clinic administrators and owners get from TheCheckIn</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-layer-group text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">All staff types in one view — no separate systems</h3>
+                                <p class="text-gray-600">Most clinics end up with doctors tracked one way, nurses another, and admin on a spreadsheet. TheCheckIn consolidates all of them. One login, one dashboard, one export at payroll time — regardless of how different each person's schedule is.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clock text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Know immediately when a shift handover hasn't happened</h3>
+                                <p class="text-gray-600">If the PM nurse is supposed to arrive at 2pm and hasn't checked in by 2:10, you see it on the dashboard right then — not when the AM nurse calls to say they've been waiting for 30 minutes to leave. Early warning, not a post-incident report.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-shield text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Face recognition without a biometric device</h3>
+                                <p class="text-gray-600">Fingerprint readers in clinical environments raise hygiene concerns — especially in post-pandemic contexts. Face recognition on the staff member's own phone avoids any shared contact point. Liveness detection means the check-in is the actual person, not a photo.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-medical-alt text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Clean records for labour compliance and audits</h3>
+                                <p class="text-gray-600">Healthcare employers often face strict requirements around working hours — particularly for nurses on long shifts. Every check-in and check-out is a permanent, tamper-proof record. Attendance data is available by date range for any audit or compliance review.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-rose-50 rounded-2xl p-8 border border-rose-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Works for every type of healthcare setting</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-clinic-medical text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">General practice &amp; specialist clinics</p>
+                                    <p class="text-xs text-gray-500">Doctors + nurses + reception in one dashboard</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-tooth text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Dental clinics</p>
+                                    <p class="text-xs text-gray-500">Dentist session hours + assistant and front desk</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-dumbbell text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Physiotherapy &amp; wellness centres</p>
+                                    <p class="text-xs text-gray-500">Therapist session tracking, part-time staff</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-pills text-rose-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Diagnostic centres &amp; pharmacies</p>
+                                    <p class="text-xs text-gray-500">Lab staff and pharmacist attendance by shift</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from clinic owners and administrators</h2>
+            <p class="text-lg text-gray-600 mb-10">Real questions from healthcare practices setting up digital attendance for the first time.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How does TheCheckIn handle doctors who work part-time at multiple clinics?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        A doctor can be registered in multiple branches within the same TheCheckIn account. Their attendance at each location is tracked separately and visible in one dashboard. For multi-branch clinics under the same owner, one account covers all locations.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Is any patient or medical data stored in TheCheckIn?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        No. TheCheckIn only records staff attendance — who checked in, when, and at which location. No patient names, no medical records, no clinical data. It's purely an HR attendance tool.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How is face recognition data handled for clinical staff?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Face recognition processing uses AWS Rekognition. Facial data is not stored on the device. Only the attendance record — name, timestamp, location — is stored. Face data is used only to verify identity at check-in and is not shared with third parties or used for any other purpose.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Our nurses do 12-hour shifts. Does the app handle extended shift hours?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Shift duration is configured by you — 8 hours, 12 hours, or custom lengths. Check-in time and check-out time are recorded regardless of how long the shift is. Hours are calculated automatically from the timestamps.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Give your clinic a clean attendance system</h2>
+            <p class="text-lg opacity-90 mb-2">Set up your clinic, add your doctors, nurses, and admin team, and start tracking every shift.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · Face recognition · QR check-in · Shift reports for payroll</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Staff attendance tracking for clinics, factories, retail, and field teams — no hardware required.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/clinic-attendance.html" class="text-sm text-brand-blue font-medium">Clinics &amp; Healthcare</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="mailto:' + addr + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+        // Hero dashboard — live refresh cycle (simulates real-time check-in activity)
+        (function () {
+            setTimeout(function () {
+                var rows = document.querySelectorAll('.clinic-row-in');
+                if (!rows.length) return;
+                var idx = 0;
+                setInterval(function () {
+                    rows[idx].style.outline = '2px solid rgba(34,197,94,0.3)';
+                    rows[idx].style.outlineOffset = '2px';
+                    setTimeout(function () {
+                        rows[idx].style.outline = '';
+                        rows[idx].style.outlineOffset = '';
+                        idx = (idx + 1) % rows.length;
+                    }, 800);
+                }, 14000);
+            }, 2500);
+        })();
+    </script>
+</body>
+</html>

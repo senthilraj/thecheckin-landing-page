@@ -1,193 +1,1664 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>TheCheckIn - Free QR attendance management software</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <meta name="description" content="The Mobile friendly QR attendance management software which helps to time tracking employees in both easy and secure way to cover all small to enterprise businesses"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/style.css"/>
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                <div class="header-section">
-                    <div class="logo">
-                        <a href="#"><img src="./images/logo.png" alt="TheCheckIn Logo"/></a>
-                    </div>
-                    <div class="menu">
-                        <ul>
-                            <li>
-                                <a href="https://api.whatsapp.com/send?phone=918778796644" target="_blank">+91-87787 96644</a>
-                            </li>
-                            <li>
-                                <a href="https://web.thecheckin.io/Login" target="_blank">Login</a>
-                            </li>
-                            <li>
-                                <a href="https://web.thecheckin.io/Signup" target="_blank" class="button button-primary">Try for Free</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <section class="main-section">
-            <div class="container">
-                <div class="main-content">
-                    <div class="left-content">
-                        <h1>Simplify Attendance<br/>Time Tracking Securely</h1>
-                        <p>The Mobile friendly QR attendance management software which helps to time tracking employees in both easy and secure way to cover all small to enterprise businesses.</p>
-                        <br/>
-                        <div class="button-container">
-                            <a href="https://web.thecheckin.io/Signup" target="_blank" class="button button-primary">Start Tracking for Free</a>
-                            <button type="button" onclick="openPopup()" class="button button-default"><i class="bi bi-play-fill"></i>Watch Video Demo</button>
-                        </div>
-                        <div class="app-links">
-                            <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank">
-                                <img src="./images/thecheckin-qr-attendance-tracker-android.png" alt="TheCheckIn app android playstore link"/>
-                            </a>
-                            <!-- <a href="#" target="_blank">
-                                <img src="./images/thecheckin-qr-attendance-tracker-ios.jpg" alt="TheCheckIn app ios appstore link"/>
-                            </a> -->
-                        </div>
-                    </div>
-                    <div class="right-content">
-                        <div class="app-visual">
-                            <img src="./images/TheCheckIn-Attendance-Tracking-Types.jpg" width="100%"  alt="TheCheckIn Attendance Tracking Types"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="feature-section" id="features">
-            <div class="container">
-                <div class="features-content">
-                    <img src="./images/TheCheckIn-feature-multiple-branches.jpg" alt="TheCheckIn feature multiple branches"/>
-                    <div class="features-content-text">
-                        <h2>Multiple Branch Support</h2>
-                        <p>You can easily track attendance for all your branches in one place. This makes it simple to oversee operations and keep everything organized.</p>
-                    </div>
-                </div>
-                <div class="features-content align-right">
-                    <img src="./images/TheCheckIn-feature-role-management.jpg" alt="TheCheckIn feature role management"/>
-                    <div class="features-content-text">
-                        <h2>Role Management</h2>
-                        <p>Admins can assign roles such as Branch Lead and Team Lead to employees to manage branches and teams.</p>
-                    </div>
-                </div>
-                <div class="features-content">
-                    <img src="./images/TheCheckIn-feature-multiple-shifts.jpg" alt="TheCheckIn feature multiple shifts"/>
-                    <div class="features-content-text">
-                        <h2>Flexible Shifts</h2>
-                        <p>Adapt shifts to suit your organization's specific needs. TheCheckIn allows for multiple shifts, making it perfect for businesses with different working hours.</p>
-                    </div>
-                </div>
-                <div class="features-content align-right">
-                    <img src="./images/TheCheckIn-feature-timesheet.jpg" alt="TheCheckIn feature timesheet"/>
-                    <div class="features-content-text">
-                        <h2>Timesheet Generation</h2>
-                        <p>Generate timesheets easily with our advanced search and filter options. You can choose to view them by day, week, or month, so you can quickly find the details you need.</p>
-                    </div>
-                </div>
-                <div class="features-content">
-                    <img src="./images/TheCheckIn-feature-mock-location-prevention.jpg" alt="TheCheckIn feature mock location prevention"/>
-                    <div class="features-content-text">
-                        <h2>Mock Location Prevention</h2>
-                        <p>Verify that employees are checking in from the correct location to avoid fake check-ins. This feature helps ensure that employees are actually at the designated place when they clock in.</p>
-                    </div>
-                </div>
-                <div class="features-content align-right">
-                    <img src="./images/TheCheckIn-feature-Attendance-Tracking-types.jpg" alt="TheCheckIn feature timesheet"/>
-                    <div class="features-content-text">
-                        <h2>Versatile Time Tracking</h2>
-                        <p>Track time in various ways to fit your needs. You can use Branch QR, Employee QR, or Direct check-in type to record attendance in the way that works best for your organization.</p>
-                    </div> 
-                </div>
-            </div>
-        </section>
-        <section class="faq-section-landing">
-            <div class="container">
-                <h4>FAQs</h4>
-                <img src="./images/TheCheckIn-faq.jpg" alt="TheCheckIn FAQs"/>
-                <p>For Frequently Asked Questions, please click the <a href="./faq.html" target="_blank">link</a></p>
-                <br/>
-                <p>You can reach our customer support team via email at <strong>support[@]thecheckin.io</strong></p>
-            </div>
-        </section>
-        <section class="section-second-cta">
-            <div class="container">
-                <h4>"Your team deserves the best - make the switch to TheCheckIn and see the difference!"</h4><br/><br/>
-                <div class="button-container">
-                    <a href="https://web.thecheckin.io/Signup" target="_blank" class="button button-primary">Get Started</a>
-                </div>
-            </div>
-        </section>
-        <footer>
-            <div class="container">
-                <p>&copy; 2024 <a href="https://pazhanam.com" target="_blank">www.pazhanam.com</a> All rights reserved.</p>
-            </div>
-        </footer>
-        <div class="popup-container" id="popupContainer" onclick="closeOnClick(event)">
-            <div class="popup-content">
-                <span class="close-btn" onclick="closePopup()">&times;</span>
-                <!-- Embedded YouTube video -->
-                <iframe id="youtubeVideo" width="100%" height="450" src="https://www.youtube.com/embed/x-yia1cbJxI?si=Y6o67ClAC0_FTW30"
-                 title="YouTube video player" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-        </div>
-        <script>
-            // Function to open the popup
-            function openPopup() {
-                var popup = document.getElementById("popupContainer");
-                var video = document.getElementById("youtubeVideo");
-                video.src = "https://www.youtube.com/embed/x-yia1cbJxI?si=Y6o67ClAC0_FTW30";
-                popup.style.display = "block";
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            // Function to close the popup
-            function closePopup() {
-                var popup = document.getElementById("popupContainer");
-                var video = document.getElementById("youtubeVideo");
-                video.src = ""; // Set the src attribute to empty to stop the video
-                popup.style.display = "none";
-            }
+    <!-- ═══════════════════════════════════════════════════════════
+         SEO — Primary tags
+         Primary keywords: face recognition attendance, face attendance app,
+           erpnext face attendance, frappe attendance app, frappe face attendance,
+           erpnext customization, hvac technician attendance,
+           sage 300 time and attendance, sage 300 integration attendance
+         Secondary keywords: attendance tracking app, employee check-in app,
+           QR attendance, free attendance software, GPS attendance tracking,
+           erpnext integration attendance, multi-branch attendance management
+    ═══════════════════════════════════════════════════════════ -->
+    <title>Face Recognition Attendance App | ERPNext & Frappe | TheCheckIn</title>
+    <meta name="description" content="TheCheckIn is a face recognition attendance app for any smartphone — no biometric device. Integrates with ERPNext, Frappe & Sage 300. Free to start.">
+    <meta name="keywords" content="face recognition attendance, face attendance app, erpnext face attendance, frappe attendance app, frappe face attendance, erpnext customization, customize erpnext, hvac technician attendance, sage 300 time and attendance, sage 300 integration attendance, erpnext integration attendance, employee attendance tracking, QR code attendance, GPS attendance, face recognition attendance system, free attendance software">
+    <link rel="canonical" href="https://thecheckin.io/">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
 
-            // Function to close popup when clicking outside of it
-            function closeOnClick(event) {
-                var popup = document.getElementById("popupContainer");
-                if (event.target == popup) {
-                    closePopup();
+    <!-- Open Graph — for social sharing and AI crawlers -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/">
+    <meta property="og:title" content="Face Recognition Attendance App — No Biometric Device | TheCheckIn">
+    <meta property="og:description" content="TheCheckIn is a face recognition attendance app for any smartphone — no biometric device. Integrates with ERPNext, Frappe & Sage 300. Free to start.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Face Recognition Attendance App — No Biometric Device | TheCheckIn">
+    <meta name="twitter:description" content="TheCheckIn is a face recognition attendance app for any employee smartphone — no biometric device needed. Integrates with ERPNext, Frappe HRMS, and Sage 300. Free up to 10 employees.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <!-- JSON-LD Structured Data ─ helps Google, ChatGPT, and AI search cite this page -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://thecheckin.io/#org",
+          "name": "TheCheckIn",
+          "url": "https://thecheckin.io/",
+          "logo": "https://thecheckin.io/images/logo.png",
+          "description": "TheCheckIn is an employee attendance tracking software with QR code, GPS, and face recognition check-in, built for small and medium businesses worldwide.",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "kala@thecheckin.io",
+            "contactType": "customer support"
+          },
+          "parentOrganization": {
+            "@type": "Organization",
+            "name": "Pazhanam Technologies"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://thecheckin.io/#app",
+          "name": "TheCheckIn",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Android, Web",
+          "url": "https://thecheckin.io/",
+          "downloadUrl": "https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Employee attendance management app with QR code check-in, GPS location validation, and face recognition. Supports office, field, and remote workers. Multi-branch dashboard and automatic timesheet generation.",
+          "featureList": [
+            "Face recognition attendance with liveness detection",
+            "QR code attendance check-in",
+            "GPS location validation",
+            "Remote employee check-in",
+            "Multi-branch management",
+            "Automatic timesheet generation",
+            "Real-time attendance dashboard",
+            "Export reports to Excel",
+            "ERPNext attendance integration",
+            "Frappe HRMS integration",
+            "Sage 300 time and attendance integration"
+          ],
+          "screenshot": "https://thecheckin.io/images/team-dashboard-screen.png",
+          "publisher": {
+            "@id": "https://thecheckin.io/#org"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://thecheckin.io/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is TheCheckIn free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. TheCheckIn is free for up to 10 employees — no credit card, no hardware purchase required. Download the Android app or sign up on the web and add your first employee in under 2 minutes. For teams larger than 10 employees, contact us for a flexible plan tailored to your headcount."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does QR code attendance work in TheCheckIn?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "TheCheckIn supports two QR methods: Branch QR (a QR code placed at each office location that employees scan on their phone) and Employee QR (a personal QR card assigned to each employee, scanned by a manager or kiosk device). Both methods record exact check-in time and location."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can TheCheckIn track field workers and remote employees?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Remote and field employees use the GPS check-in feature. Their location is captured when they check in, allowing managers to verify they are at the correct job site. No hardware is needed — just the mobile app."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need a biometric machine to use TheCheckIn?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. TheCheckIn replaces biometric machines entirely. Attendance is tracked through QR codes, GPS location, or face recognition using the employee's smartphone. There is no hardware to purchase, install, or maintain."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does face recognition attendance work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Employees register their face once in the app. On subsequent check-ins, the app uses face recognition with liveness detection (eye blink test) to confirm the person is physically present — preventing proxy attendance using photos."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I manage multiple office branches in TheCheckIn?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. TheCheckIn supports multiple branches. Each branch has its own QR code and GPS geofence. Admins see attendance across all locations in a single real-time dashboard."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How are timesheets generated?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Timesheets are generated automatically from check-in and check-out data. Daily, weekly, and monthly reports are available. You can export the data to Excel for payroll processing."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What types of businesses use TheCheckIn?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "TheCheckIn is used by retail stores, restaurants, construction companies, manufacturing facilities, healthcare clinics, schools, and any business with employees who need accurate attendance tracking. It works for teams of 5 to 500."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TheCheckIn integrate with ERPNext or Frappe HRMS?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. TheCheckIn syncs attendance data with ERPNext and Frappe HRMS. Admins can export attendance records directly into ERPNext HR modules, making it ideal for businesses already using Frappe or ERPNext for payroll and HR."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TheCheckIn work with Sage 300?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. TheCheckIn integrates with Sage 300 for time and attendance. Attendance records from TheCheckIn can be mapped to Sage 300 payroll and HR modules, replacing manual timesheet entry."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is employee face recognition data stored or shared?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Face recognition in TheCheckIn uses on-device processing — the app compares the live face against the registered face data stored on the employee's own smartphone. Raw face images are not transmitted to a server. Employee face data belongs to your company and is never shared with third parties."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        'brand-blue': '#1d19d8',
+                    }
                 }
             }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        /* On desktop, hero fills the viewport (minus sticky nav) and centers content */
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 64px);
+                display: flex;
+                align-items: center;
+            }
+            /* Stretch the inner container so mx-auto centering still works */
+            .hero-gradient > div {
+                width: 100%;
+            }
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .faq-answer {
+            display: none;
+        }
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+        }
 
+        /* ═══════ AI Face Recognition Hero Demo ═══════ */
+        .face-demo-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Shrink vertical breathing room on shorter viewports */
+            padding: clamp(12px, 4vh, 40px) 10px;
+        }
 
-        </script>
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-          
-            // Your web app's Firebase configuration
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-              apiKey: "AIzaSyC_bZWFOLPy20gFhb390tXNd_UU6zouigI",
-              authDomain: "thecheckinio.firebaseapp.com",
-              projectId: "thecheckinio",
-              storageBucket: "thecheckinio.appspot.com",
-              messagingSenderId: "449830596143",
-              appId: "1:449830596143:web:1ff376ad79508140f6e0da",
-              measurementId: "G-WGEFK5GBCW"
-            };
-          
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-          </script>
-    </body>
+        /* Floating chips */
+        .face-chip {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1f2937;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            z-index: 20;
+            animation: chip-float 4s ease-in-out infinite;
+        }
+        .face-chip i { color: #1d19d8; font-size: 15px; }
+        .face-chip.green i { color: #16a34a; }
+        .face-chip-1 { top: 4%; left: 0; animation-delay: 0s; }
+        .face-chip-2 { top: 22%; right: 0; animation-delay: 0.6s; }
+        .face-chip-3 { bottom: 26%; left: 0; animation-delay: 1.2s; }
+        .face-chip-4 { bottom: 4%; right: 8%; animation-delay: 1.8s; }
+        @keyframes chip-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Phone frame */
+        .face-phone {
+            /*
+             * Scale the phone so it never overflows the viewport height.
+             * Formula: available_height / phone_aspect_ratio
+             *   available = 100dvh - 64px(nav) - 2×wrap_padding(≈120px) - 40px(buffer)
+             *   phone height ≈ width × 1.72 (300px wide → ~516px tall inc. border+padding)
+             *   so: width = (100dvh - 224px) / 1.72
+             * clamp keeps a 200px floor and 300px ceiling.
+             */
+            width: clamp(200px, calc((100dvh - 224px) / 1.72), 300px);
+            max-width: 90%;
+            background: #0b1220;
+            border: 6px solid #1e293b;
+            border-radius: 42px;
+            padding: 18px 12px 12px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 10;
+        }
+        .face-phone::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 22px;
+            background: #0b1220;
+            border-radius: 12px;
+            z-index: 30;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .face-phone-screen {
+            background: #ffffff;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 9 / 16;
+        }
+
+        /* App header inside phone */
+        .face-app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 36px 16px 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            position: relative;
+            z-index: 20;
+        }
+        .face-app-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .face-app-title img { height: 22px; width: auto; }
+        .face-app-time {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Status bar inside phone */
+        .face-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 16px 0;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Camera viewport */
+        .face-camera {
+            position: relative;
+            height: 330px;
+            margin: 14px 12px 0;
+            background: radial-gradient(ellipse at 50% 35%, #eef2f7 0%, #e2e8f0 100%);
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        /* Viewfinder corner brackets */
+        .face-bracket {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            border: 3px solid #38bdf8;
+            border-radius: 10px;
+            z-index: 12;
+            opacity: 0.85;
+        }
+        .face-bracket-tl { top: 22px; left: 22px; border-right: none; border-bottom: none; border-top-left-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite; }
+        .face-bracket-tr { top: 22px; right: 22px; border-left: none; border-bottom: none; border-top-right-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite 0.5s; }
+        .face-bracket-bl { bottom: 22px; left: 22px; border-right: none; border-top: none; border-bottom-left-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite 1s; }
+        .face-bracket-br { bottom: 22px; right: 22px; border-left: none; border-top: none; border-bottom-right-radius: 16px; animation: bracket-pulse 2s ease-in-out infinite 1.5s; }
+        @keyframes bracket-pulse {
+            0%, 100% { opacity: 0.85; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.96); }
+        }
+
+        /* Detection ring */
+        .face-detect-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            z-index: 11;
+            pointer-events: none;
+        }
+        .face-detect-ring .ring-circle {
+            fill: none;
+            stroke: #38bdf8;
+            stroke-width: 2;
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: ring-scan 7s ease-in-out infinite;
+        }
+        .face-detect-ring .ring-pulse {
+            fill: none;
+            stroke: rgba(56, 189, 248, 0.35);
+            stroke-width: 1.5;
+            animation: ring-pulse 2.4s ease-out infinite;
+        }
+        @keyframes ring-scan {
+            0% { stroke-dashoffset: 500; }
+            20% { stroke-dashoffset: 0; }
+            80% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 500; }
+        }
+        @keyframes ring-pulse {
+            0% { transform: scale(0.75); opacity: 1; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* Avatar / face */
+        .face-avatar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 190px;
+            height: 190px;
+            z-index: 6;
+            transition: all 0.5s ease;
+        }
+        .face-avatar.verified .face-head {
+            filter: drop-shadow(0 0 18px rgba(34, 197, 94, 0.8));
+        }
+
+        /* Scan line */
+        .face-scanline {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.9), transparent);
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+            z-index: 10;
+            border-radius: 9999px;
+            animation: scan-move 3.2s ease-in-out infinite;
+        }
+        @keyframes scan-move {
+            0% { top: 30px; opacity: 0; }
+            8% { opacity: 1; }
+            50% { top: 290px; }
+            92% { opacity: 1; }
+            100% { top: 30px; opacity: 0; }
+        }
+        .face-scanline.blinking {
+            animation: none;
+            top: 50%;
+            opacity: 0.6;
+            background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.9), transparent);
+            box-shadow: 0 0 14px rgba(250, 204, 21, 0.7);
+        }
+
+        /* Face status text */
+        .face-status-text {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #7dd3fc;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            z-index: 15;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        .face-status-text.verified {
+            border-color: rgba(34, 197, 94, 0.5);
+            color: #4ade80;
+            background: rgba(20, 83, 45, 0.9);
+        }
+
+        /* Success toast */
+        .face-toast {
+            position: absolute;
+            left: 50%;
+            bottom: 26px;
+            transform: translate(-50%, 20px);
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(34, 197, 94, 0.6);
+            border-radius: 18px;
+            padding: 14px 18px;
+            width: calc(100% - 48px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 18px 40px -10px rgba(34, 197, 94, 0.35);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .face-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+        .face-toast-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22c55e;
+            font-size: 18px;
+            animation: toast-pop 0.5s ease;
+        }
+        @keyframes toast-pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .face-toast-title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .face-toast-sub {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        /* Verified badge overlay */
+        .face-verified-badge {
+            position: absolute;
+            z-index: 30;
+            top: 56%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(34, 197, 94, 0.95);
+            color: #fff;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.2), 0 12px 30px -5px rgba(34, 197, 94, 0.5);
+        }
+        .face-verified-badge.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .face-phone {
+                width: 280px;
+            }
+            .face-chip {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .face-chip-1 { left: -6px; }
+            .face-chip-2 { right: -6px; }
+            .face-chip-3 { left: -6px; }
+            .face-chip-4 { right: 0; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="#why" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Why Us</a>
+                    <a href="#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90 focus:outline-none">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="#why" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Why Us</a>
+                <a href="#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════ HERO ═══════════════════ -->
+    <section class="hero-gradient">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700 mb-6">
+                        <i class="fas fa-face-smile mr-2"></i> Face Recognition Attendance &middot; No Biometric Device Needed
+                    </div>
+                    <!-- H1 with primary keyword first -->
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight text-gray-900 mb-6">
+                        Face Recognition Attendance App — No Biometric Device Needed
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-4">
+                        <strong>TheCheckIn</strong> turns any employee smartphone into a face recognition attendance terminal. Staff look at the camera once — liveness detection confirms it's really them — and they're checked in. <strong>No biometric machine. No fingerprint scanner. No extra hardware.</strong> Works for offices, HVAC teams, construction sites, restaurants, and remote workers worldwide.
+                    </p>
+                    <p class="text-sm text-gray-500 mb-8">
+                        Trusted by Gibcaac, Steconfer, Worthybook.my, Prokira Enterprise, and 100+ businesses globally. Integrates with ERPNext, Frappe HRMS, and Sage 300.
+                    </p>
+                    <div class="flex flex-col sm:flex-row mb-3">
+                        <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center px-7 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90 focus:outline-none">
+                            <i class="fab fa-google-play mr-2"></i> Try the App — Google Play
+                        </a>
+                    </div>
+                    <p class="text-sm text-gray-500">
+                        Setting up your team? <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="text-primary-600 hover:underline font-medium">Open Admin Dashboard →</a>
+                        <span class="mx-2 text-gray-300">|</span> Free up to 10 employees
+                    </p>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="face-demo-wrap">
+                        <div class="face-chip face-chip-1"><i class="fas fa-mobile-alt"></i> Smartphone only</div>
+                        <div class="face-chip face-chip-2 green"><i class="fas fa-ban"></i> No biometric device</div>
+                        <div class="face-chip face-chip-3"><i class="fas fa-eye"></i> Liveness detection</div>
+                        <div class="face-chip face-chip-4 green"><i class="fas fa-shield-alt"></i> Proxy-proof</div>
+                        <div class="face-phone">
+                            <div class="face-phone-screen">
+                                <div class="face-app-header">
+                                    <div class="face-app-title">
+                                        <img src="./images/logo.png" alt="TheCheckIn">
+                                    </div>
+                                    <div class="face-app-time" id="faceClock">9:02 AM</div>
+                                </div>
+                                <div class="face-status">
+                                    <span><i class="fas fa-camera mr-1"></i> Face Check-in</span>
+                                    <span><i class="fas fa-map-marker-alt mr-1"></i> Office</span>
+                                </div>
+                                <div class="face-camera">
+                                    <div class="face-bracket face-bracket-tl"></div>
+                                    <div class="face-bracket face-bracket-tr"></div>
+                                    <div class="face-bracket face-bracket-bl"></div>
+                                    <div class="face-bracket face-bracket-br"></div>
+                                    <svg class="face-detect-ring" viewBox="0 0 200 200" fill="none">
+                                        <circle class="ring-circle" cx="100" cy="100" r="88"/>
+                                        <circle class="ring-pulse" cx="100" cy="100" r="40"/>
+                                    </svg>
+                                    <img class="face-avatar" id="faceAvatar" src="./images/face-recognization-thecheckin-attendance-1.png" alt="Face recognition attendance check-in" style="width:200px;height:200px;object-fit:cover;object-position:center 30%;border-radius:50%;transform:translate(-50%,-50%) scale(1.15);">
+                                    <div class="face-scanline" id="faceScanline"></div>
+                                    <div class="face-status-text" id="faceStatus">Align your face in the frame</div>
+                                    <div class="face-verified-badge" id="faceVerifiedBadge"><i class="fas fa-check"></i></div>
+                                </div>
+                            </div>
+                            <div class="face-toast" id="faceToast">
+                                <div class="face-toast-icon"><i class="fas fa-check"></i></div>
+                                <div>
+                                    <div class="face-toast-title">Check-in Successful</div>
+                                    <div class="face-toast-sub">Emily Watson &middot; <span id="faceToastTime">9:02 AM</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ SOCIAL PROOF BAR ═══════════════════ -->
+    <section class="bg-white border-y border-gray-100 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center md:justify-around items-center gap-8 text-center">
+                <div>
+                    <p class="text-2xl font-bold text-brand-blue">100+</p>
+                    <p class="text-sm text-gray-500">Businesses across 15+ countries</p>
+                </div>
+                <div class="hidden md:block h-8 w-px bg-gray-200"></div>
+                <div>
+                    <p class="text-2xl font-bold text-brand-blue">4 types</p>
+                    <p class="text-sm text-gray-500">QR, GPS, Face, Employee QR</p>
+                </div>
+                <div class="hidden md:block h-8 w-px bg-gray-200"></div>
+                <div>
+                    <p class="text-2xl font-bold text-brand-blue">Free</p>
+                    <p class="text-sm text-gray-500">No card, no hardware to start</p>
+                </div>
+                <div class="hidden md:block h-8 w-px bg-gray-200"></div>
+                <div>
+                    <p class="text-2xl font-bold text-brand-blue">ERP Ready</p>
+                    <p class="text-sm text-gray-500">ERPNext &amp; Sage 300 integration</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ CUSTOMERS ═══════════════════ -->
+    <section class="py-10 bg-white border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <p class="text-center text-sm font-semibold text-gray-400 uppercase tracking-wider mb-8">
+                Trusted by businesses worldwide
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-10 md:gap-16">
+
+                <a href="https://gibcaac.com/" target="_blank" rel="noopener" class="opacity-70 hover:opacity-100 transition-opacity" aria-label="Gibcaac Dubai — TheCheckIn customer">
+                    <img src="./images/gibcaac-dubai-logo.png" alt="Gibcaac Dubai Co. LLC — TheCheckIn customer"
+                         class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all" loading="lazy">
+                </a>
+
+                <a href="https://www.steconfer.com/en" target="_blank" rel="noopener" class="opacity-70 hover:opacity-100 transition-opacity" aria-label="Steconfer Global Rail Infrastructure — TheCheckIn customer">
+                    <img src="./images/steconfer-logo-rail-construction.png" alt="Steconfer Global Rail Infrastructure — TheCheckIn customer"
+                         class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all" loading="lazy">
+                </a>
+
+                <a href="https://worthybook.my/" target="_blank" rel="noopener" class="opacity-70 hover:opacity-100 transition-opacity" aria-label="Worthybook.my — TheCheckIn customer">
+                    <img src="./images/worthybook-logo.png" alt="Worthybook.my — TheCheckIn customer"
+                         class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all" loading="lazy">
+                </a>
+
+                <a href="https://www.prokira.com.my/" target="_blank" rel="noopener" class="opacity-70 hover:opacity-100 transition-opacity" aria-label="Prokira Enterprise — TheCheckIn customer">
+                    <img src="./images/prokira-my-logo.webp" alt="Prokira Enterprise — TheCheckIn customer"
+                         class="h-10 w-auto object-contain grayscale hover:grayscale-0 transition-all" loading="lazy">
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Set up employee attendance tracking in 2 minutes</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    No IT team. No hardware to install. Sign up, add your team, and start recording attendance today.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-md text-center">
+                    <div class="w-14 h-14 bg-brand-blue text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-5">1</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Create your account</h3>
+                    <p class="text-gray-600">Sign up with your work email. Your company workspace, default branch, and shift are configured automatically — nothing to set up manually.</p>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-md text-center">
+                    <div class="w-14 h-14 bg-brand-blue text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-5">2</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Add your employees</h3>
+                    <p class="text-gray-600">Add team members with just a name and email. They receive login credentials instantly. Assign QR, GPS, or face recognition per employee — or mix all three.</p>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-md text-center">
+                    <div class="w-14 h-14 bg-brand-blue text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-5">3</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Track attendance live</h3>
+                    <p class="text-gray-600">See who checked in, from where, and at what time — in real time on your dashboard. Timesheets are generated automatically for payroll.</p>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="inline-flex items-center px-6 py-3 text-base font-medium rounded-md text-white bg-brand-blue hover:opacity-90 shadow-sm">
+                    Try It Free — Up and Running in 2 Minutes
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ FEATURES ═══════════════════ -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Attendance tracking features for every type of team</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Whether your team works in an office, on a construction site, or from home — TheCheckIn has a check-in method that fits.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Face Recognition — PRIMARY feature, first in grid -->
+                <div class="feature-card bg-primary-50 rounded-xl p-8 shadow-md transition-all duration-300 ease-in-out border border-primary-200 ring-2 ring-primary-400 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 flex gap-2">
+                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-primary-100 text-primary-700">Proxy-proof</span>
+                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-amber-100 text-amber-700">Primary Feature</span>
+                    </div>
+                    <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mb-6 mt-8">
+                        <i class="fas fa-face-smile text-brand-blue text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Face Recognition Attendance</h3>
+                    <p class="text-gray-600">
+                        Employees check in using their face — on any smartphone, no biometric device needed. Liveness detection (eye blink) ensures a real person is present, not a photo. Eliminates buddy punching and proxy attendance completely.
+                    </p>
+                    <a href="/face-recognition-attendance.html" class="inline-flex items-center gap-1 text-sm text-primary-600 font-medium mt-4 hover:underline">
+                        How face check-in works <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="feature-card bg-white rounded-xl p-8 shadow-md transition-all duration-300 ease-in-out border border-gray-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-building text-brand-blue text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Branch QR Code Check-in</h3>
+                    <p class="text-gray-600">
+                        Place a QR code at each office or site. Employees scan it on their phone when they arrive. No card reader, no biometric machine, no extra hardware — just a printed QR code.
+                    </p>
+                    <a href="/qr-code-attendance.html" class="inline-flex items-center gap-1 text-sm text-primary-600 font-medium mt-4 hover:underline">
+                        How QR check-in works <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="feature-card bg-white rounded-xl p-8 shadow-md transition-all duration-300 ease-in-out border border-gray-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-map-marker-alt text-brand-blue text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">GPS Remote Attendance</h3>
+                    <p class="text-gray-600">
+                        Field staff and remote workers check in from their location. GPS validation confirms they are at the correct job site — not checking in from a different location.
+                    </p>
+                    <a href="/gps-attendance.html" class="inline-flex items-center gap-1 text-sm text-primary-600 font-medium mt-4 hover:underline">
+                        How GPS attendance works <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="feature-card bg-white rounded-xl p-8 shadow-md transition-all duration-300 ease-in-out border border-gray-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-user-tag text-brand-blue text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Employee QR Card</h3>
+                    <p class="text-gray-600">
+                        Each employee gets a unique QR card. A manager or shared device scans it for check-in. Ideal for factories, warehouses, and sites where employees share workstations.
+                    </p>
+                    <a href="/employee-qr-attendance.html" class="inline-flex items-center gap-1 text-sm text-primary-600 font-medium mt-4 hover:underline">
+                        How Employee QR Cards work <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="feature-card bg-white rounded-xl p-8 shadow-md transition-all duration-300 ease-in-out border border-gray-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-file-alt text-brand-blue text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Automatic Timesheet Generation</h3>
+                    <p class="text-gray-600">
+                        Daily, weekly, and monthly timesheets are calculated automatically from check-in data. Export to Excel for payroll in one click — no manual calculation needed.
+                    </p>
+                </div>
+
+                <div class="feature-card bg-white rounded-xl p-8 shadow-md transition-all duration-300 ease-in-out border border-gray-100">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-brand-blue text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Real-time Attendance Dashboard</h3>
+                    <p class="text-gray-600">
+                        See who is in, who is late, and who hasn't arrived — right now, from any device. Track trends across all your branches in one real-time dashboard.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ WHO IS IT FOR ═══════════════════ -->
+    <section id="who-is-it-for" class="py-16 bg-primary-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Used by businesses of every type, worldwide</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    If you manage employees and track attendance manually — TheCheckIn replaces spreadsheets, paper registers, and expensive hardware with a free app.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <a href="/retail-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-store text-yellow-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Retail &amp; Shops</p>
+                </a>
+                <a href="/construction-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-hard-hat text-amber-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Construction</p>
+                </a>
+                <a href="/restaurant-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-utensils text-red-500 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Restaurants &amp; Cafes</p>
+                </a>
+                <a href="/manufacturing-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-industry text-slate-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Manufacturing</p>
+                </a>
+                <a href="/clinic-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-hospital text-emerald-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Clinics &amp; Healthcare</p>
+                </a>
+                <a href="/school-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-graduation-cap text-purple-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Schools &amp; Institutes</p>
+                </a>
+                <a href="/hvac-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-tools text-orange-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">HVAC &amp; Field Services</p>
+                </a>
+                <a href="/logistics-attendance.html" class="group block bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-truck text-blue-600 text-xl"></i>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-brand-blue">Logistics &amp; Delivery</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ WHY US ═══════════════════ -->
+    <section id="why" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:space-x-12">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Why teams switch to TheCheckIn</h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Biometric machines are expensive and need maintenance. Paper registers are unreliable. Spreadsheets waste hours every month. There is a better way.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-brand-blue"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">Zero proxy attendance</h3>
+                                <p class="text-gray-600">GPS validation, face recognition, and device binding ensure employees can only check in as themselves, from the right location.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-brand-blue"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">Payroll-ready timesheets in seconds</h3>
+                                <p class="text-gray-600">Attendance data is automatically turned into timesheets. Export to Excel and hand it to payroll — no manual tallying at month end.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-brand-blue"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">Works for every type of worker</h3>
+                                <p class="text-gray-600">One platform covers office staff (QR), construction workers (GPS), and remote employees (mobile check-in) — no separate tools needed.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-brand-blue"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-gray-900">One dashboard for all branches</h3>
+                                <p class="text-gray-600">Multiple offices or job sites? See attendance across all locations in a single view — no calling branch managers or switching between sheets.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                        <img src="./images/team-dashboard-screen.png" alt="TheCheckIn HR attendance dashboard with multi-branch map" class="rounded-lg w-full mb-6">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-100">
+                                    <th class="text-left py-2 text-gray-500 font-medium"></th>
+                                    <th class="text-center py-2 text-brand-blue font-bold">TheCheckIn</th>
+                                    <th class="text-center py-2 text-gray-400 font-medium">Paper Register</th>
+                                    <th class="text-center py-2 text-gray-400 font-medium">Biometric</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-50">
+                                <tr>
+                                    <td class="py-2 text-gray-600">Cost to start</td>
+                                    <td class="py-2 text-center text-secondary-600 font-medium">Free</td>
+                                    <td class="py-2 text-center text-gray-400">Free</td>
+                                    <td class="py-2 text-center text-gray-400">Expensive</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-gray-600">Proxy attendance</td>
+                                    <td class="py-2 text-center"><i class="fas fa-times text-red-400"></i> Blocked</td>
+                                    <td class="py-2 text-center text-red-400">Easy to fake</td>
+                                    <td class="py-2 text-center text-gray-400">Partial</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-gray-600">Remote / field workers</td>
+                                    <td class="py-2 text-center"><i class="fas fa-check text-secondary-500"></i></td>
+                                    <td class="py-2 text-center"><i class="fas fa-times text-red-400"></i></td>
+                                    <td class="py-2 text-center"><i class="fas fa-times text-red-400"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-gray-600">Auto timesheets</td>
+                                    <td class="py-2 text-center"><i class="fas fa-check text-secondary-500"></i></td>
+                                    <td class="py-2 text-center"><i class="fas fa-times text-red-400"></i></td>
+                                    <td class="py-2 text-center text-gray-400">Partial</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-gray-600">Multi-branch</td>
+                                    <td class="py-2 text-center"><i class="fas fa-check text-secondary-500"></i></td>
+                                    <td class="py-2 text-center"><i class="fas fa-times text-red-400"></i></td>
+                                    <td class="py-2 text-center text-gray-400">Extra cost</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 text-gray-600">Hardware required</td>
+                                    <td class="py-2 text-center text-secondary-600 font-medium">None</td>
+                                    <td class="py-2 text-center text-gray-400">None</td>
+                                    <td class="py-2 text-center text-red-400">Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ INTEGRATIONS ═══════════════════ -->
+    <section id="integrations" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <span class="inline-block bg-primary-100 text-primary-700 text-sm font-semibold px-4 py-1 rounded-full mb-4">Integrations</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Connect TheCheckIn with Your ERP &amp; HR Software
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Already using ERPNext, Frappe HRMS, or Sage 300? TheCheckIn syncs attendance
+                    data directly — no manual exports, no spreadsheet juggling.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+                <!-- ERPNext / Frappe card -->
+                <div class="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-cube text-blue-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">ERPNext &amp; Frappe HRMS</h3>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="inline-block bg-blue-50 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full border border-blue-100">ERPNext Attendance</span>
+                                <span class="inline-block bg-blue-50 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full border border-blue-100">Frappe HRMS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-gray-600 mb-6">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Sync face recognition attendance directly into ERPNext HR Attendance module</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Works with Frappe HRMS leave and payroll — attendance feeds through automatically</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Used by ERPNext-powered businesses in retail, construction, clinics, and field services globally</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Replaces expensive biometric devices at every branch — ERPNext handles the HR, TheCheckIn handles the attendance</span>
+                        </li>
+                    </ul>
+                    <a href="/erpnext-attendance.html" class="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700">
+                        See ERPNext integration details <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Sage 300 card -->
+                <div class="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-building-columns text-green-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Sage 300</h3>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="inline-block bg-green-50 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full border border-green-100">Sage 300 T&amp;A</span>
+                                <span class="inline-block bg-green-50 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full border border-green-100">Payroll Integration</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-gray-600 mb-6">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Export attendance timesheets from TheCheckIn into Sage 300 Time &amp; Attendance</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Map employee check-in/out times to Sage 300 payroll periods automatically</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Face recognition check-in on smartphones replaces Sage 300 biometric terminal hardware</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-secondary-500 mt-1 flex-shrink-0"></i>
+                            <span>Works for multi-branch businesses already running Sage 300 across locations</span>
+                        </li>
+                    </ul>
+                    <a href="/sage-300-attendance.html" class="inline-flex items-center gap-2 text-secondary-600 font-semibold hover:text-secondary-700">
+                        See Sage 300 integration details <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <p class="text-center text-gray-500 mt-10 text-sm">
+                Need a custom integration? <a href="#contact" class="text-primary-600 font-medium hover:underline">Contact us</a> — we connect TheCheckIn with your existing HR or ERP software.
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ CTA BANNER ═══════════════════ -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-4">Stop tracking attendance manually. Start free today.</h2>
+                    <p class="text-lg opacity-90 mb-2">Download the Android app — try face recognition check-in right now. Up and running in 2 minutes.</p>
+                    <p class="text-sm opacity-75 mb-6">Free up to 10 employees &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; No hardware &nbsp;·&nbsp; No IT setup</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-brand-blue bg-white hover:bg-gray-100">
+                            <i class="fab fa-google-play mr-2"></i> Get Android App
+                        </a>
+                        <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white bg-transparent hover:bg-white hover:text-brand-blue">
+                            <i class="fas fa-globe mr-2"></i> Admin Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="bg-white rounded-xl p-6 shadow-lg max-w-xs flex flex-col items-center">
+                        <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener" aria-label="Download TheCheckIn on Google Play">
+                            <img src="./images/thecheckin-qr-attendance-tracker-android.png" alt="TheCheckIn on Google Play Store" class="mx-auto hover:opacity-80 transition-opacity cursor-pointer" style="width:180px;" loading="lazy">
+                        </a>
+                        <p class="text-xs text-gray-500 mt-2 text-center">Employee app on Google Play &middot; Android only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ FAQ — Feeds Google featured snippets & ChatGPT ═══════════════════ -->
+    <section id="faq" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-lg text-gray-600">Everything you need to know about TheCheckIn attendance tracking app.</p>
+            </div>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Is TheCheckIn free to use?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes — TheCheckIn is <strong>free for up to 10 employees</strong>, with no credit card and no hardware required. Download the Android app or sign up on the web and add your first employee in under 2 minutes. For larger teams, <a href="#contact" class="text-primary-600 hover:underline">contact us</a> for a flexible plan tailored to your headcount.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Do I need a biometric machine or any hardware?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        No hardware is needed at all. TheCheckIn replaces biometric machines entirely. Attendance is tracked using QR codes, GPS on the employee's smartphone, or face recognition — all through the free mobile app.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How does QR code attendance work?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        TheCheckIn offers two QR methods. <strong>Branch QR</strong>: a QR code is placed at each office or site entrance — employees scan it with their phone to check in. <strong>Employee QR card</strong>: each employee has their own personal QR code that a manager or shared device scans. Both record exact time, date, and location.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can I track field workers and remote employees?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Remote and field employees use the GPS check-in feature in the app. Their GPS coordinates are captured at check-in, so managers can confirm they are at the right location — whether that's a construction site, client office, or delivery location. No additional hardware is needed.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How does face recognition attendance prevent proxy check-in?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Employees register their face once in the app. On each check-in, face recognition with <strong>liveness detection</strong> (eye blink verification) confirms the person is physically present — not a printed photo or video. This completely eliminates buddy punching and proxy attendance.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can I manage multiple office branches?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn supports unlimited branches. Each branch gets its own QR code and GPS geofence. Admins see attendance across all locations on a single real-time dashboard — no need to check each branch separately.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How are timesheets generated for payroll?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Timesheets are automatically calculated from check-in and check-out data. Daily, weekly, and monthly reports are available in the dashboard. Export them to Excel with one click and share with your payroll team — no manual work required.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">What types of businesses use TheCheckIn?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        TheCheckIn is used by retail stores, restaurants, construction companies, manufacturing units, healthcare clinics, schools, and logistics businesses. It suits any organisation with 5 to 500+ employees who need reliable, tamper-proof attendance tracking.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does TheCheckIn integrate with ERPNext or Frappe HRMS?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn syncs attendance records with ERPNext and Frappe HRMS. If your business already runs ERPNext for HR and payroll, TheCheckIn can feed face recognition attendance data directly into your ERPNext Attendance module, eliminating manual data entry.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can TheCheckIn replace a Sage 300 biometric time clock?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn integrates with Sage 300 Time and Attendance. Employees use their smartphone camera for face recognition check-in instead of a biometric terminal. Attendance data exports into Sage 300 payroll-ready format, saving hours of manual data entry each pay period.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Is employee face recognition data stored or shared?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Face recognition in TheCheckIn uses on-device processing — the app compares the live face against the registered face data stored on the employee's own smartphone. Raw face images are not transmitted to a server. Employee face data belongs to your company and is never shared with third parties.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ ABOUT ═══════════════════ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">About TheCheckIn</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+                    TheCheckIn is developed by <strong>Pazhanam Technologies Private Limited</strong>, a DPIIT Startup India recognised company building practical attendance and workforce management software for businesses worldwide.
+                </p>
+                <div class="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-sm">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-brand-blue text-2xl"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6">
+                        We built TheCheckIn because millions of businesses worldwide still use paper registers or expensive biometric machines that require maintenance and technical support. Our mission is to make attendance tracking simple, reliable, and accessible to every business — regardless of size or budget.
+                    </p>
+                    <div class="flex items-center justify-center space-x-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-globe text-brand-blue mr-2"></i>
+                            <span class="text-sm text-gray-600">Serving customers globally</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-certificate text-brand-blue mr-2"></i>
+                            <span class="text-sm text-gray-600">DPIIT Recognised Startup</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ CONTACT ═══════════════════ -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Questions about TheCheckIn for your business? Reach us by email or WhatsApp — we reply within one business day.
+                </p>
+            </div>
+            <div class="max-w-3xl mx-auto bg-brand-blue rounded-2xl shadow-lg p-8 md:p-10 text-white">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+
+                    <!-- Email -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/70 mb-1">Email</p>
+                            <!-- Email assembled by JS — not in plain HTML source to reduce spam harvesting -->
+                            <span id="contact-email-slot" class="text-white"></span>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-whatsapp text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/70 mb-1">WhatsApp</p>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                               class="text-white hover:underline font-medium">+91 87787 96644</a>
+                        </div>
+                    </div>
+
+                    <!-- Company -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-building text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/70 mb-1">Company</p>
+                            <p class="text-white font-medium">Pazhanam Technologies</p>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-location-dot text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white/70 mb-1">Address</p>
+                            <p class="text-white font-medium">Tamil Nadu, India — 614613</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- CTA row -->
+                <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                    <a id="contact-email-btn" href="#"
+                       class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-brand-blue text-sm font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap">
+                        <i class="fas fa-envelope"></i> Send an Email
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90 transition-opacity whitespace-nowrap">
+                        <i class="fab fa-whatsapp text-base"></i> Chat on WhatsApp
+                    </a>
+                    <a href="https://www.linkedin.com/in/arangaraju-balasubramanian-pazhanam/" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white/10 text-white text-sm font-semibold hover:bg-white/20 transition-colors border border-white/20 whitespace-nowrap">
+                        <i class="fab fa-linkedin text-base"></i> Connect on LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ FOOTER ═══════════════════ -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+
+                <!-- Brand + contact -->
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn — Employee Attendance App" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Face recognition attendance app for offices, HVAC teams, construction, and field workers worldwide.</p>
+                    <div class="space-y-3">
+                        <!-- Email assembled by JS -->
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                        <div class="flex items-start gap-2 text-sm text-gray-600">
+                            <i class="fas fa-location-dot text-brand-blue w-4 flex-shrink-0 mt-0.5"></i>
+                            <span>Pazhanam Technologies<br>Tamil Nadu, India — 614613</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Check-in Methods -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/qr-code-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/gps-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/employee-qr-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                        <li><a href="#faq" class="text-sm text-gray-600 hover:text-brand-blue">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Industries -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+
+                <!-- Integrations -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company links -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Us</a></li>
+                        <li><a href="#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+                            <i class="fab fa-whatsapp text-base"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5] transition-colors">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════ Fixed WhatsApp floating button ═══════ -->
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+       aria-label="Chat with TheCheckIn on WhatsApp"
+       id="wa-float"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform 0.2s,box-shadow 0.2s;"
+       onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 28px rgba(37,211,102,0.6)';"
+       onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 20px rgba(37,211,102,0.45)';">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        /* Assemble contact email at runtime — keeps address out of static HTML source.
+           Must run AFTER footer is in the DOM, so placed here at bottom of body. */
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var mailto = 'mailto:' + addr;
+            /* Contact section */
+            var slot = document.getElementById('contact-email-slot');
+            if (slot) slot.innerHTML = '<a href="' + mailto + '" class="text-white hover:underline font-medium">' + addr + '</a>';
+            var btn = document.getElementById('contact-email-btn');
+            if (btn) btn.href = mailto;
+            /* Footer — now rendered above this script so getElementById finds it */
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="' + mailto + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+
+        // Mobile menu
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const el = document.querySelector(targetId);
+                if (el) {
+                    e.preventDefault();
+                    el.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-trigger').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const item = this.closest('.faq-item');
+                const isOpen = item.classList.contains('open');
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                // Toggle clicked
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+
+    </script>
+
+    <!-- ═══════ AI Face Recognition Hero Demo — Phase Cycle ═══════ -->
+    <script>
+        (function () {
+            // Only run if the face demo elements exist
+            var avatar = document.getElementById('faceAvatar');
+            if (!avatar) return;
+
+            var statusEl = document.getElementById('faceStatus');
+            var scanline = document.getElementById('faceScanline');
+            var badge = document.getElementById('faceVerifiedBadge');
+            var toast = document.getElementById('faceToast');
+            var toastTime = document.getElementById('faceToastTime');
+            var clock = document.getElementById('faceClock');
+
+            // Live clock in phone header
+            function updateClock() {
+                var now = new Date();
+                var h = now.getHours();
+                var m = now.getMinutes();
+                var ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12 || 12;
+                var mm = m < 10 ? '0' + m : m;
+                var timeStr = h + ':' + mm + ' ' + ampm;
+                if (clock) clock.textContent = timeStr;
+                if (toastTime) toastTime.textContent = timeStr;
+            }
+            updateClock();
+            setInterval(updateClock, 30000);
+
+            // Reset demo state
+            function resetDemo() {
+                avatar.classList.remove('verified');
+                badge.classList.remove('show');
+                toast.classList.remove('show');
+                statusEl.classList.remove('verified');
+                statusEl.textContent = 'Align your face in the frame';
+            }
+
+            // Professional phase cycle — no eye blink
+            var PHASES = [
+                { ms: 2000, run: function () { resetDemo(); statusEl.textContent = 'Align your face in the frame'; } },
+                { ms: 2200, run: function () { statusEl.textContent = 'Scanning face…'; } },
+                { ms: 2800, run: function () {
+                    statusEl.textContent = 'Face verified ✓';
+                    statusEl.classList.add('verified');
+                    avatar.classList.add('verified');
+                    badge.classList.add('show');
+                } },
+                { ms: 2200, run: function () {
+                    toast.classList.add('show');
+                } },
+                { ms: 2400, run: function () {
+                    toast.classList.remove('show');
+                } }
+            ];
+
+            var phaseIndex = 0;
+            function nextPhase() {
+                var phase = PHASES[phaseIndex];
+                if (phase.run) phase.run();
+                phaseIndex = (phaseIndex + 1) % PHASES.length;
+                setTimeout(nextPhase, phase.ms);
+            }
+
+            // Start the cycle after a short delay
+            setTimeout(nextPhase, 800);
+        })();
+    </script>
+</body>
 </html>

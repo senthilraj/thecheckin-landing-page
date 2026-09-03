@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Staff Attendance — Shift Check-in for Cafes & Restaurants | TheCheckIn</title>
+    <meta name="description" content="Track kitchen and front-of-house staff attendance by shift. QR or face check-in, no paper register. Real-time dashboard for all locations. Free up to 10 employees.">
+    <meta name="keywords" content="restaurant staff attendance, restaurant employee attendance, cafe staff attendance, kitchen staff attendance, restaurant attendance app, hospitality attendance tracking">
+    <link rel="canonical" href="https://thecheckin.io/restaurant-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/restaurant-attendance.html">
+    <meta property="og:title" content="Restaurant Staff Attendance �� Shift Check-in | TheCheckIn">
+    <meta property="og:description" content="Track kitchen and front-of-house staff attendance by shift. QR or face check-in. No paper register. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Restaurant Staff Attendance — Shift Check-in | TheCheckIn">
+    <meta name="twitter:description" content="Track kitchen and front-of-house attendance by shift. QR or face check-in for restaurant staff.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Restaurant Staff Attendance", "item": "https://thecheckin.io/restaurant-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does TheCheckIn handle multiple shifts — morning and evening — for restaurant staff?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Each shift (AM, PM, split) is configured in the admin dashboard. Staff check in when they arrive and check out when they leave. The system records which shift they worked and calculates hours automatically. You can set expected shift times so late arrivals are flagged." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I track kitchen staff and front-of-house staff separately?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can create separate departments or groups in TheCheckIn — for example, Kitchen, FOH (front of house), and Management. Attendance reports can be filtered by department, making it easy to see kitchen headcount separate from service staff." }
+            },
+            {
+              "@type": "Question",
+              "name": "What if a chef checks in for a colleague who hasn't arrived yet (proxy)?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Enable face recognition. Every check-in requires the staff member to look at their own phone camera — a liveness detection test (eye blink) confirms it's a real person, not a photo. Nobody can check in as someone else. The face match happens on-device in under 3 seconds." }
+            },
+            {
+              "@type": "Question",
+              "name": "We have two restaurant locations. Can I manage both from one account?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each location is a separate branch in TheCheckIn with its own QR code. You manage all locations from one admin account and see attendance across both in a single dashboard." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero restaurant shift board animations ═══ */
+        @keyframes rest-row-slide {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .rest-row { opacity: 0; animation: rest-row-slide 0.5s ease forwards; }
+        @keyframes rest-check-pop {
+            0% { opacity: 0; transform: scale(0.3); }
+            60% { transform: scale(1.25); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .rest-check { animation: rest-check-pop 0.5s ease forwards; }
+        @keyframes rest-badge-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.45); }
+            50% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+        }
+        .rest-badge-glow { animation: rest-badge-glow 2s ease-in-out infinite; }
+        @keyframes rest-shift-fade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .rest-shift-in { opacity: 0; animation: rest-shift-fade 0.5s ease forwards; }
+        .rest-shift-in.delay-1 { animation-delay: 0.1s; }
+        .rest-shift-in.delay-2 { animation-delay: 0.3s; }
+        .rest-shift-in.delay-3 { animation-delay: 0.5s; }
+        .rest-shift-in.delay-4 { animation-delay: 0.7s; }
+        .rest-shift-in.delay-5 { animation-delay: 0.9s; }
+        .rest-shift-in.delay-6 { animation-delay: 1.1s; }
+    </style>
+
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">Restaurant Staff Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-rose-100 text-rose-700 mb-5">
+                    <i class="fas fa-utensils mr-2"></i> Restaurants &amp; Cafes
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Restaurant Staff Attendance — Fast Shift Check-in for Kitchen & Front of House
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Your morning chef starts at 7am. Your evening service team comes in at 4pm. You have part-timers on weekends and a paper register that nobody fills in properly. At the end of the month, payroll takes a full day to sort out.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    TheCheckIn gives every shift a clean digital record. Staff check in with a QR scan or face recognition when they arrive — it takes 3 seconds. You see who's in for each shift from your phone, and timesheets are calculated automatically at the end of every pay period.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · QR + face check-in · AM/PM shift tracking</p>
+            </div>
+
+            <!-- Visual: Shift overview card -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-5">
+                        <div class="w-9 h-9 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-utensils text-rose-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Today's shifts</p>
+                            <p class="text-[10px] text-gray-400">Saturday · Full day</p>
+                        </div>
+                    </div>
+                    <!-- AM Shift -->
+                    <div class="mb-3 rest-row-in delay-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-gray-700 uppercase tracking-wide">AM Shift · 7:00–15:00</span>
+                            <span class="text-[10px] bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full rest-badge-glow">All in ✓</span>
+                        </div>
+                        <div class="bg-rose-50 rounded-xl p-3 border border-rose-100 space-y-1.5">
+                            <div class="rest-row" style="animation-delay: 0.2s">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-5 h-5 bg-rose-200 rounded-full flex items-center justify-center text-[9px] font-bold text-rose-700">K</div>
+                                        <span class="text-xs text-gray-700">Head Chef</span>
+                                    </div>
+                                    <span class="text-[10px] text-green-600 font-semibold rest-check" style="animation-delay: 0.35s">07:02 ✓</span>
+                                </div>
+                            </div>
+                            <div class="rest-row" style="animation-delay: 0.35s">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-5 h-5 bg-rose-200 rounded-full flex items-center justify-center text-[9px] font-bold text-rose-700">S</div>
+                                        <span class="text-xs text-gray-700">Sous Chef</span>
+                                    </div>
+                                    <span class="text-[10px] text-green-600 font-semibold rest-check" style="animation-delay: 0.5s">07:15 ✓</span>
+                                </div>
+                            </div>
+                            <div class="rest-row" style="animation-delay: 0.5s">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-5 h-5 bg-rose-200 rounded-full flex items-center justify-center text-[9px] font-bold text-rose-700">M</div>
+                                        <span class="text-xs text-gray-700">Cashier</span>
+                                    </div>
+                                    <span class="text-[10px] text-green-600 font-semibold rest-check" style="animation-delay: 0.65s">07:05 ✓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PM Shift -->
+                    <div class="rest-row-in delay-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-gray-700 uppercase tracking-wide">PM Shift · 15:00–23:00</span>
+                            <span class="text-[10px] bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full rest-badge-glow">Starts 3pm</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-3 border border-gray-200">
+                            <p class="text-[10px] text-gray-500 text-center">4 staff scheduled · Pending check-in</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center rest-row-in delay-3">
+                        <p class="text-[10px] text-gray-400 font-medium">Timesheet auto-calculated at month end</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How restaurant shift attendance works with TheCheckIn</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">No hardware. No paper. Every shift gets a clean digital record automatically.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">1</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Set up shifts and branches</h3>
+                    <p class="text-sm text-gray-600">Create your AM and PM shifts in the admin dashboard. Add each restaurant location as a branch. Takes 5 minutes and you don't touch it again unless your schedule changes.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">2</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Staff check in on arrival</h3>
+                    <p class="text-sm text-gray-600">When the chef arrives, they scan the kitchen QR code or check in with face recognition. 3 seconds. No app login every time — just scan and go. Latecomers are automatically flagged.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">3</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Manager sees headcount live</h3>
+                    <p class="text-sm text-gray-600">Before service starts you can check — is the full kitchen team in? Did the evening crew arrive? See it from your phone without calling anyone. Know if you're going to be short-staffed before service opens.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">4</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Pay period closes automatically</h3>
+                    <p class="text-sm text-gray-600">At the end of the month, total hours per staff member are calculated from check-in and check-out data. Export to Excel for payroll — or connect to ERPNext or Sage 300 for direct import.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">What restaurant owners get from TheCheckIn</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-qrcode text-rose-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">The paper register is gone — no one misses it</h3>
+                                <p class="text-gray-600">Paper registers get left blank during busy service, filled in retroactively, or just lost. A QR code on the wall doesn't get lost. Every scan is a permanent, timestamped record that nobody can alter.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-check text-amber-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">No more proxy check-ins between kitchen and FOH</h3>
+                                <p class="text-gray-600">In a busy restaurant, it's easy for one staff member to mark another as present. Face recognition with liveness detection stops that completely — only the actual person can check in for themselves.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clock text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Late arrival alerts before service starts</h3>
+                                <p class="text-gray-600">You can see who hasn't checked in yet as the shift start time approaches. If a key staff member is running late, you know in time to call them or arrange cover — not 20 minutes after service should have opened.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-invoice-dollar text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Payroll disputes end when every hour is documented</h3>
+                                <p class="text-gray-600">When a part-time staff member says they worked 18 hours last week and your calculation says 14, TheCheckIn shows the exact check-in and check-out timestamps. No dispute — just the record.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-rose-50 rounded-2xl p-8 border border-rose-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Works for every type of food service business</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-coffee text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Cafes &amp; coffee shops</p>
+                                    <p class="text-xs text-gray-500">Morning crew tracking, barista shift handovers</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-pizza-slice text-rose-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Fast food &amp; QSR chains</p>
+                                    <p class="text-xs text-gray-500">High-frequency shift changes, multiple locations</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-wine-glass text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Fine dining restaurants</p>
+                                    <p class="text-xs text-gray-500">Split shifts, sommelier and kitchen staff combined</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-truck text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Cloud kitchens &amp; delivery-only</p>
+                                    <p class="text-xs text-gray-500">Kitchen crew attendance without a dine-in front desk</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from restaurant owners &amp; managers</h2>
+            <p class="text-lg text-gray-600 mb-10">Real questions from people replacing the paper register for the first time.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Kitchen staff won't use an app. How do we handle that?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The QR code scan is as simple as it gets — one tap to open the camera, point at the QR, done. No login, no form, no typing. For kitchen staff who really won't use a phone, Employee QR Cards work too: a supervisor scans each person's card as they walk in. No app required on the worker's side.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How do I track staff who work split shifts?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Multiple check-in events per day are fully supported. A staff member working a split shift (e.g. 8am–12pm, then 5pm–10pm) checks in and out twice. Both sessions are recorded and the total hours for the day are combined in the timesheet.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can I set different expected shift times for kitchen vs service staff?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Each shift configuration has its own start and end time. You can set the kitchen AM shift to start at 7:00 and the service AM shift to start at 10:00. Late arrivals are flagged relative to their own shift start time, not a single global time.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We hire extra staff during weekends and events. How do they get added?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Add them as temporary employees in the admin dashboard — just a name and phone number. They register their face on the app and can check in immediately. You can remove or deactivate them after the event. No additional hardware, no extra device.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Replace the paper register today</h2>
+            <p class="text-lg opacity-90 mb-2">Set up your restaurant, add your kitchen and service staff, and start tracking every shift.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · QR &amp; face check-in · Automatic shift timesheets</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Shift attendance tracking for restaurants, retail, clinics, and field teams worldwide.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-brand-blue font-medium">Restaurants</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var mailto = 'mailto:' + addr;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="' + mailto + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+        // Hero dashboard — live refresh cycle (simulates real-time check-in activity)
+        (function () {
+            setTimeout(function () {
+                var rows = document.querySelectorAll('.rest-row');
+                if (!rows.length) return;
+                var idx = 0;
+                setInterval(function () {
+                    rows[idx].style.outline = '2px solid rgba(34,197,94,0.3)';
+                    rows[idx].style.outlineOffset = '2px';
+                    setTimeout(function () {
+                        rows[idx].style.outline = '';
+                        rows[idx].style.outlineOffset = '';
+                        idx = (idx + 1) % rows.length;
+                    }, 800);
+                }, 14000);
+            }, 2500);
+        })();
+    </script>
+</body>
+</html>

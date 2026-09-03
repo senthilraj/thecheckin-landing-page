@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERPNext Face Attendance & Frappe HRMS Integration | TheCheckIn</title>
+    <meta name="description" content="TheCheckIn syncs face recognition attendance into ERPNext in real time — no export, no import. Employee check-ins appear in ERPNext Employee Checkin instantly. Frappe HRMS payroll picks up automatically.">
+    <meta name="keywords" content="erpnext face attendance, frappe attendance app, frappe face attendance, frappe hrms attendance, erpnext attendance integration, frappe hrms integration, erpnext auto attendance">
+    <link rel="canonical" href="https://thecheckin.io/erpnext-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/erpnext-attendance.html">
+    <meta property="og:title" content="ERPNext Face Attendance & Frappe HRMS Integration | TheCheckIn">
+    <meta property="og:description" content="Face recognition attendance that syncs into ERPNext in real time. No export. No import. Employee check-ins appear in ERPNext Employee Checkin instantly.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ERPNext Face Attendance & Frappe HRMS Integration | TheCheckIn">
+    <meta name="twitter:description" content="Face recognition attendance that syncs into ERPNext in real time. No manual steps.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "ERPNext Attendance Integration", "item": "https://thecheckin.io/erpnext-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does TheCheckIn sync attendance to ERPNext?",
+              "acceptedAnswer": { "@type": "Answer", "text": "TheCheckIn sends each check-in event to ERPNext automatically via a secure webhook — the moment the face recognition confirms identity. The attendance record appears in ERPNext's Employee Checkin log within seconds. No export file, no manual import, no scheduled job needed." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does ERPNext's auto-attendance work with TheCheckIn check-ins?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. TheCheckIn creates Employee Checkin records in ERPNext using the exact format ERPNext's own auto-attendance processor expects. ERPNext then runs its native logic to generate Attendance records and feed Frappe HRMS payroll — all without any manual step." }
+            },
+            {
+              "@type": "Question",
+              "name": "How do employee records sync between ERPNext and TheCheckIn?",
+              "acceptedAnswer": { "@type": "Answer", "text": "ERPNext is the source of truth for employee and branch data. When you add or update an employee in ERPNext, the change syncs into TheCheckIn automatically. You manage employees in ERPNext — TheCheckIn reflects it. Face enrollment (the one-time face photo capture per employee) stays in the TheCheckIn app." }
+            },
+            {
+              "@type": "Question",
+              "name": "Which ERPNext versions does TheCheckIn support?",
+              "acceptedAnswer": { "@type": "Answer", "text": "TheCheckIn's integration supports ERPNext v14 and v15, including both self-hosted and Frappe Cloud deployments. It works with the Frappe HRMS app as well as the HR module in older ERPNext versions." }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens if the internet goes down at a site during check-in?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Face recognition matching happens on the device — no internet needed for that step. The check-in record queues locally and the webhook fires as soon as connectivity is restored. The retry logic handles temporary outages automatically, with no attendance records lost." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        @keyframes slideIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+        .slide-in { animation: slideIn 0.5s ease forwards; }
+        @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+        .pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero sync diagram animations ═══ */
+        @keyframes flow-down {
+            0% { top: 0; opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .flow-particle {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+            animation: flow-down 2.6s ease-in-out infinite;
+            z-index: 5;
+        }
+        .flow-particle.delay-1 { animation-delay: 1.3s; }
+        @keyframes bolt-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .bolt-pulse {
+            display: inline-block;
+            animation: bolt-pulse 1.4s ease-in-out infinite;
+        }
+        @keyframes check-pop {
+            0% { opacity: 0; transform: scale(0.4); }
+            60% { transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .check-pop { animation: check-pop 0.5s ease forwards; }
+        @keyframes row-reveal {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .row-reveal { opacity: 0; animation: row-reveal 0.5s ease forwards; }
+        @keyframes in-badge-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        }
+        .in-badge-pulse { animation: in-badge-pulse 1.8s ease-in-out infinite; }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">ERPNext Attendance Integration</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+                <!-- Text -->
+                <div>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700">
+                            ERPNext v14 &amp; v15
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700">
+                            Frappe HRMS
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot mr-1.5"></span>Real-time sync
+                        </span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                        ERPNext Attendance Integration — Face Recognition, Synced Instantly
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-4">
+                        You're running ERPNext for HR. Your employees still sign a paper register or punch in on a shared fingerprint machine. Those two things shouldn't coexist — and now they don't have to.
+                    </p>
+                    <p class="text-xl text-gray-600 mb-8">
+                        TheCheckIn captures face recognition check-in on each employee's Android phone and pushes it directly to ERPNext's Employee Checkin log — automatically, in seconds. No export. No import. ERPNext's own auto-attendance and Frappe HRMS payroll take it from there.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                            <i class="fab fa-google-play mr-2"></i> Try the App Free
+                        </a>
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                            <i class="fab fa-whatsapp mr-2"></i> Ask About Your ERPNext Setup
+                        </a>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · Real-time webhook sync · ERPNext v14 &amp; v15</p>
+                </div>
+
+                <!-- Visual — real-time sync diagram -->
+                <div class="hidden md:block mt-10 md:mt-0">
+                    <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Live Integration</span>
+                            <span class="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold bg-emerald-50 px-2 py-1 rounded-full border border-emerald-200">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot"></span>
+                                Real-time
+                            </span>
+                        </div>
+
+                        <!-- TheCheckIn block -->
+                        <div class="bg-primary-50 border border-primary-200 rounded-xl p-4 mb-2 relative overflow-hidden">
+                            <div class="flow-particle"></div>
+                            <div class="flow-particle delay-1"></div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-brand-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-face-smile text-white text-base"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-gray-900">TheCheckIn App</p>
+                                    <p class="text-xs text-gray-500 truncate">Face check-in · 9:02 AM · Main Office</p>
+                                </div>
+                                <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold flex-shrink-0 in-badge-pulse">IN ✓</span>
+                            </div>
+                        </div>
+
+                        <!-- Webhook arrow -->
+                        <div class="flex flex-col items-center py-2 gap-1">
+                            <div class="w-px h-3 bg-brand-blue/30"></div>
+                            <div class="flex items-center gap-1.5">
+                                <div class="h-px w-8 bg-brand-blue/30"></div>
+                                <span class="text-xs text-brand-blue font-semibold bg-primary-50 border border-primary-200 px-2 py-0.5 rounded-full">
+                                    <i class="fas fa-bolt mr-1 text-amber-400 bolt-pulse"></i>webhook · <3 sec
+                                </span>
+                                <div class="h-px w-8 bg-brand-blue/30"></div>
+                            </div>
+                            <div class="w-px h-3 bg-brand-blue/30"></div>
+                        </div>
+
+                        <!-- ERPNext block -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-layer-group text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-900">ERPNext</p>
+                                    <p class="text-xs text-gray-500">Employee Checkin created</p>
+                                </div>
+                            </div>
+                            <div class="space-y-2 border-t border-blue-100 pt-3">
+                                <div class="flex items-center gap-2 text-xs text-gray-600 row-reveal" style="animation-delay:0.2s">
+                                    <div class="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 check-pop">
+                                        <i class="fas fa-check text-green-600 text-[9px]"></i>
+                                    </div>
+                                    <span>Employee Checkin logged automatically</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-gray-600 row-reveal" style="animation-delay:0.5s">
+                                    <div class="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 check-pop">
+                                        <i class="fas fa-check text-green-600 text-[9px]"></i>
+                                    </div>
+                                    <span>ERPNext Auto-attendance runs</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs text-gray-600 row-reveal" style="animation-delay:0.8s">
+                                    <div class="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 check-pop">
+                                        <i class="fas fa-check text-green-600 text-[9px]"></i>
+                                    </div>
+                                    <span>Frappe HRMS payroll ready</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-gray-400 text-center mt-4 font-medium">No export. No import. No manual steps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it actually works — real-time, no manual steps -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">Connect once. It syncs itself.</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">After a one-time setup, every employee check-in flows into ERPNext automatically. Your HR team doesn't do anything extra.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-0">
+                <div class="relative">
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm h-full">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4 mx-auto">1</div>
+                        <div class="text-center mb-3">
+                            <i class="fas fa-plug text-brand-blue text-2xl mb-3"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-2 text-center">Connect the integration</h3>
+                        <p class="text-sm text-gray-600 text-center">One-time setup. Paste the API key from TheCheckIn into your ERPNext settings. Done.</p>
+                    </div>
+                    <div class="hidden md:flex absolute top-1/2 -right-3 z-10 w-6 h-6 bg-brand-blue text-white rounded-full items-center justify-center text-xs">
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </div>
+                </div>
+
+                <div class="relative mt-4 md:mt-0 md:ml-4">
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm h-full">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4 mx-auto">2</div>
+                        <div class="text-center mb-3">
+                            <i class="fas fa-users-gear text-primary-600 text-2xl mb-3"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-2 text-center">Employees sync automatically</h3>
+                        <p class="text-sm text-gray-600 text-center">Your ERPNext employee list syncs into TheCheckIn. Add or update an employee in ERPNext — it appears in TheCheckIn within seconds.</p>
+                    </div>
+                    <div class="hidden md:flex absolute top-1/2 -right-3 z-10 w-6 h-6 bg-brand-blue text-white rounded-full items-center justify-center text-xs">
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </div>
+                </div>
+
+                <div class="relative mt-4 md:mt-0 md:ml-4">
+                    <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm h-full">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4 mx-auto">3</div>
+                        <div class="text-center mb-3">
+                            <i class="fas fa-face-smile text-primary-600 text-2xl mb-3"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-2 text-center">Employee checks in with face</h3>
+                        <p class="text-sm text-gray-600 text-center">Face recognition on their Android phone. Liveness detection confirms it's them. Check-in confirmed.</p>
+                    </div>
+                    <div class="hidden md:flex absolute top-1/2 -right-3 z-10 w-6 h-6 bg-brand-blue text-white rounded-full items-center justify-center text-xs">
+                        <i class="fas fa-arrow-right text-[10px]"></i>
+                    </div>
+                </div>
+
+                <div class="mt-4 md:mt-0 md:ml-4">
+                    <div class="bg-green-50 rounded-xl p-6 border border-green-200 shadow-sm h-full">
+                        <div class="w-12 h-12 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4 mx-auto">4</div>
+                        <div class="text-center mb-3">
+                            <i class="fas fa-layer-group text-blue-600 text-2xl mb-3"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 mb-2 text-center">ERPNext updates instantly</h3>
+                        <p class="text-sm text-gray-600 text-center">A webhook fires. Employee Checkin appears in ERPNext within seconds. ERPNext's auto-attendance runs. Frappe HRMS payroll processes it.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No manual steps callout -->
+            <div class="mt-8 bg-white rounded-xl border border-gray-200 p-5 flex flex-col md:flex-row items-center gap-4 max-w-2xl mx-auto">
+                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-circle-check text-amber-500 text-xl"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-900">No export file. No CSV import. No scheduled job.</p>
+                    <p class="text-sm text-gray-600 mt-0.5">The entire flow is automated. From face scan to ERPNext Attendance record — no one has to touch a button at the end of the day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Two-direction sync explained simply -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3 text-center">Two things sync — in two different directions</h2>
+            <p class="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">The integration works both ways, but each direction has one owner — no conflicts, no duplicates.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- ERPNext → TheCheckIn -->
+                <div class="bg-blue-50 rounded-2xl p-8 border border-blue-200">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-layer-group text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">ERPNext → TheCheckIn</p>
+                            <p class="font-bold text-gray-900">Employee &amp; Branch data</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-blue-400 ml-auto text-xl"></i>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">ERPNext is the single source of truth for who your employees are. You add, update, or deactivate employees in ERPNext — the changes sync to TheCheckIn automatically.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-blue-500 flex-shrink-0 w-4"></i>
+                            <span>Employee name, email, phone, department</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-blue-500 flex-shrink-0 w-4"></i>
+                            <span>Branch / work location assignments</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-blue-500 flex-shrink-0 w-4"></i>
+                            <span>Employee status (Active / Left)</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-white rounded-lg p-3 border border-blue-100 text-xs text-blue-700 font-medium">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        One exception: face enrollment always happens in TheCheckIn — there's no equivalent in ERPNext.
+                    </div>
+                </div>
+
+                <!-- TheCheckIn → ERPNext -->
+                <div class="bg-primary-50 rounded-2xl p-8 border border-primary-200">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-12 h-12 bg-brand-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-face-smile text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">TheCheckIn → ERPNext</p>
+                            <p class="font-bold text-gray-900">Attendance check-ins</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-primary-400 ml-auto text-xl"></i>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Every face recognition check-in event pushes to ERPNext the moment it's confirmed — via a secure, signed webhook. ERPNext creates an Employee Checkin record, then handles the rest.</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-primary-600 flex-shrink-0 w-4"></i>
+                            <span>Check-in and check-out events (IN / OUT)</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-primary-600 flex-shrink-0 w-4"></i>
+                            <span>Timestamp, branch, GPS coordinates</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-700">
+                            <i class="fas fa-check text-primary-600 flex-shrink-0 w-4"></i>
+                            <span>Verification method (face recognition)</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-white rounded-lg p-3 border border-primary-100 text-xs text-primary-700 font-medium">
+                        <i class="fas fa-bolt mr-1 text-amber-400"></i>
+                        Appears in ERPNext within seconds — not at end of day, not the next morning.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What ERPNext does with the data -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">What ERPNext and Frappe HRMS do with the data</h2>
+                    <p class="text-gray-600 mb-8">Once the Employee Checkin records are in ERPNext, your existing ERPNext and Frappe HRMS setup takes over. Nothing new to configure — it plugs into the tools you already have.</p>
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-calendar-check text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">ERPNext auto-attendance runs natively</p>
+                                <p class="text-sm text-gray-600 mt-1">ERPNext's built-in auto-attendance processor reads the Employee Checkin records and generates Attendance documents — Present, Absent, Half Day — based on your existing shift policies.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-money-bill-wave text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">Frappe HRMS payroll uses the same data</p>
+                                <p class="text-sm text-gray-600 mt-1">Frappe HRMS reads the Attendance records created by auto-attendance. Leave deductions, LOP calculations, overtime, and shift allowances all process from accurate real-time data.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-bar text-purple-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">All ERPNext HR reports work out of the box</p>
+                                <p class="text-sm text-gray-600 mt-1">Monthly Attendance Sheet, Late Entry report, Early Exit report — they all work because the data is in the standard ERPNext Employee Checkin doctype format.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-shield-alt text-amber-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">Secure, signed webhook — no data exposed</p>
+                                <p class="text-sm text-gray-600 mt-1">Every check-in push is HMAC-signed. No raw face images or biometric data ever leaves TheCheckIn — only the attendance event and the ERPNext employee ID are sent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <!-- Visual: full flow summary -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900 mb-5 text-center">The full picture — from face scan to payroll</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3 p-3 bg-primary-50 rounded-xl border border-primary-100">
+                                <div class="w-9 h-9 bg-brand-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-face-smile text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-800">Face check-in on Android</p>
+                                    <p class="text-xs text-gray-500">Liveness confirmed · Location recorded</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center">
+                                <div class="flex flex-col items-center gap-0.5">
+                                    <div class="w-px h-3 bg-gray-300"></div>
+                                    <span class="text-[10px] text-gray-400 font-medium px-2 border border-gray-200 rounded bg-gray-50">webhook · &lt;3s</span>
+                                    <div class="w-px h-3 bg-gray-300"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl border border-blue-100">
+                                <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-user-clock text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-800">ERPNext Employee Checkin</p>
+                                    <p class="text-xs text-gray-500">Auto-created · Standard doctype</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center">
+                                <div class="flex flex-col items-center gap-0.5">
+                                    <div class="w-px h-3 bg-gray-300"></div>
+                                    <span class="text-[10px] text-gray-400 font-medium px-2 border border-gray-200 rounded bg-gray-50">auto-attendance</span>
+                                    <div class="w-px h-3 bg-gray-300"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                                <div class="w-9 h-9 bg-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-calendar-check text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-800">ERPNext Attendance record</p>
+                                    <p class="text-xs text-gray-500">Present / Absent / Half Day</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-center">
+                                <div class="flex flex-col items-center gap-0.5">
+                                    <div class="w-px h-3 bg-gray-300"></div>
+                                    <span class="text-[10px] text-gray-400 font-medium px-2 border border-gray-200 rounded bg-gray-50">Frappe HRMS</span>
+                                    <div class="w-px h-3 bg-gray-300"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-3 bg-purple-50 rounded-xl border border-purple-100">
+                                <div class="w-9 h-9 bg-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-money-bill-wave text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-800">Payroll processed</p>
+                                    <p class="text-xs text-gray-500">LOP deductions · Overtime · Leave</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from ERPNext admins</h2>
+            <p class="text-lg text-gray-600 mb-10">Real questions from people who already run ERPNext and want to sort out attendance.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How does TheCheckIn sync attendance to ERPNext — is it real time?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes, real time. The moment an employee's face check-in is confirmed, a secure webhook fires to your ERPNext instance. The Employee Checkin record appears in ERPNext within a few seconds — no export file, no daily batch job, no manual import.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Which ERPNext versions does this work with?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        ERPNext v14 and v15, including self-hosted and Frappe Cloud. It works with the new Frappe HRMS app and also with the HR module in older ERPNext versions. If you're on v13, reach out — we can advise on compatibility.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">How are employees managed — do I add them in TheCheckIn or in ERPNext?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        In ERPNext. Once the integration is connected, ERPNext is the source of truth for employee data. You add, edit, or deactivate employees in ERPNext — those changes sync into TheCheckIn automatically. The only thing done in TheCheckIn is face registration: each employee registers their face once in the app (since ERPNext has no equivalent for that).
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We have existing employees in TheCheckIn already. What happens when we enable the integration?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The integration does a one-time reconciliation — it tries to match existing TheCheckIn employees to ERPNext employees by email. Matched records are linked and their attendance history is preserved. Unmatched records can be linked manually. After that first sync, ERPNext takes over as the source of truth.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We have custom ERPNext fields and workflows. Will the integration still work?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The standard integration uses ERPNext's built-in Employee Checkin doctype — no custom fields needed. If you have custom approval workflows, custom shift rules, or need the integration to populate custom fields, Pazhanam can build that. <a href="/erpnext-customization.html" class="text-brand-blue hover:underline">See ERPNext customization services →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Get face recognition attendance into ERPNext — automatically</h2>
+            <p class="text-lg opacity-90 mb-2">Start with the free Android app. Try face check-in with your team. When you're ready to connect to ERPNext, we'll walk you through it.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · ERPNext v14 &amp; v15 · Real-time webhook · No manual steps</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+            <p class="text-sm opacity-60 mt-6">Need custom ERPNext workflows? <a href="/erpnext-customization.html" class="underline opacity-90 hover:opacity-100">See ERPNext customization</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Face recognition attendance for ERPNext, Frappe HRMS, Sage 300, and standalone use worldwide.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-brand-blue font-medium">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var mailto = 'mailto:' + addr;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="' + mailto + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>

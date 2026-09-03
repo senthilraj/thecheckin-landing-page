@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factory & Manufacturing Attendance Tracking — No Biometric Machine | TheCheckIn</title>
+    <meta name="description" content="Track factory floor attendance without expensive biometric machines. Employee QR or face check-in on any Android phone. Works offline. Free up to 10 employees.">
+    <meta name="keywords" content="manufacturing attendance tracking, factory attendance app, employee attendance factory, manufacturing employee attendance, factory floor attendance">
+    <link rel="canonical" href="https://thecheckin.io/manufacturing-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/manufacturing-attendance.html">
+    <meta property="og:title" content="Factory Attendance Tracking — No Biometric Machine | TheCheckIn">
+    <meta property="og:description" content="Employee QR or face check-in for factories. No biometric hardware. Real-time attendance on the dashboard. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Factory Attendance Tracking — No Biometric Machine | TheCheckIn">
+    <meta name="twitter:description" content="Employee QR or face check-in for factories and manufacturing. No expensive hardware needed.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "Manufacturing Attendance Tracking", "item": "https://thecheckin.io/manufacturing-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can factory workers check in without a smartphone?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. With Employee QR Cards, each worker gets a printed card with their unique QR code. A supervisor or shift manager scans all incoming workers' cards using one phone as they enter the floor. Workers don't need smartphones at all — just one device at the gate or entrance." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does TheCheckIn work in areas with no internet — inside a factory or warehouse?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The app can queue check-ins when connectivity is poor and syncs automatically once a connection is restored. For consistent offline use, Employee QR Card scanning via a single device at the gate is the most reliable approach — it works even on very low connectivity." }
+            },
+            {
+              "@type": "Question",
+              "name": "We already have a biometric machine. Why would we switch?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Biometric machines cost $300–$1,000 each, need maintenance, break down, and require fingerprint or iris registration for every worker. When they fail, attendance stops. TheCheckIn runs on a phone you already have, needs no maintenance, and if the phone breaks you replace it for nothing. Staff turnover is also handled instantly — add or remove workers from the app without a technician visit." }
+            },
+            {
+              "@type": "Question",
+              "name": "How does it handle high-turnover workers or contract labour?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Contract workers are added with just a name and phone number — no fingerprint enrollment, no ID card wait. They can check in on day one. When the contract ends, deactivate them from the dashboard. The attendance record for their period stays in the system for payroll and compliance." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero factory gate scan animations ═══ */
+        @keyframes mfg-row-slide {
+            from { opacity: 0; transform: translateX(-16px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .mfg-row { opacity: 0; animation: mfg-row-slide 0.5s ease forwards; }
+        @keyframes mfg-check-pop {
+            0% { opacity: 0; transform: scale(0.3); }
+            60% { transform: scale(1.25); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .mfg-check { animation: mfg-check-pop 0.5s ease forwards; }
+        @keyframes mfg-badge-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(245,158,11,0); }
+        }
+        .mfg-badge-pulse { animation: mfg-badge-pulse 1.8s ease-in-out infinite; }
+        @keyframes mfg-absent-shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            40% { transform: translateX(2px); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+        }
+        .mfg-absent { animation: mfg-absent-shake 0.5s ease 0.5s both; }
+        @keyframes mfg-row-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .mfg-row-in { opacity: 0; animation: mfg-row-in 0.5s ease forwards; }
+        .mfg-row-in.delay-1 { animation-delay: 0.1s; }
+        .mfg-row-in.delay-2 { animation-delay: 0.3s; }
+        .mfg-row-in.delay-3 { animation-delay: 0.5s; }
+        .mfg-row-in.delay-4 { animation-delay: 0.7s; }
+        .mfg-row-in.delay-5 { animation-delay: 0.9s; }
+        .mfg-row-in.delay-6 { animation-delay: 1.1s; }
+    </style>
+
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">Manufacturing Attendance Tracking</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-700 mb-5">
+                    <i class="fas fa-industry mr-2"></i> Manufacturing &amp; Factories
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Factory Attendance Without the Biometric Machine
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Biometric fingerprint machines cost $300–$1,000 each. They need maintenance, break down in dusty or humid factory environments, and when they fail, attendance tracking stops entirely. You're also stuck re-enrolling fingerprints every time a contract worker joins.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    TheCheckIn replaces the machine with an app. Workers check in by scanning their employee QR card — a printed card, no smartphone required on their side. Or use face recognition on their own phone if they have one. Either way, every check-in is timestamped and goes straight to the dashboard.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · Employee QR card · Face recognition · No hardware to buy</p>
+            </div>
+
+            <!-- Visual: Factory gate scan sequence -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-5">
+                        <div class="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-id-card text-slate-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900 text-sm">Gate check-in · Morning shift</p>
+                            <p class="text-[10px] text-gray-400">Shift starts 08:00 · Today</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <div class="mfg-row" style="animation-delay: 0.2s">
+                            <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2 border border-green-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 bg-slate-200 rounded-full flex items-center justify-center text-[9px] font-bold text-slate-700">R</div>
+                                    <div>
+                                        <p class="text-xs font-semibold text-gray-800">Rajan · Line A</p>
+                                        <p class="text-[10px] text-gray-500">QR card scanned</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-green-600 font-bold mfg-check" style="animation-delay: 0.35s">07:58 ✓</span>
+                            </div>
+                        </div>
+                        <div class="mfg-row" style="animation-delay: 0.35s">
+                            <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2 border border-green-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 bg-slate-200 rounded-full flex items-center justify-center text-[9px] font-bold text-slate-700">P</div>
+                                    <div>
+                                        <p class="text-xs font-semibold text-gray-800">Priya · QC Floor</p>
+                                        <p class="text-[10px] text-gray-500">Face recognition</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-green-600 font-bold mfg-check" style="animation-delay: 0.5s">08:03 ✓</span>
+                            </div>
+                        </div>
+                        <div class="mfg-row" style="animation-delay: 0.5s">
+                            <div class="flex items-center justify-between bg-amber-50 rounded-lg px-3 py-2 border border-amber-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 bg-slate-200 rounded-full flex items-center justify-center text-[9px] font-bold text-slate-700">K</div>
+                                    <div>
+                                        <p class="text-xs font-semibold text-gray-800">Kumar · Packing</p>
+                                        <p class="text-[10px] text-gray-500">QR card scanned</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-amber-600 font-bold mfg-badge-pulse" style="animation-delay: 0.6s">08:19 Late</span>
+                            </div>
+                        </div>
+                        <div class="mfg-row" style="animation-delay: 0.65s">
+                            <div class="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2 border border-gray-200">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 bg-gray-200 rounded-full flex items-center justify-center text-[9px] font-bold text-gray-500">M</div>
+                                    <div>
+                                        <p class="text-xs font-semibold text-gray-500">Muthu · Welding</p>
+                                        <p class="text-[10px] text-gray-400">Not checked in</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-red-500 font-semibold mfg-absent">Absent</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mfg-row-in delay-3">
+                        <p class="text-[10px] text-slate-600 text-center font-medium">3 of 4 present · 1 late · No biometric device used</p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How factory attendance works with TheCheckIn</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">Works for daily-wage workers, contract labour, and permanent staff — no enrollment machines, no IT setup.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">1</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Add workers from the admin dashboard</h3>
+                    <p class="text-sm text-gray-600">Enter each worker's name and phone number — that's all. No fingerprint enrollment, no biometric setup. New contract workers can be added in 30 seconds, before they walk through the gate.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-slate-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">2</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Print employee QR cards</h3>
+                    <p class="text-sm text-gray-600">Each worker gets a printed QR card with their unique code. Print them yourself — any printer works. Workers carry the card like an ID badge. No app installation needed on the worker's side.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-slate-500 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">3</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Supervisor scans cards at gate entry</h3>
+                    <p class="text-sm text-gray-600">As workers arrive for their shift, the gate supervisor scans each card with one phone. Takes 2 seconds per person. Or set up a shared device at the entry point so workers scan themselves as they walk in.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="w-10 h-10 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold mb-4">4</div>
+                    <h3 class="font-semibold text-gray-900 mb-2 text-sm">Timesheets calculate automatically</h3>
+                    <p class="text-sm text-gray-600">Hours worked are calculated from check-in and check-out times. Daily wage workers, weekly contract staff, and permanent employees all tracked the same way. Export to Excel for payroll — or connect to ERPNext.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Why factories switch from biometric machines to TheCheckIn</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-tools text-slate-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">No machine to maintain or replace</h3>
+                                <p class="text-gray-600">Biometric machines in factory environments fail — dust, humidity, oil on hands all affect fingerprint readers. When the machine breaks, attendance tracking stops until a technician comes. With TheCheckIn, the device is a phone. If it breaks, use another one.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-plus text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Add contract workers the same day they arrive</h3>
+                                <p class="text-gray-600">Biometric enrollment takes time, a technician, and the machine has to be working. TheCheckIn adds a worker in under a minute. For factories with daily or weekly contract labour, this alone saves hours of admin per month.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-shield-alt text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Proxy check-in stopped at the gate</h3>
+                                <p class="text-gray-600">Workers sharing QR cards or checking in for absent colleagues is caught immediately — each QR card is unique and one check-in per shift per person is enforced. Enable face recognition for higher-security environments where proxy is a bigger problem.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-export text-amber-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Payroll-ready data, not raw punch logs</h3>
+                                <p class="text-gray-600">The dashboard shows total hours per worker, broken down by day and shift. One-click Excel export with columns formatted for payroll input. No re-entering data from printed punch slips, no transcription errors.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Suitable for every type of factory environment</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-slate-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-cogs text-slate-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Assembly &amp; production lines</p>
+                                    <p class="text-xs text-gray-500">Track line workers by shift, department, and station</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-fire-alt text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Welding &amp; metalwork shops</p>
+                                    <p class="text-xs text-gray-500">Works even where fingerprint readers fail due to surface conditions</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-seedling text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Food processing &amp; packaging</p>
+                                    <p class="text-xs text-gray-500">Hygienic — no shared fingerprint reader surface</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-warehouse text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Warehouses &amp; distribution centres</p>
+                                    <p class="text-xs text-gray-500">Multiple entry points, large teams, high turnover</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from factory managers &amp; HR teams</h2>
+            <p class="text-lg text-gray-600 mb-10">Real questions from manufacturers replacing fingerprint machines.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can factory workers check in without a smartphone?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. With Employee QR Cards, each worker gets a printed card with their unique QR code. A supervisor or shift manager scans all incoming workers' cards using one phone as they enter the floor. Workers don't need smartphones at all — just one device at the gate or entrance.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does it work in areas with no internet inside the factory?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        The app queues check-ins when connectivity is low and syncs automatically when a connection is restored. For consistent offline use, Employee QR Card scanning via a single device at the gate is the most reliable setup — it works even on minimal connectivity.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We have 3 shifts per day — morning, afternoon, night. Can TheCheckIn handle that?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. Configure each shift with its own start and end time. Workers are automatically assigned to the right shift based on when they check in. Late arrivals are flagged against their specific shift start time. Reports can be filtered by shift so you see morning, afternoon, and night separately.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">We use ERPNext for our factory operations. Does TheCheckIn connect to it?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn integrates directly with ERPNext's HR Attendance module via webhook sync. Check-in and check-out events flow automatically — no manual CSV export needed. See the <a href="/erpnext-attendance.html" class="text-brand-blue hover:underline">ERPNext attendance integration page</a> for full details.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Replace the biometric machine today</h2>
+            <p class="text-lg opacity-90 mb-2">Set up your factory, print QR cards for your workers, and start tracking every shift.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · Employee QR card · Face recognition · No hardware to buy</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">Attendance tracking for factories, field teams, restaurants, and retail — no biometric hardware needed.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/manufacturing-attendance.html" class="text-sm text-brand-blue font-medium">Manufacturing</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="mailto:' + addr + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+        // Hero dashboard — live refresh cycle (simulates real-time check-in activity)
+        (function () {
+            setTimeout(function () {
+                var rows = document.querySelectorAll('.mfg-row');
+                if (!rows.length) return;
+                var idx = 0;
+                setInterval(function () {
+                    rows[idx].style.outline = '2px solid rgba(34,197,94,0.3)';
+                    rows[idx].style.outlineOffset = '2px';
+                    setTimeout(function () {
+                        rows[idx].style.outline = '';
+                        rows[idx].style.outlineOffset = '';
+                        idx = (idx + 1) % rows.length;
+                    }, 800);
+                }, 14000);
+            }, 2500);
+        })();
+    </script>
+</body>
+</html>

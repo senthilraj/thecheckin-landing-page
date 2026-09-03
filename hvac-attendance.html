@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Technician Attendance Tracking App — GPS Check-in | TheCheckIn</title>
+    <meta name="description" content="Track HVAC technician attendance from any job site — GPS check-in confirms location, face recognition confirms identity. Real-time dashboard, automatic timesheets. Free up to 10 employees.">
+    <meta name="keywords" content="hvac technician attendance, hvac employee tracking, field service attendance app, hvac attendance tracking, technician attendance app, field worker attendance">
+    <link rel="canonical" href="https://thecheckin.io/hvac-attendance.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Pazhanam Technologies">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thecheckin.io/hvac-attendance.html">
+    <meta property="og:title" content="HVAC Technician Attendance Tracking App — GPS Check-in | TheCheckIn">
+    <meta property="og:description" content="GPS + face recognition attendance for HVAC technicians. Real-time dashboard. No hardware at each job site. Free up to 10 employees.">
+    <meta property="og:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+    <meta property="og:site_name" content="TheCheckIn">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HVAC Technician Attendance Tracking App — GPS Check-in | TheCheckIn">
+    <meta name="twitter:description" content="GPS + face recognition attendance for HVAC technicians at any job site.">
+    <meta name="twitter:image" content="https://thecheckin.io/images/TheCheckIn-Attendance-Tracking-Types.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thecheckin.io/" },
+            { "@type": "ListItem", "position": 2, "name": "HVAC Technician Attendance", "item": "https://thecheckin.io/hvac-attendance.html" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does TheCheckIn work for HVAC technicians who go to different sites each day?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Each job site is set up as a branch in TheCheckIn with a GPS geofence. When the technician arrives, they open the app and check in — the GPS confirms they're at the right location. Multiple check-ins per day are supported for technicians who move between sites." }
+            },
+            {
+              "@type": "Question",
+              "name": "What if a technician goes directly from home to a job site without coming to the office?",
+              "acceptedAnswer": { "@type": "Answer", "text": "That's exactly what TheCheckIn is designed for. The technician checks in from the job site using GPS. The admin can set up the site as a recognized branch location so the GPS fence matches the client address. There's no need to pass through the office first." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I see where my technicians are in real time?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. When an employee checks in with GPS, the exact coordinates and timestamp are recorded. The admin dashboard shows all check-ins by branch and by employee, updated in real time as the data syncs from their phone." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does it work without internet access at a job site?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The face recognition matching happens on the device without internet. The check-in record syncs to the server once the phone connects to WiFi or mobile data. If a technician is in an area with poor signal, the record will sync automatically when they get connectivity." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50:'#f0f9ff',100:'#e0f2fe',200:'#bae6fd',300:'#7dd3fc',400:'#38bdf8',500:'#0ea5e9',600:'#0284c7',700:'#0369a1',800:'#075985',900:'#0c4a6e' },
+                        secondary: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+                        'brand-blue': '#1d19d8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .faq-answer { display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(2,132,199,0.1) 0%, rgba(34,197,94,0.1) 100%);
+        }
+        @media (min-width: 768px) {
+            .hero-gradient {
+                min-height: calc(100dvh - 110px);
+                display: flex;
+                align-items: flex-start;
+            }
+            .hero-gradient > div {
+                width: 100%;
+                padding-top: clamp(16px, 3.5dvh, 64px);
+                padding-bottom: clamp(16px, 3.5dvh, 64px);
+            }
+        }
+        @media (min-width: 768px) and (min-height: 820px) {
+            .hero-gradient { align-items: center; }
+        }
+
+        /* ═══ Hero Ahmed's work day timeline animations ═══ */
+        @keyframes timeline-item-in {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .timeline-item {
+            opacity: 0;
+            animation: timeline-item-in 0.5s ease forwards;
+        }
+        @keyframes check-in-pop {
+            0% { opacity: 0; transform: scale(0.3); }
+            60% { transform: scale(1.3); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .check-in-pop { animation: check-in-pop 0.5s ease forwards; }
+        @keyframes pin-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .pin-bounce { animation: pin-bounce 2.2s ease-in-out infinite; }
+        @keyframes hours-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .hours-pulse { animation: hours-pulse 1.8s ease-in-out infinite; }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="images/logo.png" alt="TheCheckIn — Employee Attendance Tracking App" class="h-[25px] w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/#how-it-works" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="/#features" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="/#integrations" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Integrations</a>
+                    <a href="/#faq" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">FAQ</a>
+                    <a href="/#contact" class="text-gray-700 hover:text-brand-blue px-3 py-2 text-sm font-medium">Contact</a>
+                    <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-blue hover:opacity-90">
+                        Start Free
+                    </a>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden md:hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="/#how-it-works" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">How It Works</a>
+                <a href="/#features" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Features</a>
+                <a href="/#integrations" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Integrations</a>
+                <a href="/#faq" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">FAQ</a>
+                <a href="/#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-brand-blue hover:bg-gray-50">Contact</a>
+                <a href="https://web.thecheckin.io/" target="_blank" rel="noopener" class="block px-3 py-2 text-base font-medium text-brand-blue hover:bg-gray-50">Start Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="/" class="hover:text-brand-blue">Home</a>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+                <span class="text-gray-700 font-medium">HVAC Technician Attendance</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-700 mb-5">
+                    <i class="fas fa-tools mr-2"></i> HVAC &amp; Field Services
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Attendance Tracking for HVAC Technicians — GPS Check-in on Their Phone
+                </h1>
+                <p class="text-xl text-gray-600 mb-4">
+                    Your HVAC technician starts from home, drives to a client's building across town, handles two more calls by afternoon, and finishes at a site you've never been to. You're tracking all of this on WhatsApp messages and a spreadsheet.
+                </p>
+                <p class="text-xl text-gray-600 mb-4">
+                    There's a cleaner way. TheCheckIn lets each technician check in from wherever they are — the GPS confirms the location, and the app records the exact time. By end of day you can see who arrived where and when, without calling anyone.
+                </p>
+                <p class="text-xl text-gray-600 mb-8">
+                    No hardware to install at every job site. No paper sign-in sheet. At the end of the month, timesheets are already calculated.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-brand-blue hover:opacity-90 text-base font-medium shadow-sm">
+                        <i class="fab fa-google-play mr-2"></i> Try the App Free
+                    </a>
+                    <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                       class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white bg-[#25D366] hover:opacity-90 text-base font-medium">
+                        <i class="fab fa-whatsapp mr-2"></i> Ask on WhatsApp
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-3">Free up to 10 employees · GPS + face recognition · Works from any job site</p>
+            </div>
+
+            <!-- Visual: HVAC technician day timeline -->
+            <div class="hidden md:block mt-10 md:mt-0">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 max-w-sm mx-auto">
+                    <div class="flex items-center gap-2 mb-5">
+                        <div class="w-9 h-9 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-tools text-orange-600"></i>
+                        </div>
+                        <p class="font-bold text-gray-900 text-sm">Ahmed's work day — tracked</p>
+                    </div>
+                    <!-- Timeline -->
+                    <div class="relative pl-2">
+                        <div class="absolute left-6 top-4 bottom-4 w-px bg-gray-200"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 relative timeline-item" style="animation-delay:0.1s">
+                                <div class="w-9 h-9 bg-brand-blue rounded-full flex items-center justify-center z-10 flex-shrink-0 text-white text-[10px] font-bold">7am</div>
+                                <div class="pt-1 flex-1">
+                                    <p class="text-xs font-semibold text-gray-800">Started from home</p>
+                                    <p class="text-[10px] text-gray-500">GPS check-in · Recorded</p>
+                                </div>
+                                <i class="fas fa-check-circle text-emerald-500 text-sm pt-1 flex-shrink-0 check-in-pop"></i>
+                            </div>
+                            <div class="flex items-start gap-4 relative timeline-item" style="animation-delay:0.3s">
+                                <div class="w-9 h-9 bg-orange-400 rounded-full flex items-center justify-center z-10 flex-shrink-0 text-white text-[10px] font-bold pin-bounce">9am</div>
+                                <div class="pt-1 flex-1">
+                                    <p class="text-xs font-semibold text-gray-800">Client Site A · Al Quoz</p>
+                                    <p class="text-[10px] text-gray-500">Face + GPS confirmed on-site</p>
+                                </div>
+                                <i class="fas fa-check-circle text-emerald-500 text-sm pt-1 flex-shrink-0 check-in-pop"></i>
+                            </div>
+                            <div class="flex items-start gap-4 relative timeline-item" style="animation-delay:0.5s">
+                                <div class="w-9 h-9 bg-orange-400 rounded-full flex items-center justify-center z-10 flex-shrink-0 text-white text-[10px] font-bold pin-bounce">2pm</div>
+                                <div class="pt-1 flex-1">
+                                    <p class="text-xs font-semibold text-gray-800">Client Site B · Deira</p>
+                                    <p class="text-[10px] text-gray-500">Checked in at second location</p>
+                                </div>
+                                <i class="fas fa-check-circle text-emerald-500 text-sm pt-1 flex-shrink-0 check-in-pop"></i>
+                            </div>
+                            <div class="flex items-start gap-4 relative timeline-item" style="animation-delay:0.7s">
+                                <div class="w-9 h-9 bg-secondary-600 rounded-full flex items-center justify-center z-10 flex-shrink-0 text-white text-[10px] font-bold">6pm</div>
+                                <div class="pt-1 flex-1">
+                                    <p class="text-xs font-semibold text-gray-800">Checked out</p>
+                                    <p class="text-[10px] text-emerald-600 font-semibold hours-pulse">9.5 hrs · Timesheet ready</p>
+                                </div>
+                                <i class="fas fa-check-circle text-emerald-500 text-sm pt-1 flex-shrink-0 check-in-pop"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 bg-gray-50 rounded-xl p-3 border border-gray-200 text-center">
+                        <p class="text-xs text-gray-500 font-medium">
+                            <i class="fas fa-comment-slash text-gray-400 mr-1"></i>
+                            Zero WhatsApp messages. Zero spreadsheet rows.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works for HVAC -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-3">How HVAC technicians use TheCheckIn</h2>
+            <p class="text-lg text-gray-600 mb-12 max-w-2xl">A typical day — from first call to end of shift — with no extra steps for your team.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 bg-brand-blue text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">7am</div>
+                        <span class="font-semibold text-gray-800 text-sm">Starts from home</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Technician opens the app when they leave for the first job. GPS check-in records that their day has started. No need to come to the office first.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 bg-orange-400 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">9am</div>
+                        <span class="font-semibold text-gray-800 text-sm">Arrives at first site</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Check-in from the client site. The GPS confirms they're within the geofence for that location. You see it on the dashboard in real time. Time recorded automatically.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 bg-orange-400 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2pm</div>
+                        <span class="font-semibold text-gray-800 text-sm">Second job site</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Checks in again at the second site. Multiple check-ins per day are supported. Each one records location and time. The dashboard shows the full day's movement.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 bg-secondary-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6pm</div>
+                        <span class="font-semibold text-gray-800 text-sm">End of day</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Checks out. Total hours worked are calculated automatically. At month end, timesheets for all technicians are ready — no one has to count days or add up hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits specific to HVAC -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:grid md:grid-cols-2 md:gap-16 md:items-start">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">What field service companies get from TheCheckIn</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-orange-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">GPS confirms they're on site, not around the corner</h3>
+                                <p class="text-gray-600">When a technician checks in with GPS, the app records their exact coordinates. You set the geofence radius for each job site. If they're not close enough, the check-in isn't accepted.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-face-smile text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Face recognition confirms it's the actual technician</h3>
+                                <p class="text-gray-600">A colleague can't check in for someone who hasn't arrived yet. The face recognition with liveness detection (eye blink) confirms the real person is there, not just their phone.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-export text-green-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Payroll-ready timesheets every month</h3>
+                                <p class="text-gray-600">Total hours, overtime, and attendance status are calculated automatically from check-in and check-out data. Export to Excel and hand to payroll — or import into ERPNext or Sage 300.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-code-branch text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Multiple sites, one dashboard</h3>
+                                <p class="text-gray-600">Each client location or recurring job site is a separate branch in TheCheckIn. The admin dashboard shows all technicians across all sites — who's on site, who hasn't checked in, and who's working late.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <div class="bg-orange-50 rounded-2xl p-8 border border-orange-100">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Other field service industries that use TheCheckIn</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-bolt text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Electrical &amp; plumbing contractors</p>
+                                    <p class="text-xs text-gray-500">Same pattern — different sites each day, no fixed office</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-hard-hat text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Construction &amp; civil works</p>
+                                    <p class="text-xs text-gray-500">Workers at active sites, GPS confirms they're on location</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-truck text-emerald-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Delivery &amp; logistics</p>
+                                    <p class="text-xs text-gray-500">Drivers check in at warehouses or delivery hubs from their own phone</p>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 shadow-sm flex items-center gap-3">
+                                <div class="w-9 h-9 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-home text-rose-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-gray-800">Home care &amp; cleaning services</p>
+                                    <p class="text-xs text-gray-500">GPS at client address confirms arrival time for billing accuracy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions from HVAC company owners</h2>
+            <p class="text-lg text-gray-600 mb-10">Real questions from people managing field teams for the first time with an app instead of WhatsApp.</p>
+            <div class="space-y-4" id="faq-list">
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">My technicians go to different sites every day. How do I set that up?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Each client site or recurring location you want to track is added as a branch in TheCheckIn. Set the address and a geofence radius (e.g. 100 meters). When a technician checks in from that location, the GPS matches it to the right branch automatically. For one-off sites, GPS check-in still records the coordinates — you can review them in the dashboard even without a pre-defined branch.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">What if the phone's GPS isn't accurate enough in a basement or indoor site?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        GPS works reasonably well in most indoor environments, but accuracy varies. For sites where GPS is unreliable (deep basements, dense buildings), you can set up QR code check-in instead — a QR code posted at the site entrance that the technician scans on arrival. Both methods record the check-in time and link it to the branch.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can a technician check in multiple times per day — once at each site?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn supports multiple check-in and check-out events per day. A technician can check in at site A in the morning, check out when they leave, check in at site B in the afternoon, and check out at the end. All events are logged and visible in the admin dashboard.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Does it work without WiFi at a job site?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Face recognition happens on-device — no internet needed for the match. The check-in record queues locally and syncs to the server once the phone has data (mobile or WiFi). For most HVAC technicians who have mobile data, this isn't an issue. If they work in a signal dead zone all day, records sync when they're back in range.
+                    </div>
+                </div>
+
+                <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-trigger w-full flex justify-between items-center px-6 py-5 text-left bg-white hover:bg-gray-50 focus:outline-none">
+                        <span class="text-base font-medium text-gray-900">Can I use the data for payroll calculations?</span>
+                        <i class="faq-icon fas fa-chevron-down text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4"></i>
+                    </button>
+                    <div class="faq-answer px-6 pb-5 text-gray-600">
+                        Yes. TheCheckIn generates daily, weekly, and monthly timesheets automatically — with total hours worked per employee. You can export to Excel for your payroll team, or if you use ERPNext or Sage 300, import directly into those systems for payroll processing.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-brand-blue text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Track your HVAC team from any job site</h2>
+            <p class="text-lg opacity-90 mb-2">Download the app, add your technicians, and set up your first job site in under 10 minutes.</p>
+            <p class="text-sm opacity-75 mb-8">Free up to 10 employees · GPS + face recognition · No hardware at job sites</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-brand-blue bg-white hover:bg-gray-100 text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Get Android App
+                </a>
+                <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center px-6 py-3 rounded-md text-white border border-white hover:bg-white hover:text-brand-blue text-base font-medium">
+                    <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="md:col-span-1">
+                    <a href="/"><img src="images/logo.png" alt="TheCheckIn" class="h-[25px] w-auto mb-4"></a>
+                    <p class="text-sm text-gray-500 mb-5">GPS and face recognition attendance for HVAC, construction, field services, and office teams worldwide.</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fas fa-envelope text-brand-blue w-4 flex-shrink-0"></i>
+                            <span id="footer-email-slot"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <i class="fab fa-whatsapp text-[#25D366] w-4 flex-shrink-0"></i>
+                            <a href="https://wa.me/918778796644" target="_blank" rel="noopener" class="hover:text-brand-blue">+91 87787 96644</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Check-in Methods</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/face-recognition-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Face Recognition</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">QR Code Check-in</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">GPS Attendance</a></li>
+                        <li><a href="/#features" class="text-sm text-gray-600 hover:text-brand-blue">Employee QR Card</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Industries</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/hvac-attendance.html" class="text-sm text-brand-blue font-medium">HVAC &amp; Field Services</a></li>
+                        <li><a href="/construction-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Construction</a></li>
+                        <li><a href="/retail-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Retail &amp; Shops</a></li>
+                        <li><a href="/restaurant-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Restaurants</a></li>
+                        <li><a href="/logistics-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Logistics &amp; Delivery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Integrations</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/erpnext-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext &amp; Frappe HRMS</a></li>
+                        <li><a href="/sage-300-attendance.html" class="text-sm text-gray-600 hover:text-brand-blue">Sage 300</a></li>
+                        <li><a href="/erpnext-customization.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext Customization</a></li>
+                        <li><a href="/erpnext-dubai.html" class="text-sm text-gray-600 hover:text-brand-blue">ERPNext in Dubai</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="https://pazhanam.com" class="text-sm text-gray-600 hover:text-brand-blue">About Pazhanam</a></li>
+                        <li><a href="/#contact" class="text-sm text-gray-600 hover:text-brand-blue">Contact</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Privacy Policy</a></li>
+                        <li><a href="/privacy-policy-terms-of-service.html" target="_blank" class="text-sm text-gray-600 hover:text-brand-blue">Terms of Service</a></li>
+                    </ul>
+                    <div class="mt-6">
+                        <a href="https://wa.me/918778796644" target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#25D366] text-white text-sm font-semibold hover:opacity-90">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">&copy; 2026 Pazhanam Technologies. All rights reserved.</p>
+                <a href="https://www.linkedin.com/company/pazhanam/" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#0077B5]">
+                    <i class="fab fa-linkedin text-[#0077B5]"></i> Pazhanam Technologies on LinkedIn
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918778796644" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
+       style="position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);"
+       onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp" style="color:#fff;font-size:28px;"></i>
+    </a>
+
+    <script>
+        (function () {
+            var u = 'kala', d = 'thecheckin' + '.io';
+            var addr = u + '@' + d;
+            var mailto = 'mailto:' + addr;
+            var fslot = document.getElementById('footer-email-slot');
+            if (fslot) fslot.innerHTML = '<a href="' + mailto + '" class="text-gray-600 hover:text-brand-blue">' + addr + '</a>';
+        })();
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('.faq-trigger').forEach(function(btn) {
+            btn.addEventListener('click', function () {
+                var item = this.closest('.faq-item');
+                var isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>

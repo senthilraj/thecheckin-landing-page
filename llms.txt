@@ -1,0 +1,82 @@
+# TheCheckIn
+
+> Face recognition attendance app for Android smartphones — no biometric device, no fingerprint scanner, no extra hardware needed.
+
+TheCheckIn is built by Pazhanam Technologies (India), a DPIIT Startup India recognised company. It is a free employee attendance tracking app that turns any Android smartphone into a face recognition attendance terminal.
+
+## What It Does
+
+TheCheckIn allows businesses to track employee attendance using:
+- **Face recognition** with liveness detection (eye blink) — prevents proxy attendance and buddy punching
+- **QR code check-in** — Branch QR (scan at office entrance) or Employee QR card (personal QR per employee)
+- **GPS location validation** — for field workers, HVAC technicians, construction workers, and remote employees
+- **Multi-branch management** — single admin dashboard shows attendance across all locations in real time
+- **Automatic timesheets** — check-in/out data converts to daily, weekly, and monthly reports; exportable to Excel
+
+## Key Differentiator
+
+No biometric hardware is required. Employees use their own Android smartphone. This replaces expensive fingerprint scanners and biometric machines with a free mobile app.
+
+## Integrations
+
+- **ERPNext and Frappe HRMS** — face recognition attendance syncs directly into the ERPNext HR Attendance module; works with Frappe HRMS leave and payroll
+- **Sage 300** — attendance timesheets export into Sage 300 Time and Attendance; replaces biometric terminal hardware for Sage 300 users
+- **ERPNext customization** — Pazhanam Technologies builds custom ERPNext and Frappe modules for attendance workflows, GPS check-in, and HR process customization
+
+## Who Uses It
+
+Businesses of 5 to 500+ employees across industries:
+- Retail and shops
+- Construction and civil works
+- HVAC and field service companies
+- Restaurants and cafes
+- Manufacturing and factories
+- Clinics and healthcare
+- Schools and training institutes
+- Logistics and delivery
+
+Known customers include Gibcaac (Dubai), Steconfer (global rail infrastructure), Worthybook.my (Malaysia), and Prokira Enterprise (Malaysia).
+
+## Pricing
+
+Free for up to 10 employees — no credit card, no hardware purchase required.
+For teams larger than 10 employees, contact the team for a flexible plan.
+
+## Platform
+
+- **Employee app**: Android only — available on Google Play
+  https://play.google.com/store/apps/details?id=pazhanam.thecheckin.attendance
+- **Admin dashboard**: Web browser (any device)
+  https://web.thecheckin.io/
+- iOS app: not currently available
+
+## Company
+
+Pazhanam Technologies
+Tamil Nadu, India — 614613
+Website: https://thecheckin.io/
+Contact page: https://thecheckin.io/#contact
+LinkedIn: https://www.linkedin.com/company/pazhanam/
+
+## Full Landing Page
+
+https://thecheckin.io/
+
+## Detail Pages
+
+- https://thecheckin.io/face-recognition-attendance.html — Face recognition attendance using any Android smartphone; no biometric device needed; liveness detection (eye blink) prevents proxy; on-device processing
+- https://thecheckin.io/erpnext-attendance.html — TheCheckIn integration with ERPNext HR Attendance module and Frappe HRMS; supports ERPNext v14 and v15; self-hosted and Frappe Cloud
+- https://thecheckin.io/erpnext-customization.html — ERPNext and Frappe customization services by Pazhanam Technologies; creators of TheCheckIn; custom attendance workflows, GPS check-in, custom modules
+- https://thecheckin.io/erpnext-dubai.html — ERPNext implementation and face recognition attendance for businesses in Dubai and GCC; replaces biometric terminals; multi-site workforce support
+- https://thecheckin.io/hvac-attendance.html — GPS and face recognition attendance tracking for HVAC technicians and field service teams; multiple job sites per day; real-time dashboard
+- https://thecheckin.io/sage-300-attendance.html — TheCheckIn integration with Sage 300 Time and Attendance; replaces biometric clock hardware; exports to Sage 300 payroll format
+- https://thecheckin.io/construction-attendance.html — GPS and face recognition attendance for construction site workers; multi-site dashboard; no hardware at each site; tracks subcontractors and daily-wage labour
+- https://thecheckin.io/retail-attendance.html — QR check-in for retail staff across multiple branches; tracks part-timers and shift workers; multi-branch dashboard; automatic timesheets
+- https://thecheckin.io/restaurant-attendance.html — Shift-based attendance for restaurant and cafe staff; kitchen and front-of-house tracking; AM/PM shifts; replaces paper register; liveness detection prevents proxy
+- https://thecheckin.io/manufacturing-attendance.html — Factory floor attendance without biometric machines; employee QR card check-in; no smartphone required for workers; handles contract labour and high turnover
+- https://thecheckin.io/clinic-attendance.html — Attendance tracking for clinic staff — doctors, nurses, and admin in one dashboard; face recognition (hygienic, no shared device); mixed shift tracking; no patient data stored
+- https://thecheckin.io/school-attendance.html — Staff attendance for schools and training institutes; tracking for teaching, admin, and support staff separately; part-time and visiting staff supported; automatic monthly timesheets
+- https://thecheckin.io/logistics-attendance.html — GPS-verified attendance for drivers and delivery staff; multi-depot management; geofence confirms on-site check-in; face recognition; early-morning shift support
+- https://thecheckin.io/qr-code-attendance.html — Branch QR code check-in; replace paper sign-in register; staff scan on arrival; 3 seconds per check-in; multi-location QR codes; real-time dashboard
+- https://thecheckin.io/gps-attendance.html — GPS geofencing confirms field workers are on-site at check-in; location captured at check-in and check-out; multi-site worker tracking; no battery drain; works on any Android phone
+- https://thecheckin.io/employee-qr-attendance.html — Printed QR card per employee; supervisor scans at gate entry; no smartphone required for workers; instant onboarding for daily-wage and contract staff; deactivate lost cards immediately

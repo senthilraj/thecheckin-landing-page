@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# 1) Canonicalize to https + non-www in a single redirect
+#    (covers http://, https://www., and http://www. in one hop)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\.thecheckin\.io$ [NC]
+RewriteRule ^(.*)$ https://thecheckin.io/$1 [L,R=301]
+
+# 2) Strip /index.html down to /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html[?\s] [NC]
+RewriteRule ^index\.html$ / [L,R=301]
+
+# 3) Strip trailing "index.html" from any subdirectory too (defensive, none exist today)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)/index\.html[?\s] [NC]
+RewriteRule ^(.+)/index\.html$ /$1/ [L,R=301]
